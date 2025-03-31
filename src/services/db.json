@@ -1,0 +1,133 @@
+{
+  "usuarios": [
+    {
+      "id": "c683",
+      "nombre": "ABC",
+      "identificacion": "ABC",
+      "email": "ABC@gmail.com",
+      "password": "abc",
+      "fechaNacimiento": "2003-09-07",
+      "genero": "M"
+    },
+    {
+      "id": "1dd8",
+      "nombre": "barry",
+      "identificacion": "207360415",
+      "email": "barry@.com",
+      "password": "123456",
+      "fechaNacimiento": "2025-03-29",
+      "genero": "M"
+    },
+    {
+      "id": "9762",
+      "nombre": "Betza",
+      "identificacion": "1234",
+      "email": "betza@gmail.es",
+      "password": "1234",
+      "fechaNacimiento": "2025-03-27",
+      "genero": "F"
+    },
+    {
+      "id": "1b6f",
+      "nombre": "",
+      "identificacion": "",
+      "email": "",
+      "password": "",
+      "fechaNacimiento": "",
+      "genero": ""
+    }
+  ],
+  "administradores": [],
+  "especialistas": [
+    {
+      "id": "e14e",
+      "nombre": "",
+      "especialidad": "",
+      "email": "v",
+      "password": "jlg",
+      "fechaNacimiento": "",
+      "genero": ""
+    },
+    {
+      "id": "867b",
+      "nombre": "Pepe Viyuela",
+      "especialidad": "Psicología",
+      "email": "pepe.viyuela@example.com",
+      "password": "jlg",
+      "fechaNacimiento": "",
+      "genero": "F"
+    },
+    {
+      "id": "fa67",
+      "nombre": "GKD",
+      "especialidad": "",
+      "email": "HKF",
+      "password": "",
+      "fechaNacimiento": "",
+      "genero": ""
+    },
+    {
+      "id": "018a",
+      "nombre": "juanito",
+      "especialidad": "abc",
+      "email": "juani@.com",
+      "password": "123456",
+      "fechaNacimiento": "2025-03-28",
+      "genero": "M"
+    },
+    {
+      "id": "59f5",
+      "nombre": "Jose Miguel",
+      "especialidad": "",
+      "email": "jose@gmail.com",
+      "password": "123456",
+      "fechaNacimiento": "2025-03-27",
+      "genero": "M"
+    },
+    {
+      "id": "3511",
+      "nombre": "Jose Miguelito",
+      "especialidad": "",
+      "email": "jose@gmail.com",
+      "password": "123456",
+      "fechaNacimiento": "2025-03-27",
+      "genero": "M"
+    }
+  ],
+  "especialidades": [
+    {
+      "id": "e365",
+      "nombre": "Neurología"
+    },
+    {
+      "id": "e366",
+      "nombre": "Nutrición"
+    }
+  ],
+  "auida": [
+    {
+      "id": "09f2",
+      "nombre": "aaaa",
+      "email": "bb@gmail.com",
+      "telefono": "a121",
+      "especialidad": "dssda",
+      "mensaje": "dasdsa"
+    },
+    {
+      "id": "1c6e",
+      "nombre": "",
+      "email": "",
+      "telefono": "",
+      "especialidad": "",
+      "mensaje": ""
+    },
+    {
+      "id": "3f3f",
+      "nombre": "",
+      "email": "",
+      "telefono": "",
+      "especialidad": "",
+      "mensaje": ""
+    }
+  ]
+}

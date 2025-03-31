@@ -1,0 +1,42 @@
+.card6 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 390px;
+    padding: 9%;
+    background-color: #0b0b0b;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    color: antiquewhite;
+    margin-top: 15%;
+   gap: 50px;
+    position: relative;
+}
+
+.derechos {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+    font-size: 16px;
+    
+}
+.iconosredes {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    text-align: center;
+    font-size: 16px;
+    
+}

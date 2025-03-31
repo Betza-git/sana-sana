@@ -1,0 +1,80 @@
+ 
+     .contenedorLogin {
+        background-color: rgba(180, 224, 216, 0.295);
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        max-width: 400px;
+        padding: 40px;
+        text-align: center;
+        transition: all 0.3s ease;
+        margin-left: 30%;
+        margin-top: 3%;
+    }
+    
+    .contenedorLogin:hover {
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    }
+    
+    
+    /* Título */
+    .titulo {
+        color: #5d5fef;
+        font-weight: 600;
+        margin-bottom: 30px;
+        font-size: 24px;
+    }
+    
+    /* Formulario */
+    .loginForm {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    
+    
+    
+    input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #055c9f5a;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s;
+        box-sizing: border-box;
+    }
+    
+    input:focus {
+        outline: none;
+        border-color: #5d5fef;
+        box-shadow: 0 0 0 3px rgba(93, 95, 239, 0.1);
+    }
+    
+    
+    .btnlogin {
+        background-color: #5d5fef;
+        color: white;
+        border: none;
+        padding: 14px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 10px;
+    }
+    
+    .btnlogin:hover {
+        background-color: #24c0b694;
+        transform: translateY(-2px);
+    }
+    
+    
+  
+    @media (max-width: 480px) {
+        .logincontainer {
+            padding: 30px 20px;
+            margin: 0 15px;
+        }
+    }

@@ -1,0 +1,49 @@
+.cont-cards-4 {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  
+  
+  background-color: #f7f7fb;
+  display: flex;
+  flex-direction: row;
+  margin-left: 17%;
+  top: 270px;
+  position: relative;
+  width: 64%;
+  gap: 95px;
+  
+  
+  
+}
+
+
+
+.card4-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  margin-top: 10vh;
+  color: #181717;
+  height: 235px;
+  position: relative;
+  bottom: 55px;
+  text-align: center;
+  gap: 45px;
+  padding: 35px;
+ 
+  
+} 
+
+.btncard4 {
+  background-color: #fc5494;
+  color: #ffff;
+  border: none;
+  padding: 8.5px;
+  border-radius: 5px;
+  cursor: pointer;
+  
+}
+
+
+ 

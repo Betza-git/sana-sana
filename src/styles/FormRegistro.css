@@ -1,0 +1,34 @@
+.contenedorRegistro{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 110vh;
+  background-color: #d7f0f4d0;
+  padding: 60px;
+  width: 50%;
+  gap: 40px;
+
+ 
+  
+}
+.textoIniciar{
+  text-wrap: nowrap;
+}
+.navRegistro {
+  background-image: url("../imagenes/back.avif");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 200%;
+  width: 100%;
+  margin-top: -2%;
+ 
+}
+
+.cont-link {
+  flex-direction: column;
+  gap: 20px;
+  margin-left: 70%;
+  position: relative;
+  text-align: start;
+}
