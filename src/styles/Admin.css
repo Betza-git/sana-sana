@@ -5,13 +5,17 @@
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    margin-top: 20px;
+    margin-top: 10px;
     width: 35%;
     margin-left: 5%; 
     background-image: linear-gradient(62deg, #6794c1 0%, #cd5baea5 100%);
-    
+    gap: 10px;
 }
-
+.abc{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
 .contenedor-ad {
     background-image: url("src/imagenes/fondoCards.png");
     width: 115%;
@@ -23,7 +27,6 @@
 
 .btn-especialidad {background-image: linear-gradient(to right, #614385 0%, #516395  51%, #614385  100%)}
 .btn-especialidad {
-   margin: 10px;
    padding: 15px 45px;
    text-align: center;
    text-transform: uppercase;
@@ -44,8 +47,6 @@
  .lista-admin {
    margin-top: -690px;
    margin-left: 50%;
-   
-  
 }
 
 

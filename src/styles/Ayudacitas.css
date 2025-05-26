@@ -1,13 +1,26 @@
 .contenedorcitas {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
   gap: 20px;
-  background-color: #22305c;
-  width: 65%;
-    padding: 20px;
+  background-image: url('../imagenes/jaspinder-singh-29ShZj22La0-unsplash.jpg');
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100vh; 
+  padding: 10px;
+}
+
+.contenedor-mensaje {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 40%;
+  height: 40vh;
+  margin-left: 55%;
+  margin-top: -35%;
+  background-color: rgba(206, 172, 128, 0.922);
+  gap: 20px;
 }
 
 .formulariocitas {
@@ -16,8 +29,31 @@
   gap: 10px;
   width: 40%;
   padding: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid #101412;
   border-radius: 5px;
-  background-color: #f9f9f9bb;
+  background-color: #f9f9f9d7;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+button {
+  background-color: #b85a7e;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+button:hover {
+  background-color: #854e75;
+}
+
+.btn-home {
+  background-color: #d9fc50c1;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 50%;
 }

@@ -154,7 +154,7 @@ return (
             placeholder="Ingrese la especialidad"
         />
         <button onClick={guardarEspecialidad} className='btn-especialidad'  >GUARDAR ESPECIALIDAD</button>
-        <h2>Agregue el especialista</h2>
+        <h2>Agregue sus datos</h2>
         <input onChange={(e) => setNombre(e.target.value)} type="text" placeholder="Ingrese el nombre del especialista" />
         <select onChange={(e) => setEspecialidadEspecialista(e.target.value)} name="" id="">
             <option value="" selected disabled>Seleccione la especialidad</option>
@@ -177,9 +177,9 @@ return (
     </div>
     <div className='lista-admin'>
         <h2>Lista de especialidades</h2>
-        <ul>
+        <ul >
             {especialidadesL.map((especialidad) => {
-                return <ul key={especialidad.id}>                  
+                return <ul key={especialidad.id} className='abc'>                  
                     <li>{especialidad.nombre}</li>                 
                     <li><button onClick={() => editarEspecialidad(especialidad.id)}>editar</button></li>
                     <li><button onClick={() => eliminarEspecialidad(especialidad.id)}>eliminar</button></li>  

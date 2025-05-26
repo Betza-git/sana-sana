@@ -3,6 +3,9 @@ import '../styles/Ayudacitas.css'
 import { useState, useEffect } from 'react'
 import { getData, patchData, postData } from '../services/llamados'
 import Swal from 'sweetalert2'
+import { Link } from 'react-router-dom' 
+
+
 
 // definición de la función Ayuda para el formulario de contacto
 // Se importan los hooks useState y useEffect de React para manejar el estado y los efectos secundarios
@@ -85,10 +88,15 @@ function Ayuda() {
       
         <button type="submit" onClick={enviarDatos}>Enviar</button>
         <button type="editar">Editar</button>
-
         <button type="button">Cancelar</button>
       </form>
+      <div className='contenedor-mensaje'>
+        <h2>Gracias por su consulta!</h2>
+        <button className='btn-home'><Link to="/">Home</Link></button>
+        <img src="src/imagenes/icono.png" alt=""  height="50" width="60" />
+      </div>
     </div>
+    
   )
 }
 

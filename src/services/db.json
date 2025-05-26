@@ -102,14 +102,6 @@
     {
       "id": "e365",
       "nombre": "Neurología"
-    },
-    {
-      "id": "e366",
-      "nombre": "Nutrición"
-    },
-    {
-      "id": "edde",
-      "nombre": "Medicina"
     }
   ],
   "auida": [
@@ -139,6 +131,14 @@
     },
     {
       "id": "1d2f",
+      "nombre": "",
+      "email": "",
+      "telefono": "",
+      "especialidad": "",
+      "mensaje": ""
+    },
+    {
+      "id": "990a",
       "nombre": "",
       "email": "",
       "telefono": "",
