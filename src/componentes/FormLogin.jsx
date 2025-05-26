@@ -2,25 +2,25 @@ import React from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getData } from '../services/llamados'
-import { Link } from 'react-router-dom' 
+import { Link } from 'react-router-dom'
+import '../styles/Login.css' 
 
 function FormLogin() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
+
   async function iniciarSesion(e) {
     e.preventDefault()
-   const usuarios = await getData("usuarios")
-   const usuario = usuarios.find(usuario => usuario.email === email && usuario.password === password)
+    const usuarios = await getData("usuarios")
+    const usuario = usuarios.find(usuario => usuario.email === email && usuario.password === password)
     
-   console.log(usuario);
-   
-   
-   if(usuario){
+    console.log(usuario)
+    
+    if (usuario) {
+      localStorage.setItem("idUsuario", usuario.id)
       navigate('/')
-      localStorage.setItem("idUsuario",usuario.id)
     }
-
   }
 
   return ( 
@@ -30,8 +30,13 @@ function FormLogin() {
         <form className='loginForm'>
           <input type="text" placeholder="Correo Electrónico" onChange={(e) => setEmail(e.target.value)} />
           <input type="password" placeholder="Contraseña" onChange={(e) => setPassword(e.target.value)} />
-          <button className='btnlogin'    onClick={iniciarSesion}><Link to='/admin'>Iniciar Sesión</Link></button>
         </form>
+        <div className='contenedor2'> 
+          <Link to="/recuperar-contrasena" className='linkRecuperar'>¿Olvidaste tu contraseña?</Link>
+          <button className='botonLogin' onClick={iniciarSesion}>Iniciar Sesión</button>
+          <h4 className='titulo1'>¿No tienes cuenta?</h4>
+          <Link to="/registro" className='linkRegistro'>Registrate</Link>
+        </div>
       </div>
     </div>
   )

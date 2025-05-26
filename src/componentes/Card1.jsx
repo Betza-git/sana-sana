@@ -2,6 +2,11 @@ import React from 'react'
 import '../styles/Card1.css'
 
 
+// Componente funcional Card1 que recibe props y devuelve un elemento JSX
+// Este componente representa una tarjeta que muestra información sobre un tema específico
+// Props: titulo, icono, cantidad, lugar, cantidad2, sitio
+// Se utiliza la desestructuración para extraer las propiedades de props
+
 const Card1 = ({ titulo,icono,cantidad,lugar,cantidad2,sitio }) => {
   return (
     <>

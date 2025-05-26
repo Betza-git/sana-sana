@@ -31,7 +31,7 @@ function Servicios() {
         <div>
             {
                 servicios.map(servicio => (              //map es para recorrer el arreglo de servicios
-                    <div key={servicio.id}>                 //key es para que no se repitan los elementos
+                    <div key={servicio.id}>                
                         <h3>{servicio.nombre}</h3>               
                         <h3>{servicio.especialidad}</h3>           
                     </div>

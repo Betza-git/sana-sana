@@ -12,7 +12,7 @@ import Card5 from '../componentes/Card5'
 import Card6 from '../componentes/Card6'
 
 function Home() {
-  const navigate = useNavigate()
+  const navigate = useNavigate() // Hook de navegación para redirigir a otras páginas
   return (
     <>
       <header>
@@ -46,8 +46,8 @@ function Home() {
           <h5>Le acompañaremos a lo largo de su tratamiento, juntos tendremos resultados increíbles!! </h5>
           
           <div className='cont-cards-4'>
-          <div className='card4' ><Card4 icono={"../src/imagenes/doctor.jpg"} titulo={"Usuario Existente"} button={<Link to={"/login"}>INGRESAR</Link>} /></div><hr className='hr4' />
-          <Card4 icono={"../src/imagenes/foro.jpg"} titulo={"Usuario Nuevo"} button={<Link to={"/registro"}>CREAR</Link>} /> 
+          <div className='card4' ><Card4  titulo={"Usuario Existente"} button={<Link to={"/login"}>INGRESAR</Link>} /></div><hr className='hr4' />
+          <Card4 icono={"fa-solid fa-circle-user"} titulo={"Usuario Nuevo"} button={<Link to={"/registro"}>CREAR</Link>} /> 
           </div>
 
           <div>

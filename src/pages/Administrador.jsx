@@ -6,7 +6,7 @@ import '../styles/Admin.css';
 
 
 function Administrador() {
-    // Estado para almacenar la especialidad
+    // Estado para almacenar la especialidad, uso de useState para manejar el estado de la especialidad
     const [especialidad, setEspecialidad] = useState('');
 
     const [nombre, setNombre] = useState('');
@@ -17,7 +17,8 @@ function Administrador() {
     const [genero, setGenero] = useState('');
     const [especialidadesL, setEspecialidadesL] = useState([]);
     const [recargar, setRecargar] = useState(false);
-    // Función para guardar la especialidad en el servidor
+
+// Función para guardar la especialidad en el servidor
     const guardarEspecialidad = async (e) => {
         console.log("entra")
         e.preventDefault()
@@ -25,7 +26,10 @@ function Administrador() {
             nombre: especialidad // Cambiado de 'especialidad' a 'nombre' para evitar conflicto
         };
         const filtro = especialidadesL.find(especialidad => especialidad.nombre === especialidadData.nombre); // Verifica si ya existe la especialidad => es para evitar que se repita el nombre de la especialidad
-
+//* find es un método de los arrays que devuelve el primer elemento que cumple con la condición dada. 
+// En este caso, busca si hay alguna especialidad con el mismo nombre que la que se está intentando agregar.
+//  Si no encuentra ninguna, devuelve undefined. */
+// Si ya existe la especialidad, muestra un mensaje de error
         if (filtro) {
             Swal.fire({
                 icon: "error",
@@ -33,6 +37,7 @@ function Administrador() {
                 text: "Ya se encuentra registrado!",
             });
         }
+// postData es para guardar la especialidad en el servidor local        
         else {
             await postData(especialidadData, 'especialidades');
             setEspecialidad('');
@@ -74,20 +79,25 @@ const manejarEnvioEspecialista = async (e) => {  // Función para guardar el esp
         title: "Especialista registrado",
         text: "Especialista registrado con éxito",
     });
-    setRecargar(!recargar);
+    setRecargar(!recargar);  //Recarga la página para mostrar el nuevo especialista, 
+// ! es para cambiar el estado de recargar a true o false
 
 }
  
-useEffect(() => {                                 // useEffect para que se ejecute la función de traer las especialidades y guardarlas en el estado especialidadesL
+ // useEffect para que se ejecute la función de traer las especialidades y guardarlas en el estado especialidadesL
+
+useEffect(() => { 
     const obtenerEspecialidades = async () => {
         const listaEspecialidades = await getData('especialidades');
-        // Va hacer un filtro que solamente devuelva las especialidades que no sean iguales
+// Va hacer un filtro que solamente devuelva las especialidades que no sean iguales
         setEspecialidadesL(listaEspecialidades);
     }
-    obtenerEspecialidades();
-}, [especialidadesL]);                      // especialidadesL es el estado que se va a actualizar cuando se agregue una nueva especialidad o se elimine una
 
-async function eliminarEspecialidad(id) {               // deleteData es para eliminar la especialidad
+    obtenerEspecialidades();
+}, [especialidadesL]); // especialidadesL es el estado que se va a actualizar cuando se agregue una
+//  nueva especialidad o se elimine una
+
+async function eliminarEspecialidad(id) {         // deleteData es para eliminar la especialidad
     const { isConfirmed } = await Swal.fire({
         title: "¿Está seguro de eliminar la especialidad?",
         icon: "warning",
@@ -106,16 +116,16 @@ async function eliminarEspecialidad(id) {               // deleteData es para el
     }
 }
 
-async function editarEspecialidad(id) {                   // patchData es para editar la especialidad 
+async function editarEspecialidad(id) {        // patchData es para editar la especialidad 
     const { value: formValues } = await Swal.fire({
         title: "Editar especialidad",
         html: `
           <input id="swal-input1" class="swal2-input" placeholder="Ingrese la nueva especialidad">
         `,
         focusConfirm: false,
-        preConfirm: () => {
+        preConfirm: () => {  // Se ejecuta cuando se confirma el formulario       
           return [
-            document.getElementById("swal-input1").value
+            document.getElementById("swal-input1").value // Captura el valor del input
           ];
         }
       });
@@ -138,7 +148,7 @@ return (
     <section className='contenedor-ad'>                       
     <div className='contenedor-admin'>
         <h2>Agregue su especialidad</h2>
-        <input
+        <input                        //* onChange es un evento que se ejecuta cuando el valor de un input cambia.
             onChange={(e) => setEspecialidad(e.target.value)}            //e.target.value es el que capta el evento
             type="text"
             placeholder="Ingrese la especialidad"

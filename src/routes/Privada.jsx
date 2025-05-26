@@ -13,6 +13,7 @@ function Privada({children}) {
             return false
         }
     }
+// ? children es para que se muestre el contenido de la página privada 
     return (
     <>
      {usuarioValido() ? children : <div>USTED NO ESTÁ REGISTRADO <Link to={"/registro"}>registro</Link></div>}

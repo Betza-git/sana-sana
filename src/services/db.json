@@ -35,19 +35,19 @@
       "password": "",
       "fechaNacimiento": "",
       "genero": ""
+    },
+    {
+      "id": "994c",
+      "nombre": "",
+      "identificacion": "",
+      "email": "",
+      "password": "",
+      "fechaNacimiento": "",
+      "genero": ""
     }
   ],
   "administradores": [],
   "especialistas": [
-    {
-      "id": "e14e",
-      "nombre": "",
-      "especialidad": "",
-      "email": "v",
-      "password": "jlg",
-      "fechaNacimiento": "",
-      "genero": ""
-    },
     {
       "id": "867b",
       "nombre": "Pepe Viyuela",
@@ -59,8 +59,8 @@
     },
     {
       "id": "fa67",
-      "nombre": "GKD",
-      "especialidad": "",
+      "nombre": "Gonzalo",
+      "especialidad": "Medicina General",
       "email": "HKF",
       "password": "",
       "fechaNacimiento": "",
@@ -69,7 +69,7 @@
     {
       "id": "018a",
       "nombre": "juanito",
-      "especialidad": "abc",
+      "especialidad": "Nutrición",
       "email": "juani@.com",
       "password": "123456",
       "fechaNacimiento": "2025-03-28",
@@ -78,23 +78,27 @@
     {
       "id": "59f5",
       "nombre": "Jose Miguel",
-      "especialidad": "",
+      "especialidad": "Fisioterapia",
       "email": "jose@gmail.com",
       "password": "123456",
       "fechaNacimiento": "2025-03-27",
       "genero": "M"
     },
     {
-      "id": "3511",
-      "nombre": "Jose Miguelito",
+      "id": "a290",
+      "nombre": "JeanCarlos",
       "especialidad": "",
-      "email": "jose@gmail.com",
-      "password": "123456",
-      "fechaNacimiento": "2025-03-27",
+      "email": "jeanca@gmail.com",
+      "password": "1234",
+      "fechaNacimiento": "2025-04-01",
       "genero": "M"
     }
   ],
   "especialidades": [
+    {
+      "id": "e365",
+      "nombre": "Medicina General"
+    },
     {
       "id": "e365",
       "nombre": "Neurología"
@@ -102,6 +106,10 @@
     {
       "id": "e366",
       "nombre": "Nutrición"
+    },
+    {
+      "id": "edde",
+      "nombre": "Medicina"
     }
   ],
   "auida": [
@@ -123,6 +131,14 @@
     },
     {
       "id": "3f3f",
+      "nombre": "",
+      "email": "",
+      "telefono": "",
+      "especialidad": "",
+      "mensaje": ""
+    },
+    {
+      "id": "1d2f",
       "nombre": "",
       "email": "",
       "telefono": "",

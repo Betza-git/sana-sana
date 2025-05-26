@@ -3,7 +3,6 @@ import '../styles/FormRegistro.css'
 import { postData } from '../services/llamados'
 import { useState } from 'react'
 import Swal from 'sweetalert2'
-import { link, nav } from 'framer-motion/client'
 import { Link } from 'react-router-dom'
 function FormRegistro() {
         const [nombre, setNombre] = useState('')

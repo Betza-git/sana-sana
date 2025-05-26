@@ -19,7 +19,7 @@ function NavHome() {
 
       <ul className='nav-home-ul2'>
         <li>Home</li>
-        <li>Sobre Nosotros </li>
+        <li><Link to="/Aboutus">Sobre Nosotros </Link></li>
         <li>Contacto</li>
         <li><Link to="/servicios"><link rel="stylesheet" href="" />Servicios</Link></li>
         <li className='btnProfesional'>

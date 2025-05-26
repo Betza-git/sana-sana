@@ -1,34 +1,108 @@
-.contenedorRegistro{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 110vh;
-  background-color: #d7f0f4d0;
-  padding: 60px;
-  width: 50%;
-  gap: 40px;
-
- 
-  
-}
-.textoIniciar{
-  text-wrap: nowrap;
-}
 .navRegistro {
-  background-image: url("../imagenes/back.avif");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 200%;
-  width: 100%;
-  margin-top: -2%;
- 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #9ebdd49e;
+    background-image: url('../imagenes/sasha-matic-H_yCnWeSUEM-unsplash.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+    padding: 10px;
+    margin-left: 2%;
+} 
+
+.contenedorRegistro {
+    background-color: rgba(36, 50, 58, 0.792);
+    padding: 30px; 
+    border-radius: 18px;
+    box-shadow: 0 6px 20px rgba(62, 96, 12, 0.347);
+    max-width: 450px;
+    width: 100%;
+   
+}
+
+.contenedorRegistro h2 {
+    color: #6d8b74; 
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 26px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+}
+
+.formularioRegistro {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.formularioRegistro input,
+.formularioRegistro select {
+    padding: 14px 18px;
+    border: 1px solid #d1e3d7;
+    border-radius: 10px;
+    font-size: 15px;
+    background-color: #f8faf9;
+    transition: all 0.25s ease;
+    color: #5a6d5a;
+}
+
+.formularioRegistro input:focus,
+.formularioRegistro select:focus {
+    outline: none;
+    border-color: #a8c4b8;
+    box-shadow: 0 0 0 3px rgba(168, 196, 184, 0.25);
+}
+
+.formularioRegistro input::placeholder {
+    color: #b8c4b8;
+}
+
+.formularioRegistro select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236d8b74'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 15px;
+}
+
+.registro {
+    background-color: #88b0a0; 
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 5px;
+    letter-spacing: 0.5px;
+}
+
+.registro:hover {
+    background-color: #0c589e;
+    transform: translateY(-2px);
 }
 
 .cont-link {
-  flex-direction: column;
-  gap: 20px;
-  margin-left: 70%;
-  position: relative;
-  text-align: start;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.textoIniciar {
+    color: #d0e4dd;
+    font-size: 14px;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+}
+
+.textoIniciar:hover {
+    color: #36deb7;
+    text-decoration: underline;
+}
+
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: sepia(0.5) hue-rotate(100deg) saturate(0.5);
+    cursor: pointer;
 }

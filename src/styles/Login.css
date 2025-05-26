@@ -1,80 +1,91 @@
- 
-     .contenedorLogin {
-        background-color: rgba(180, 224, 216, 0.295);
-        border-radius: 12px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-        width: 100%;
-        max-width: 400px;
-        padding: 40px;
-        text-align: center;
-        transition: all 0.3s ease;
-        margin-left: 30%;
-        margin-top: 3%;
-    }
-    
-    .contenedorLogin:hover {
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
-    }
-    
-    
-    /* Título */
-    .titulo {
-        color: #5d5fef;
-        font-weight: 600;
-        margin-bottom: 30px;
-        font-size: 24px;
-    }
-    
-    /* Formulario */
-    .loginForm {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-    
-    
-    
-    
-    input {
-        width: 100%;
-        padding: 12px 15px;
-        border: 1px solid #055c9f5a;
-        border-radius: 8px;
-        font-size: 14px;
-        transition: all 0.3s;
-        box-sizing: border-box;
-    }
-    
-    input:focus {
-        outline: none;
-        border-color: #5d5fef;
-        box-shadow: 0 0 0 3px rgba(93, 95, 239, 0.1);
-    }
-    
-    
-    .btnlogin {
-        background-color: #5d5fef;
-        color: white;
-        border: none;
-        padding: 14px;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s;
-        margin-top: 10px;
-    }
-    
-    .btnlogin:hover {
-        background-color: #24c0b694;
-        transform: translateY(-2px);
-    }
-    
-    
-  
-    @media (max-width: 480px) {
-        .logincontainer {
-            padding: 30px 20px;
-            margin: 0 15px;
-        }
-    }
+.contenedorLogin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+  background: url('../imagenes/jaspinder-singh-9HllvSZfcpQ-unsplash.jpg');
+  background-size: cover;
+  background-blend-mode: overlay;
+  background-position: center;
+}
+
+.contenedorLogin > div {
+  margin-top: 8px;
+  background-color: #ffffffaf;
+  padding: 2rem 3rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(3, 78, 101, 0.445);
+  max-width: 400px;
+  width: 100%;
+}
+
+/* Título */
+.titulo {
+  text-align: center;
+  color: #4a6fa5;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+/* Inputs */
+.loginForm input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #cfd8dc;
+  border-radius: 10px;
+  background-color: #f8f9fa;
+  font-size: 1rem;
+  transition: border 0.3s;
+}
+
+.loginForm input:focus {
+  outline: none;
+  border-color: #a5d8ff;
+  background-color: #ffffff;
+}
+
+/* Botón */
+.botonLogin {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: #a3d9a5ea;
+  color: #2e7d32;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.botonLogin:hover {
+  background-color: #84bf90;
+}
+
+/* Link de recuperación */
+.linkRecuperar {
+  display: block;
+  margin: 1rem 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #6c757d;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.linkRecuperar:hover {
+  color: #416498;
+}
+
+.contenedor2 { 
+  text-align: center;
+  font-size: 0.9rem;
+
+}
+.titulo1 {
+  color: #4a6fa5;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
