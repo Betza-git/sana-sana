@@ -9,8 +9,8 @@ function Heroinfoheader() {
 
   useEffect(()=>{
     async function especialidad() { 
-      const datos = await getData ("especialidades")
-      
+      const datos = await getData("api/especialidades/")
+     console.log(datos) 
 
     
       setEspecialidades(datos)

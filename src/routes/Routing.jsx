@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Registro from '../pages/Registro'
 import Home from '../pages/Home'
 import Login from '../pages/Login'
-import Administrador from '../pages/Administrador'
+import Especialistas from '../pages/Especialistas'
 import Ayuda from '../pages/Ayuda'
 import Servicios from '../pages/Servicios'
 import Aboutus from '../pages/Aboutus'
@@ -23,8 +23,7 @@ function Routing() {
             <Route path='/login' element={<Login/>}/>  
             <Route path='/registro' element={<Registro/>}/>  
             <Route path='/NavHome' element={<Home/>}/>
-            <Route path='/admin' element={<Administrador/>}/> 
-            <Route path='/Ayuda' element={<Ayuda/>}/> 
+            <Route path='/Especialistas' element={<Especialistas/>}/> 
             <Route path='/Ayuda' element={<Ayuda/>}/> 
             <Route path='/Servicios' element={<Servicios/>}/> 
             <Route path='/Aboutus' element={<Aboutus/>}/> 

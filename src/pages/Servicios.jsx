@@ -9,7 +9,7 @@ function Servicios() {
     const [servicios, setServicios] = useState([])  //estado para guardar los servicios
     useEffect(() => {                            //useEffect para que se ejecute la función de traer los servicios
         const getServicios = async () => {         //y guardarlos en el estado servicios async () => { para que se ejecute de manera asincrona
-            const servicios = await getData("especialistas")      // await getData("servicios") para que espere a que se ejecute la función getData("servicios")
+            const servicios = await getData("api/especialistas/")      // await getData("servicios") para que espere a que se ejecute la función getData("servicios")
             setServicios(servicios)
         }
         getServicios()

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { getData, postData, deleteData, patchData } from '../services/llamados';
 import Swal from 'sweetalert2'
-import '../styles/Admin.css';
+import '../styles/Especialista.css';
 
 
 
-function Administrador() {
+
+function Especialistas() {
     // Estado para almacenar la especialidad, uso de useState para manejar el estado de la especialidad
     const [especialidad, setEspecialidad] = useState('');
 
@@ -13,7 +14,7 @@ function Administrador() {
     const [especialidadEspecialista, setEspecialidadEspecialista] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [fechaNacimiento, setFechaNacimiento] = useState('');
+    const [fecha_registro, setFechaRegistro] = useState('');
     const [genero, setGenero] = useState('');
     const [especialidadesL, setEspecialidadesL] = useState([]);
     const [recargar, setRecargar] = useState(false);
@@ -39,7 +40,7 @@ function Administrador() {
         }
 // postData es para guardar la especialidad en el servidor local        
         else {
-            await postData(especialidadData, 'especialidades');
+            await postData(especialidadData, 'api/especialidades/');
             setEspecialidad('');
             Swal.fire({
                 icon: "success",
@@ -65,15 +66,17 @@ function Administrador() {
 const manejarEnvioEspecialista = async (e) => {  // Función para guardar el especialista en el servidor local
     e.preventDefault();                         // Evita que la página se recargue
     const especialista = {
+        especialidades: 1,
         nombre: nombre,
-        especialidad: especialidad,
         email: email,
         password: password,
-        fechaNacimiento: fechaNacimiento,
+        fecha_registro: "2025-05-08",
         genero: genero
     }
-    await postData(especialista, "especialistas")     // await para que espere a que se ejecute la función postData
-    // ACA VA EL SWEET ALERT
+console.log(especialista); 
+setRecargar(!recargar);
+
+    await postData(especialista, "api/especialistas/")     // await para que espere a que se ejecute la función postData
     Swal.fire({
         icon: "success",
         title: "Especialista registrado",
@@ -86,16 +89,14 @@ const manejarEnvioEspecialista = async (e) => {  // Función para guardar el esp
  
  // useEffect para que se ejecute la función de traer las especialidades y guardarlas en el estado especialidadesL
 
-useEffect(() => { 
-    const obtenerEspecialidades = async () => {
-        const listaEspecialidades = await getData('especialidades');
-// Va hacer un filtro que solamente devuelva las especialidades que no sean iguales
+useEffect(() => {
+    const traerEspecialidades = async () => {  // Función para traer las especialidades del servidor local
+        const listaEspecialidades = await getData('api/especialidades/');
         setEspecialidadesL(listaEspecialidades);
     }
 
-    obtenerEspecialidades();
-}, [especialidadesL]); // especialidadesL es el estado que se va a actualizar cuando se agregue una
-//  nueva especialidad o se elimine una
+    traerEspecialidades();
+}, []); // Se ejecuta una vez al montar el componente
 
 async function eliminarEspecialidad(id) {         // deleteData es para eliminar la especialidad
     const { isConfirmed } = await Swal.fire({
@@ -106,7 +107,7 @@ async function eliminarEspecialidad(id) {         // deleteData es para eliminar
         cancelButtonText: "Cancelar",
     }); 
     if (isConfirmed) {
-        await deleteData(id,'especialidades');
+        await deleteData(id,'api/especialidades/');
         Swal.fire({
             icon: "success",
             title: "Especialidad eliminada",
@@ -164,7 +165,7 @@ return (
         </select>
         <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Ingrese el correo electrónico" />
         <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Ingrese la contraseña" />
-        <input onChange={(e) => setFechaNacimiento(e.target.value)} type="date" placeholder="Ingrese la fecha de nacimiento" />
+        <input onChange={(e) => setFechaRegistro(e.target.value)} type="date" placeholder="Ingrese la fecha" />
         <input onChange={subirImagen} type="file" />
         <select name="" id="" onChange={(e) => setGenero(e.target.value)}>
             <option value="" selected disabled>Seleccione su género</option>
@@ -193,4 +194,4 @@ return (
 );
 }
 
-export default Administrador;
+export default Especialistas;
