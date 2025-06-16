@@ -4,7 +4,7 @@ from .serializers import ClienteLoginSerializer, EspecialistaLoginSerializer, Em
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework import permissions
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 """Vistas:
 Implementar vistas para cada modelo usando las clases genéricas
@@ -12,7 +12,7 @@ ListCreateAPIView y RetrieveUpdateDestroyAPIView.
 api views"""
 
 class ClienteLoginAPIView(APIView):
-    
+    permission_classes = [AllowAny]
     def post(self, request):
         serializer = ClienteLoginSerializer(data=request.data)
         if serializer.is_valid():
@@ -31,6 +31,8 @@ class ClienteLoginAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class EspecialistaLoginAPIView(APIView):
+    permission_classes = [AllowAny]
+    
     
     def post(self, request):
         serializer = EspecialistaLoginSerializer(data=request.data)
@@ -51,6 +53,8 @@ class EspecialistaLoginAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class EmpleadoLoginAPIView(APIView):
+    permission_classes = [AllowAny]
+    
     
     def post(self, request):
         serializer = EmpleadoLoginSerializer(data=request.data)
@@ -73,34 +77,43 @@ class EmpleadoLoginAPIView(APIView):
 class ClientesListCreate(ListCreateAPIView):
     queryset = clientes.objects.all()
     serializer_class = ClientesSerializer
+    permission_classes = [IsAuthenticated]
 
 class ClientesRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = clientes.objects.all()
     serializer_class = ClientesSerializer
+    permission_classes = [IsAuthenticated]
+    
 
 class EspecialistasListCreate(ListCreateAPIView):
     queryset = especialistas.objects.all()
     serializer_class = EspecialistasSerializer
+    permission_classes = [IsAuthenticated]
 
 class EspecialistasRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = especialistas.objects.all()
     serializer_class = EspecialistasSerializer
+    permission_classes = [IsAuthenticated]
 
 class EmpleadosListCreate(ListCreateAPIView):
     queryset = empleados.objects.all()
     serializer_class = EmpleadosSerializer
+    permission_classes = [IsAuthenticated]
 
 class EmpleadosRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = empleados.objects.all()
     serializer_class = EmpleadosSerializer
+    permission_classes = [IsAuthenticated]
 
 class CitasListCreate(ListCreateAPIView):
     queryset = citas.objects.all()
     serializer_class = CitasSerializer
+    permission_classes = [IsAuthenticated]
 
 class CitasRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = citas.objects.all()
     serializer_class = CitasSerializer
+    permission_classes = [IsAuthenticated]
 
 class EncuestasEstresListCreate(ListCreateAPIView):
     queryset = encuestas_estres.objects.all()

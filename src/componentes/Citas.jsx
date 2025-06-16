@@ -5,6 +5,18 @@ import Swal from 'sweetalert2';
 function Citas() {
   const [citas, setCitas] = useState([]);
   const [loading, setLoading] = useState(true);
+  
+  async function obtenerUsuarios() {
+    try {
+        const response = await Llamados.getData('api/user/') // Ajusta la URL según tu API
+        console.log("Usuarios obtenidos:", response)
+        setUsuarios(response.data || response)
+        console.log(response);
+        
+    } catch (error) {
+        console.error("Error obteniendo usuarios:", error)
+    }
+  }
 
   useEffect(() => {
     // Datos de ejemplo

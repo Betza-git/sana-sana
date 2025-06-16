@@ -48,8 +48,6 @@ function FormRegistro() {
         <h2> Usuario Nuevo </h2>
         <form className='formularioRegistro'>
             <input onChange={(e) => setNombre(e.target.value)} type="text" placeholder='Nombre completo' /> 
-            {/* e.target.value es el que capta el evento */}
-
             <input onChange={(e) => setIdentificacion(e.target.value)} type="text" placeholder='Número de identificación'/>
             <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder='Correo electrónico'/>
             <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder='Contraseña'/>

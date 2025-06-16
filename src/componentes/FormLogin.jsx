@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useNavigation } from 'react-router-dom'
 import postLogin from '../services/loginservice' 
 import { Link } from 'react-router-dom'
 import '../styles/Login.css' 
@@ -8,16 +8,19 @@ import '../styles/Login.css'
 function FormLogin() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [id, setId] = useState('');
   const navigate = useNavigate()
 
   async function iniciarSesion(e) { 
     e.preventDefault()
-  const token = await postLogin("api/clientes/login/", { email, password })
+  const token = await postLogin("api/clientes/login/", { id, email, password }) 
+
   console.log(token)
 
   if (token.access) {
     localStorage.setItem("token", token.access)
-    navigate('/')
+    localStorage.setItem("userid", token.user.id)
+    navigate('/Usuarios')
   }
 }
 

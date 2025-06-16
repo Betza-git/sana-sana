@@ -8,8 +8,8 @@ import Ayuda from '../pages/Ayuda'
 import Servicios from '../pages/Servicios'
 import Aboutus from '../pages/Aboutus'
 import Admin from '../pages/Admin'
-import Usuarios from '../pages/Usuarios'
 import Dates from '../pages/Dates'
+import Usuario from '../pages/Usuario'
 
 function Routing() {
   return (
@@ -32,7 +32,7 @@ function Routing() {
             <Route path='/Servicios' element={<Servicios/>}/> 
             <Route path='/Aboutus' element={<Aboutus/>}/>
             <Route path='/Admin' element={<Admin/>}/>
-            <Route path='/Usuarios' element={<Usuarios/>}/> 
+            <Route path='/Usuarios' element={<Usuario/>}/>
             <Route path='/Dates' element={<Dates/>}/>
 
 

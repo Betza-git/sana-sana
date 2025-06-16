@@ -1,4 +1,8 @@
 from django.urls import path
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 from .views import (
     ClienteLoginAPIView,
     EspecialistaLoginAPIView,
@@ -64,4 +68,5 @@ urlpatterns = [
 
     path('pagos/', PagosListCreate.as_view(), name='pagos-list-create'),
     path('pagos/<int:pk>/', PagosRetrieveUpdateDestroy.as_view(), name='pagos-detail'),
+
 ]

@@ -1,0 +1,123 @@
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background: #f4f5fa;
+  font-family: 'Roboto', sans-serif;
+}
+.sidebar {
+  width: 220px;
+  background: #191c24;
+  color: #fff;
+  min-height: 100vh;
+  padding: 20px 0;
+}
+.sidebar-header {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+}
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+.sidebar ul li {
+  padding: 15px 30px;
+  cursor: pointer;
+  border-left: 4px solid transparent;
+  transition: background 0.2s, border-color 0.2s;
+}
+.sidebar ul li.active,
+.sidebar ul li:hover {
+  background: #262837;
+  border-left: 4px solid #6c63ff;
+}
+.main-content {
+  flex: 1;
+  padding: 30px 40px;
+}
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.search-box input {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: none;
+  background: #fff;
+  width: 220px;
+}
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.user-info img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+.cards-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #0001;
+  flex: 1;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-body h5 {
+  color: #6c63ff;
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+.card-body h2 {
+  font-size: 2.2rem;
+  margin: 0;
+  color: #191c24;
+}
+.table-section {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #0001;
+  padding: 24px;
+}
+.table-header {
+  margin-bottom: 16px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+th, td {
+  padding: 12px 8px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+th {
+  color: #6c63ff;
+  font-weight: 600;
+}
+.status {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.9em;
+}
+.status.active {
+  background: #e0ffe0;
+  color: #2ecc40;
+}
+.status.inactive {
+  background: #ffe0e0;
+  color: #e74c3c;
+}
