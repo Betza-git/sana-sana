@@ -1,0 +1,83 @@
+.especialistas-container {
+  padding: 20px;
+}
+
+.especialistas-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.especialista-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.especialista-form input {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.especialista-form button {
+  padding: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.especialista-form button:hover {
+  background-color: #218838;
+}
+
+.especialistas-list {
+  list-style: none;
+  padding: 0;
+}
+
+.especialista-card {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.especialista-info {
+  margin-bottom: 10px;
+}
+
+.especialista-nombre {
+  font-weight: bold;
+}
+
+.especialista-especialidad {
+  color: #555;
+}
+
+.especialista-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.especialista-actions button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.especialista-actions button:hover {
+  opacity: 0.8;
+}
+
+.eliminar {
+  background-color: #dc3545;
+  color: white;
+}
+
+.eliminar:hover {
+  background-color: #c82333;
+}

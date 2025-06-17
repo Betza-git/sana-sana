@@ -3,13 +3,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Registro from '../pages/Registro'
 import Home from '../pages/Home'
 import Login from '../pages/Login'
-import Especialistas from '../pages/Especialistas'
+import Especialistas from '../pages/Especialistas' 
 import Ayuda from '../pages/Ayuda'
 import Servicios from '../pages/Servicios'
 import Aboutus from '../pages/Aboutus'
 import Admin from '../pages/Admin'
 import Dates from '../pages/Dates'
 import Usuario from '../pages/Usuario'
+import Especialidades from '../pages/Especialidades'
 
 function Routing() {
   return (
@@ -34,6 +35,7 @@ function Routing() {
             <Route path='/Admin' element={<Admin/>}/>
             <Route path='/Usuarios' element={<Usuario/>}/>
             <Route path='/Dates' element={<Dates/>}/>
+            <Route path='/Especialidades' element={<Especialidades/>}/>
 
 
 

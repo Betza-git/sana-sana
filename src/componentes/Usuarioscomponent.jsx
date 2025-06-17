@@ -9,7 +9,8 @@ const Usuarios = () => {
   useEffect(() => {
     const cargarUsuario = async () => {
       const id = localStorage.getItem('userid');
-      if (!id) { 
+      
+      if (!id) {
         setError('ID de usuario no encontrado en localStorage');
         setLoading(false);
         return;
@@ -17,7 +18,6 @@ const Usuarios = () => {
 
       try {
         const data = await getUsuario(id);
-        console.log(data)
         if (!data) {
           setError('No se encontró usuario con ese ID');
         } else {

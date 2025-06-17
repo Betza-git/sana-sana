@@ -152,13 +152,15 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [  
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',  # Permitir acceso a todos los usuarios
     ],
+
+    
 }
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=120),  # Duración del token de acceso
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  # Duración del token de actualización
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1020),  # Duración del token de acceso
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=5),  # Duración del token de actualización
 }
 

@@ -9,6 +9,7 @@ function NavHome() {
       
       <ul className='nav-home-ul1'>
       <img  className='icono' src= "../src/imagenes/icono.png" alt="" width="35px"/>
+        <li><Link to="/Admin"><i className="fa-solid fa-user-shield"></i>Admin</Link></li>
         <li><Link to="/registro"><i className="fa-solid fa-address-card"   ></i> Registro</Link></li>
         <li><Link to="/login"><i className="fa-solid fa-right-to-bracket"   ></i>  Login </Link></li>
         <li> <i className="fa-solid fa-star"></i> Principal</li>

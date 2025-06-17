@@ -61,7 +61,7 @@ const Admin = () => {
         </nav>
       </aside>
 
-      {/* Main Content */}
+      
       <main style={{ flex: 1, padding: "40px" }}>
         <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 40 }}>
           <h1>Panel de Administración</h1>
@@ -73,7 +73,7 @@ const Admin = () => {
           </div>
         </header>
 
-        {/* Cards */}
+       
         <section style={{ display: "flex", gap: 24, marginBottom: 40 }}>
           <div style={{ background: "#fff", borderRadius: 12, padding: 24, flex: 1, textAlign: "center" }}>
             <h4 style={{ color: "#6c63ff" }}>Usuarios</h4>
@@ -89,7 +89,7 @@ const Admin = () => {
           </div>
         </section>
 
-        {/* Table */}
+        
         <section style={{ background: "#fff", borderRadius: 12, padding: 24 }}>
           <h3 style={{ marginBottom: 16 }}>Usuarios Registrados</h3>
           <table style={{ width: "100%", borderCollapse: "collapse" }}>

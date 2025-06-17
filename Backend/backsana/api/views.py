@@ -32,8 +32,7 @@ class ClienteLoginAPIView(APIView):
 
 class EspecialistaLoginAPIView(APIView):
     permission_classes = [AllowAny]
-    
-    
+
     def post(self, request):
         serializer = EspecialistaLoginSerializer(data=request.data)
         if serializer.is_valid():
@@ -77,79 +76,88 @@ class EmpleadoLoginAPIView(APIView):
 class ClientesListCreate(ListCreateAPIView):
     queryset = clientes.objects.all()
     serializer_class = ClientesSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 class ClientesRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = clientes.objects.all()
     serializer_class = ClientesSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     
 
 class EspecialistasListCreate(ListCreateAPIView):
     queryset = especialistas.objects.all()
     serializer_class = EspecialistasSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 class EspecialistasRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = especialistas.objects.all()
     serializer_class = EspecialistasSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 class EmpleadosListCreate(ListCreateAPIView):
     queryset = empleados.objects.all()
     serializer_class = EmpleadosSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 class EmpleadosRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = empleados.objects.all()
     serializer_class = EmpleadosSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 class CitasListCreate(ListCreateAPIView):
     queryset = citas.objects.all()
     serializer_class = CitasSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 class CitasRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = citas.objects.all()
     serializer_class = CitasSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 class EncuestasEstresListCreate(ListCreateAPIView):
     queryset = encuestas_estres.objects.all()
     serializer_class = EncuestasEstresSerializer
+    permission_classes = [AllowAny]
 
 class EncuestasEstresRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = encuestas_estres.objects.all()
     serializer_class = EncuestasEstresSerializer
+    permission_classes = [AllowAny]
 
 class SesionesTerapiaListCreate(ListCreateAPIView):
     queryset = sesiones_terapia.objects.all()
     serializer_class = SesionesTerapiaSerializer
+    permission_classes = [AllowAny]
 
 class SesionesTerapiaRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = sesiones_terapia.objects.all()
     serializer_class = SesionesTerapiaSerializer
+    permission_classes = [AllowAny]
 
 class EspecialistasServiciosListCreate(ListCreateAPIView):
     queryset = especialistas_servicios.objects.all()
     serializer_class = EspecialistasServiciosSerializer
+    permission_classes = [AllowAny]
 
 class EspecialistasServiciosRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = especialistas_servicios.objects.all()
     serializer_class = EspecialistasServiciosSerializer
+    permission_classes = [AllowAny]
 
 class ServiciosListCreate(ListCreateAPIView):
     queryset = servicios.objects.all()
     serializer_class = ServiciosSerializer
+    permission_classes = [AllowAny]
 
 class ServiciosRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = servicios.objects.all()
     serializer_class = ServiciosSerializer
+    permission_classes = [AllowAny]
 
 class EspecialidadesListCreate(ListCreateAPIView):
     queryset = especialidades.objects.all()
     serializer_class = EspecialidadesSerializer
+    permission_classes = [AllowAny]
 
 class EspecialidadesRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = especialidades.objects.all()
@@ -158,6 +166,7 @@ class EspecialidadesRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
 class MetodosPagoListCreate(ListCreateAPIView):
     queryset = metodos_pago.objects.all()
     serializer_class = MetodosPagoSerializer
+
 class MetodosPagoRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = metodos_pago.objects.all()
     serializer_class = MetodosPagoSerializer
