@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
-import {
-  getEspecialidades,
-  postEspecialidad,
-  patchEspecialidad,
-  deleteEspecialidad
-} from '../services/especialidadesservices';
+import {getEspecialidades, postEspecialidad, patchEspecialidad,deleteEspecialidad} 
+from '../services/especialidadesservices';
 
 const Especialidadesc = () => {
   const [especialidades, setEspecialidades] = useState([]);

@@ -1,4 +1,4 @@
-from .models import clientes, especialistas, empleados, citas, encuestas_estres, sesiones_terapia, especialistas_servicios, servicios, especialidades, metodos_pago, pagos
+from .models import clientes, especialistas, empleados, citas, encuestas_estres, sesiones_terapia, especialistas_servicios, servicios, especialidades, metodopago, pago
 from django.core.validators import EmailValidator
 from django.utils import timezone
 from rest_framework import serializers
@@ -145,7 +145,7 @@ class EmpleadosSerializer(serializers.ModelSerializer):
         return value
     
     def validate(self, data):
-        required_fields = ['nombre', 'email', 'telefono', 'cargo', 'usuario', 'password']
+        required_fields = ['nombre', 'email', 'telefono', 'cargo', 'password']
         for field in required_fields:
             if not data.get(field):
                 raise serializers.ValidationError({field: "Este campo es requerido."})
@@ -279,7 +279,7 @@ class ServiciosSerializer(serializers.ModelSerializer):
 
 class MetodosPagoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = metodos_pago
+        model = metodopago
         fields = '__all__'
     
     def validate_comision(self, value):
@@ -289,7 +289,7 @@ class MetodosPagoSerializer(serializers.ModelSerializer):
 
 class PagosSerializer(serializers.ModelSerializer):
     class Meta:
-        model = pagos
+        model = pago
         fields = '__all__'
     
     def validate_monto(self, value):
@@ -298,13 +298,13 @@ class PagosSerializer(serializers.ModelSerializer):
         return value
     
     def validate_estado(self, value):
-        valid_estados = ['pendiente', 'confirmado', 'cancelado']
+        valid_estados = ['confirmado']
         if value.lower() not in valid_estados:
             raise serializers.ValidationError(f"Estado inválido. Los valores válidos son: {', '.join(valid_estados)}") #{', '.join(valid_estados)}") es para que se muestre una lista de los estados válidos
         return value
     
     def validate(self, data):
-        required_fields = ['cliente', 'metodo_pago', 'monto']
+        required_fields = ['metodopago', 'monto']
         for field in required_fields:
             if not data.get(field):
                 raise serializers.ValidationError({field: "Este campo es requerido."})#data.get(field) verifica si el campo existe y no es None

@@ -14,7 +14,7 @@ export async function getUsuario(id) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+       
    
       },
     });

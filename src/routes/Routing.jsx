@@ -11,6 +11,12 @@ import Admin from '../pages/Admin'
 import Dates from '../pages/Dates'
 import Usuario from '../pages/Usuario'
 import Especialidades from '../pages/Especialidades'
+import Clientes from '../pages/Clientes'
+import Empleados from '../pages/Empleados'
+import MetodosDePago from '../pages/MetodosDePago'
+import Payments from '../componentes/Pagos'
+
+
 
 function Routing() {
   return (
@@ -36,6 +42,10 @@ function Routing() {
             <Route path='/Usuarios' element={<Usuario/>}/>
             <Route path='/Dates' element={<Dates/>}/>
             <Route path='/Especialidades' element={<Especialidades/>}/>
+            <Route path='/Clientes' element={<Clientes/>}/>
+            <Route path='/Empleados' element={<Empleados/>}/>
+            <Route path='/MetodosDePago' element={<MetodosDePago/>}/>
+            <Route path='/Pagos' element={<Payments/>}/>
 
 
 

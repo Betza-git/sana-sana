@@ -1,6 +1,7 @@
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView 
-from .models import clientes, especialistas, empleados, citas, encuestas_estres, sesiones_terapia, especialistas_servicios, servicios, especialidades, metodos_pago, pagos
-from .serializers import ClienteLoginSerializer, EspecialistaLoginSerializer, EmpleadoLoginSerializer, ClientesSerializer, EspecialistasSerializer, EmpleadosSerializer, CitasSerializer, EncuestasEstresSerializer, SesionesTerapiaSerializer, EspecialistasServiciosSerializer, ServiciosSerializer, EspecialidadesSerializer, MetodosPagoSerializer, PagosSerializer   
+from .models import clientes, especialistas, empleados, citas, encuestas_estres, sesiones_terapia, especialistas_servicios, servicios, especialidades, metodopago, pago
+
+from .serializers import ClienteLoginSerializer, EspecialistaLoginSerializer, EmpleadoLoginSerializer, ClientesSerializer, EspecialistasSerializer, EmpleadosSerializer, CitasSerializer, EncuestasEstresSerializer, SesionesTerapiaSerializer, EspecialistasServiciosSerializer, ServiciosSerializer, EspecialidadesSerializer, MetodosPagoSerializer , PagosSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -163,20 +164,20 @@ class EspecialidadesRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = especialidades.objects.all()
     serializer_class = EspecialidadesSerializer
 
-class MetodosPagoListCreate(ListCreateAPIView):
-    queryset = metodos_pago.objects.all()
+class MetodoPagoListCreate(ListCreateAPIView):
+    queryset = metodopago.objects.all()
     serializer_class = MetodosPagoSerializer
 
 class MetodosPagoRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
-    queryset = metodos_pago.objects.all()
+    queryset = metodopago.objects.all()
     serializer_class = MetodosPagoSerializer
 
-class PagosListCreate(ListCreateAPIView):
-    queryset = pagos.objects.all()
+class PagoListCreate(ListCreateAPIView):
+    queryset = pago.objects.all()
     serializer_class = PagosSerializer
 
-class PagosRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
-    queryset = pagos.objects.all()
+class PagoRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
+    queryset = pago.objects.all()
     serializer_class = PagosSerializer
 
 

@@ -25,10 +25,10 @@ from .views import (
     EspecialidadesRetrieveUpdateDestroy,
     ServiciosListCreate,
     ServiciosRetrieveUpdateDestroy,
-    MetodosPagoListCreate,
+    MetodoPagoListCreate,
     MetodosPagoRetrieveUpdateDestroy,
-    PagosListCreate,
-    PagosRetrieveUpdateDestroy,
+    PagoListCreate,
+    PagoRetrieveUpdateDestroy,
 )
 
 urlpatterns = [
@@ -63,10 +63,10 @@ urlpatterns = [
     path('especialidades/', EspecialidadesListCreate.as_view(), name='especialidades-list-create'),
     path('especialidades/<int:pk>/', EspecialidadesRetrieveUpdateDestroy.as_view(), name='especialidades-detail'),
 
-    path('metodos-pago/', MetodosPagoListCreate.as_view(), name='metodos-pago-list-create'),
-    path('metodos-pago/<int:pk>/', MetodosPagoRetrieveUpdateDestroy.as_view(), name='metodos-pago-detail'),
+    path('metodopago/', MetodoPagoListCreate.as_view(), name='metodopago-list-create'),
+    path('metodopago/<int:pk>/', MetodosPagoRetrieveUpdateDestroy.as_view(), name='metodopago-detail'),
 
-    path('pagos/', PagosListCreate.as_view(), name='pagos-list-create'),
-    path('pagos/<int:pk>/', PagosRetrieveUpdateDestroy.as_view(), name='pagos-detail'),
+    path('pago/', PagoListCreate.as_view(), name='pago-list-create'),
+    path('pago/<int:pk>/', PagoRetrieveUpdateDestroy.as_view(), name='pago-detail'),
 
 ]

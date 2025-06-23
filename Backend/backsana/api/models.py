@@ -19,18 +19,27 @@ class especialistas(models.Model):
     especialidades = models.ForeignKey(especialidades, related_name='especialistas', on_delete=models.CASCADE)
     email = models.EmailField()
     password = models.CharField(max_length=100)
-    fecha_registro = models.DateField(auto_now_add=True)
-    genero = models.CharField(max_length=10)  # Masculino, Femenino, Otro
+    fecha_registro = models.DateField()
+    genero = models.CharField(max_length=10)  
     estado = models.BooleanField(default=True)     
 
 class empleados(models.Model):
+     
+    ESTADO_CHOICES = [
+        ('activo', 'Activo'),
+        ('inactivo', 'Inactivo'),
+    ]
+
     nombre = models.CharField(max_length=100)
-    email = models.EmailField()
+    numero_identificacion = models.CharField(max_length=20, unique=True)
+    fecha_nacimiento = models.DateField()
     telefono = models.CharField(max_length=15)
     cargo = models.CharField(max_length=100)
-    usuario = models.CharField(max_length=100)
+    email = models.EmailField()
     password = models.CharField(max_length=100)
-    estado = models.BooleanField(default=True)  # Activo o inactivo
+    fecha_contratacion = models.DateField()
+    estado = models.CharField(max_length=10, choices=ESTADO_CHOICES, default='activo')
+
     
 
 class citas(models.Model):
@@ -69,18 +78,23 @@ class servicios(models.Model):
     duracion = models.IntegerField()  # Duración en minutos del servicio
 
 
-class metodos_pago(models.Model):
-    nombre = models.CharField(max_length=100)  # Nombre del método de pago
-    descripcion = models.TextField(blank=False, null=False)  # Descripción del método de pago
-    requiere_autenticacion = models.BooleanField(default=False)  # Indica si requiere autenticación
-    comision = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)  # Comisión del método de pago
-    fecha_hora = models.DateTimeField(auto_now_add=True)  # Fecha y hora de creación del método de pago
+class metodopago(models.Model):
+    nombre = models.CharField(max_length=100)
+    descripcion = models.TextField(blank=False, null=False)
+    requiere_autenticacion = models.BooleanField(default=False)
+    comision = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
 
-class pagos(models.Model):
-    cliente = models.ForeignKey(clientes, on_delete=models.CASCADE)
-    metodo_pago = models.ForeignKey(metodos_pago, on_delete=models.CASCADE)
-    monto = models.DecimalField(max_digits=10, decimal_places=2)
-    fecha_hora = models.DateTimeField(auto_now_add=True)
-    estado = models.CharField(max_length=20, default='pendiente')  # pendiente, confirmado, cancelado
-    observaciones = models.TextField(blank=False, null=False)
+
+class pago(models.Model):
+    empleado = models.ForeignKey(empleados, on_delete=models.CASCADE)
+    metodopago = models.ForeignKey(metodopago, on_delete=models.PROTECT)
+    monto = models.DecimalField(max_digits=11, decimal_places=3)
+    descripcion = models.TextField(blank=True)
+    fecha_pago = models.DateTimeField(auto_now_add=True)
+    confirmado = models.CharField(max_length=10)
+
+ 
+
+
+  
     
