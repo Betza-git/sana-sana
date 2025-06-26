@@ -1,4 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import User
+#crea una tabla de auth_user con relacion a la tabla de clientes
+
+
+
 
 class clientes(models.Model):
     nombre = models.CharField(max_length=100)
@@ -10,11 +15,13 @@ class clientes(models.Model):
     telefono = models.CharField(max_length=15) 
     
 
+
 class especialidades(models.Model):
     nombre = models.CharField(max_length=100) 
     descripcion = models.TextField(blank=False, null=False)    
 
 class especialistas(models.Model):
+    
     nombre = models.CharField(max_length=100)
     especialidades = models.ForeignKey(especialidades, related_name='especialistas', on_delete=models.CASCADE)
     email = models.EmailField()
@@ -24,12 +31,7 @@ class especialistas(models.Model):
     estado = models.BooleanField(default=True)     
 
 class empleados(models.Model):
-     
-    ESTADO_CHOICES = [
-        ('activo', 'Activo'),
-        ('inactivo', 'Inactivo'),
-    ]
-
+    
     nombre = models.CharField(max_length=100)
     numero_identificacion = models.CharField(max_length=20, unique=True)
     fecha_nacimiento = models.DateField()
@@ -38,7 +40,7 @@ class empleados(models.Model):
     email = models.EmailField()
     password = models.CharField(max_length=100)
     fecha_contratacion = models.DateField()
-    estado = models.CharField(max_length=10, choices=ESTADO_CHOICES, default='activo')
+    estado = models.CharField(max_length=10)
 
     
 

@@ -1,4 +1,4 @@
-const API_URL = 'http://127.0.0.1:8000/api/especialidades/';
+const API_URL = 'http://127.0.0.1:8000/api/especialistas/';
 
 // Obtener el token del localStorage
 function getToken() {
@@ -6,7 +6,7 @@ function getToken() {
 }
 
 // Obtener todas las especialidades
-export async function getEspecialidades() {
+export async function getEspecialistas() {
   const token = getToken();
   const response = await fetch(API_URL, {
     headers: {
@@ -14,12 +14,12 @@ export async function getEspecialidades() {
       'Content-Type': 'application/json'
     }
   });
-  if (!response.ok) throw new Error('Error al obtener especialidades');
+  if (!response.ok) throw new Error('Error al obtener especialistas');
   return await response.json();
 }
 
-// Crear una nueva especialidad
-export async function postEspecialidad(data) {
+// Crear un nuevo especialista
+export async function postEspecialistas(data) {
   const token = getToken();
   const response = await fetch(API_URL, {
     method: 'POST',
@@ -29,12 +29,12 @@ export async function postEspecialidad(data) {
     },
     body: JSON.stringify(data)
   });
-  if (!response.ok) throw new Error('Error al agregar especialidad');
+  if (!response.ok) throw new Error('Error al agregar especialista');
   return await response.json();
 }
 
-// Editar una especialidad existente
-export async function patchEspecialidad(id, data) {
+// Editar un especialista existente
+export async function patchEspecialistas(id, data) {
   const token = getToken();
   const response = await fetch(`${API_URL}${id}/`, {
     method: 'PATCH',
@@ -44,12 +44,12 @@ export async function patchEspecialidad(id, data) {
     },
     body: JSON.stringify(data)
   });
-  if (!response.ok) throw new Error('Error al editar especialidad');
+  if (!response.ok) throw new Error('Error al editar especialista');
   return await response.json();
 }
 
-// Eliminar una especialidad
-export async function deleteEspecialidad(id) {
+// Eliminar un especialista
+export async function deleteEspecialistas(id) {
   const token = getToken();
   const response = await fetch(`${API_URL}${id}/`, {
     method: 'DELETE',
@@ -58,13 +58,13 @@ export async function deleteEspecialidad(id) {
       'Content-Type': 'application/json'
     }
   });
-  if (!response.ok) throw new Error('Error al eliminar especialidad');
+  if (!response.ok) throw new Error('Error al eliminar especialista');
   return true;
 }
 
 export default {
-  getEspecialidades,
-  postEspecialidad,
-  patchEspecialidad,
-  deleteEspecialidad
+  getEspecialistas,
+  postEspecialistas,
+  patchEspecialistas,
+  deleteEspecialistas
 };

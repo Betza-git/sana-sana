@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getClientes, postCliente, patchCliente, deleteCliente } from '../services/Clientes';
 import Swal from 'sweetalert2';
+import '../styles/Clientes.css'
+
 
 function ClientesAdmin() {
   const [clientes, setClientes] = useState([]);

@@ -30,5 +30,40 @@ export async function getUsuario(id) {
   }
 }
 
-export default getUsuario;
+export async function patchUsuario(id, data) {
+  try {
+    const token = localStorage.getItem('token');
 
+    if (!token || !id) {
+      console.error("Token o ID de usuario no encontrados en localStorage.");
+      return null;
+    }
+
+    const peticion = await fetch(`${API_URL}/clientes/${id}/`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (!peticion.ok) {
+      throw new Error(`Error: ${peticion.status} ${peticion.statusText}`);
+    }
+
+    return await peticion.json();
+  } catch (error) {
+    console.error("Error al actualizar usuario:", error);
+    return null;
+  }
+}
+
+
+
+
+
+export default {
+  getUsuario,
+  patchUsuario
+};

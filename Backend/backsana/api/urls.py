@@ -29,9 +29,13 @@ from .views import (
     MetodosPagoRetrieveUpdateDestroy,
     PagoListCreate,
     PagoRetrieveUpdateDestroy,
+    AdminDashboardAPIView,
 )
 
 urlpatterns = [
+    path("admin-dashboard/", AdminDashboardAPIView.as_view(), name="admin-dashboard"),
+    path('admin-dashboard/<int:id>/', AdminDashboardAPIView.as_view()),
+
     path('clientes/login/', ClienteLoginAPIView.as_view(), name='cliente-login'),
     path('especialistas/login/', EspecialistaLoginAPIView.as_view(), name='especialista-login'),
     path('empleados/login/', EmpleadoLoginAPIView.as_view(), name='empleado-login'),

@@ -1,0 +1,244 @@
+.containerespecialistas {
+  background: linear-gradient(135deg, #ebe6ec 0%, #5e34d3 100%);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.containerespecialistas h1 {
+  color: #4a148c;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(74, 20, 140, 0.299);
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.containerespecialistas h1::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #6a1b9a, #4a148c);
+  border-radius: 2px;
+}
+
+.containerespecialistas h4 {
+  color: #4a148c;
+  font-weight: 500;
+  border-bottom: 2px solid #e1bee7;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Botón principal */
+.containerespecialistas .btn-primary {
+  background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(74, 20, 140, 0.3);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.containerespecialistas .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(74, 20, 140, 0.4);
+  background: linear-gradient(135deg, #38006b 0%, #4a148c 100%);
+}
+
+/* Formulario */
+.containerespecialistas form {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.containerespecialistas .form-label {
+  color: #4a148c;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.containerespecialistas .form-control,
+.containerespecialistas .form-select {
+  border: 2px solid #e1bee7;
+  border-radius: 8px;
+  padding: 10px 15px;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.containerespecialistas .form-control:focus,
+.containerespecialistas .form-select:focus {
+  border-color: #6a1b9a;
+  box-shadow: 0 0 0 0.2rem rgba(106, 27, 154, 0.25);
+  background-color: #ffffff;
+  outline: none;
+}
+
+.containerespecialistas .form-control:hover,
+.containerespecialistas .form-select:hover {
+  border-color: #ba68c8;
+}
+
+/* Botón de envío */
+.containerespecialistas .btn-success {
+  background: linear-gradient(135deg, #07207b 0%, #222281 100%);
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.containerespecialistas .btn-success:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+  background: linear-gradient(135deg, #1f2484 0%, #321893 100%);
+}
+
+/* Tabla */
+.containerespecialistas .table {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: none;
+}
+
+.containerespecialistas .table thead th {
+  background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+  color: white;
+  border: none;
+  padding: 15px 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.85rem;
+}
+
+.containerespecialistas .table tbody tr {
+  transition: all 0.3s ease;
+  border-bottom: 1px solid #e1bee7;
+}
+
+.containerespecialistas .table tbody tr:hover {
+  background-color: rgba(106, 27, 154, 0.05);
+  transform: scale(1.01);
+}
+
+.containerespecialistas .table tbody td {
+  padding: 12px;
+  vertical-align: middle;
+  color: #444;
+  border: none;
+}
+
+/* Botones de acción */
+.containerespecialistas .btn-warning {
+  background: linear-gradient(135deg, #053c3c 0%, #1099de 100%);
+  border: none;
+  padding: 6px 15px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(255, 152, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.containerespecialistas .btn-warning:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4);
+  background: linear-gradient(135deg, #034b7b 0%, #096ad1 100%);
+}
+
+.containerespecialistas .btn-danger {
+  background: linear-gradient(135deg, #d32f2f 0%, #f44336 100%);
+  border: none;
+  padding: 6px 15px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(211, 47, 47, 0.3);
+  transition: all 0.3s ease;
+}
+
+.containerespecialistas .btn-danger:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.4);
+  background: linear-gradient(135deg, #b71c1c 0%, #dbb6b6 100%);
+}
+
+.containerespecialistas .btn-sm {
+  margin: 0 2px;
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.containerespecialistas form,
+.containerespecialistas .table {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .containerespecialistas {
+    padding: 1rem 0.5rem;
+  }
+  
+  .containerespecialistas form {
+    padding: 1.5rem 1rem;
+  }
+  
+  .containerespecialistas .table {
+    font-size: 0.85rem;
+  }
+  
+  .containerespecialistas .btn-sm {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    margin: 1px;
+  }
+}
+
+/* Efectos adicionales */
+.containerespecialistas .mb-3:nth-child(odd) .form-control,
+.containerespecialistas .mb-3:nth-child(odd) .form-select {
+  border-left: 4px solid #e1bee7;
+}
+
+.containerespecialistas .mb-3:nth-child(even) .form-control,
+.containerespecialistas .mb-3:nth-child(even) .form-select {
+  border-left: 4px solid #d1c4e9;
+}
+
+/* Indicador de campo requerido */
+.containerespecialistas .form-label::after {
+  content: ' *';
+  color: #f44336;
+  font-weight: bold;
+}

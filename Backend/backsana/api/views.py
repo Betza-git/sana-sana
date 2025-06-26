@@ -1,16 +1,55 @@
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView 
 from .models import clientes, especialistas, empleados, citas, encuestas_estres, sesiones_terapia, especialistas_servicios, servicios, especialidades, metodopago, pago
-
-from .serializers import ClienteLoginSerializer, EspecialistaLoginSerializer, EmpleadoLoginSerializer, ClientesSerializer, EspecialistasSerializer, EmpleadosSerializer, CitasSerializer, EncuestasEstresSerializer, SesionesTerapiaSerializer, EspecialistasServiciosSerializer, ServiciosSerializer, EspecialidadesSerializer, MetodosPagoSerializer , PagosSerializer
+from django.contrib.auth.models import User
+from .serializers import ClienteLoginSerializer, EspecialistaLoginSerializer, EmpleadosSerializer, ClientesSerializer, EspecialistasSerializer, EmpleadosSerializer, CitasSerializer, EncuestasEstresSerializer, SesionesTerapiaSerializer, EspecialistasServiciosSerializer, ServiciosSerializer, EspecialidadesSerializer, MetodosPagoSerializer , PagosSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.shortcuts import get_object_or_404
 """Vistas:
 Implementar vistas para cada modelo usando las clases genéricas
 ListCreateAPIView y RetrieveUpdateDestroyAPIView.
 api views"""
+
+class AdminDashboardAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, id=None):
+        if id:
+            empleado_obj = get_object_or_404(empleados, id=id)
+            serializer = EmpleadosSerializer(empleado_obj)
+            return Response(serializer.data)
+        else:
+            empleados_list = empleados.objects.all()
+            serializer = EmpleadosSerializer(empleados_list, many=True)
+            return Response(serializer.data)
+
+    def post(self, request):
+        serializer = EmpleadosSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def patch(self, request, id=None):
+        if not id:
+            return Response({"detail": "ID is required for update"}, status=status.HTTP_400_BAD_REQUEST)
+        empleado_obj = get_object_or_404(empleados, id=id)
+        serializer = EmpleadosSerializer(empleado_obj, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, id=None):
+        if not id:
+            return Response({"detail": "ID is required for delete"}, status=status.HTTP_400_BAD_REQUEST)
+        empleado_obj = get_object_or_404(empleados, id=id)
+        empleado_obj.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
 
 class ClienteLoginAPIView(APIView):
     permission_classes = [AllowAny]
@@ -57,7 +96,7 @@ class EmpleadoLoginAPIView(APIView):
     
     
     def post(self, request):
-        serializer = EmpleadoLoginSerializer(data=request.data)
+        serializer = EmpleadosSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.validated_data['user']
             refresh = RefreshToken.for_user(user)
