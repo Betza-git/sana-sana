@@ -265,13 +265,9 @@ class ServiciosSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("El precio debe ser un valor positivo.")
         return value
     
-    def validate_duracion(self, value):
-        if value <= 0:
-            raise serializers.ValidationError("La duración debe ser un valor positivo.")
-        return value
     
     def validate(self, data):
-        required_fields = ['nombre', 'precio', 'duracion']
+        required_fields = ['nombre', 'descripcion', 'precio', 'duracion']
         for field in required_fields:
             if not data.get(field):
                 raise serializers.ValidationError({field: "Este campo es requerido."})

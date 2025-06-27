@@ -1,10 +1,8 @@
-
-// src/services/citaservices.js
 import axios from 'axios';
 const API_URL = 'http://localhost:8000/api';
 
 export const getCitasUsuario = async (userId) => {
-  const response = await axios.get(`${API_URL}/citas/?usuario_id=${userId}`);
+  const response = await axios.get(`${API_URL}/citas/?cliente=${userId}`);
   return response.data;
 };
 
@@ -22,11 +20,11 @@ export const deleteCita = async (id) => {
   const response = await axios.delete(`${API_URL}/citas/${id}/`);
   return response.data;
 };
+
 export const getCita = async (id) => {
   const response = await axios.get(`${API_URL}/citas/${id}/`);
   return response.data;
 };
-
 
 export default {
   getCitasUsuario,

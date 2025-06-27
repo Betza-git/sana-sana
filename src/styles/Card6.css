@@ -3,17 +3,19 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    margin-left: -2.5%;
+    width: 110%;
     height: 390px;
     padding: 9%;
     background-color: #0b0b0b;
-    border-radius: 10px;
+    
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     color: antiquewhite;
     margin-top: 15%;
-   gap: 50px;
+    gap: 50px;
     position: relative;
+    border-top: 5px solid #ff11b44e;
 }
 
 .derechos {
@@ -39,4 +41,21 @@
     text-align: center;
     font-size: 16px;
     
+}
+/* Responsive para tablets */
+@media (max-width: 900px) {
+  .card6 {
+    flex-direction: column;
+    height: auto;
+    padding: 5% 6%;
+    margin-top: 25%;
+  }
+}
+
+/* Responsive para móviles */
+@media (max-width: 480px) {
+  .card6 {
+    padding: 5% 4%;
+    gap: 30px;
+  }
 }

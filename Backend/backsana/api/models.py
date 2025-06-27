@@ -75,10 +75,9 @@ class especialistas_servicios(models.Model):
 
 class servicios(models.Model):
     nombre = models.CharField(max_length=100)
-    descripcion = models.TextField(blank=False, null=False)  # Descripción del servicio
-    precio = models.DecimalField(max_digits=10, decimal_places=2)  # Precio del servicio
-    duracion = models.IntegerField()  # Duración en minutos del servicio
-
+    descripcion = models.TextField(blank=False, null=False)  
+    precio = models.DecimalField(max_digits=10, decimal_places=3) 
+    duracion = models.CharField(max_length=100)  
 
 class metodopago(models.Model):
     nombre = models.CharField(max_length=100)

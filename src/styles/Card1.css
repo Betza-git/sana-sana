@@ -1,45 +1,361 @@
-.card-container{
-    border: 1px solid #ece7e4;
-    width: 190px;
-    height: 170px;
+/* ===== ESTILOS DINÁMICOS PARA CARD1 ===== */
+
+.card-container {
+    position: relative;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid rgba(236, 231, 228, 0.3);
+    width: 220px;
+    height: 180px;
     text-align: center;
     margin-left: 8%;
     margin-top: 4%;
-    border-radius: 7%;
+    border-radius: 20px;
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.08),
+        0 1px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+}
 
-    section{
-        text-align: center;
+.card-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+    );
+    transition: left 0.5s ease-in-out;
+}
+
+.card-container:hover::before {
+    left: 100%;
+}
+
+.card-container:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.15),
+        0 8px 16px rgba(0, 0, 0, 0.1);
+    border-color: rgba(124, 58, 237, 0.3);
+}
+
+.card-container:active {
+    transform: translateY(-4px) scale(1.01);
+    transition: all 0.15s ease-out;
+}
+
+.card-section {
+    padding: 15px 10px 5px;
+    position: relative;
+    z-index: 2;
+}
+
+.card-section i {
+    font-size: 2.2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+    display: block;
+    transition: all 0.3s ease;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-container:hover .card-section i {
+    transform: scale(1.1) rotate(5deg);
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        filter: drop-shadow(0 0 5px rgba(240, 147, 251, 0.3));
     }
-
-    h3{
-        font-weight: normal;
+    50% {
+        filter: drop-shadow(0 0 15px rgba(240, 147, 251, 0.6));
     }
 }
-.card-section{
-    padding: 10px;
+
+.card-section h3 {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #2d3748;
+    margin: 0;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
 }
-.card-info, .card-info1{
+
+.card-container:hover .card-section h3 {
+    color: #553c9a;
+    transform: translateY(-2px);
+}
+
+.card-info {
     display: flex;
-    gap: 25px;
-    width: 180px; 
+    gap: 20px;
+    width: 100%;
     height: 85px;
     justify-content: center;
-    border-top: 2px solid #f6f8fd;
-} 
-
-.card-info-number, .card-info-number1{
-    border-right: 2px solid #e4e6ec;
-    padding: 10px;
-      
-
+    align-items: center;
+    border-top: 2px solid rgba(246, 248, 253, 0.8);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(248, 250, 252, 0.3) 100%);
+    position: relative;
+    transition: all 0.3s ease;
 }
-.cont-cards{
+
+.card-container:hover .card-info {
+    background: linear-gradient(180deg, rgba(129, 140, 248, 0.1) 0%, rgba(165, 180, 252, 0.2) 100%);
+    border-top-color: rgba(129, 140, 248, 0.3);
+}
+
+.card-info::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    transition: all 0.4s ease;
+    transform: translateX(-50%);
+}
+
+.card-container:hover .card-info::before {
+    width: 80%;
+}
+
+.card-info-number {
+    border-right: 2px solid rgba(228, 230, 236, 0.6);
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.card-container:hover .card-info-number {
+    border-right-color: rgba(129, 140, 248, 0.4);
+}
+
+.card-info p, .card-info-number p {
+    margin: 2px 0;
+    transition: all 0.3s ease;
+}
+
+.card-info p:first-child, .card-info-number p:first-child {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #2d3748;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.card-container:hover .card-info p:first-child,
+.card-container:hover .card-info-number p:first-child {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.card-info p:last-child, .card-info-number p:last-child {
+    font-size: 0.85rem;
+    color: #718096;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.card-container:hover .card-info p:last-child,
+.card-container:hover .card-info-number p:last-child {
+    color: #553c9a;
+    transform: translateY(-1px);
+}
+
+/* ===== CONTENEDOR DE CARDS ===== */
+
+.cont-cards {
     display: flex;
-    gap: 120px;
+    gap: 80px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 20px;
+    position: relative;
 }
 
-.TituloSintomas{
-    font-size: 25px; 
+.cont-cards::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    animation: float-background 6s ease-in-out infinite;
+}
+
+@keyframes float-background {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+}
+
+/* ===== TÍTULO DE SÍNTOMAS ===== */
+
+.TituloSintomas {
+    font-size: 2.5rem;
     text-align: center;
-    margin-top: 10%;  
+    margin-top: 8%;
+    margin-bottom: 3%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+    letter-spacing: 1px;
+    position: relative;
+    animation: title-glow 3s ease-in-out infinite;
+}
+
+.TituloSintomas::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+    border-radius: 2px;
+    transform: translateX(-50%);
+    animation: line-expand 2s ease-in-out infinite;
+}
+
+@keyframes title-glow {
+    0%, 100% {
+        filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.3));
+    }
+    50% {
+        filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5));
+    }
+}
+
+@keyframes line-expand {
+    0%, 100% {
+        width: 100px;
+    }
+    50% {
+        width: 150px;
+    }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+@media (max-width: 768px) {
+    .card-container {
+        width: 180px;
+        height: 160px;
+        margin-left: 4%;
+    }
+    
+    .cont-cards {
+        gap: 40px;
+        padding: 10px;
+    }
+    
+    .TituloSintomas {
+        font-size: 2rem;
+        margin-top: 12%;
+    }
+    
+    .card-section i {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .card-container {
+        width: 160px;
+        height: 150px;
+        margin-left: 2%;
+    }
+    
+    .cont-cards {
+        gap: 20px;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .TituloSintomas {
+        font-size: 1.6rem;
+    }
+}
+
+/* ===== ANIMACIONES ADICIONALES ===== */
+
+.card-container {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.card-container:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.card-container:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.card-container:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+
+@media (prefers-color-scheme: dark) {
+    .card-container {
+        background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .card-section h3 {
+        color: #e2e8f0;
+    }
+    
+    .card-container:hover .card-section h3 {
+        color: #a78bfa;
+    }
+    
+    .card-info {
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(45, 55, 72, 0.3) 100%);
+        border-top-color: rgba(255, 255, 255, 0.1);
+    }
 }

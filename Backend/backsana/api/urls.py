@@ -63,6 +63,9 @@ urlpatterns = [
 
     path('servicios/', ServiciosListCreate.as_view(), name='servicios-list-create'),
     path('servicios/<int:pk>/', ServiciosRetrieveUpdateDestroy.as_view(), name='servicios-detail'),
+    
+    path('serviciosdash/', ServiciosListCreate.as_view(), name='servicios-list-create'),
+    path('serviciosdash/<int:pk>/', ServiciosRetrieveUpdateDestroy.as_view(), name='servicios-detail'),
 
     path('especialidades/', EspecialidadesListCreate.as_view(), name='especialidades-list-create'),
     path('especialidades/<int:pk>/', EspecialidadesRetrieveUpdateDestroy.as_view(), name='especialidades-detail'),

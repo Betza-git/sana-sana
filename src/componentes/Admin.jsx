@@ -2,48 +2,43 @@ import React, { useEffect, useState } from "react";
 import { getAdmin, postAdmin, patchAdmin, deleteAdmin } from "../services/Admin";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
-import "../styles/Admin.css"; 
+import "../styles/Admin.css";
+
 
 const Admin = () => {
-  // Cargar estados desde localStorage o iniciar vacío
-  const [usuarios, setUsuarios] = useState(() => {
-    const saved = localStorage.getItem("usuarios");
-    return saved ? JSON.parse(saved) : [];
-  });
-  const [especialistas, setEspecialistas] = useState(() => {
-    const saved = localStorage.getItem("especialistas");
-    return saved ? JSON.parse(saved) : [];
-  });
-  const [especialidades, setEspecialidades] = useState(() => {
-    const saved = localStorage.getItem("especialidades");
-    return saved ? JSON.parse(saved) : [];
-  });
-
+  // Estados cargados desde localStorage o vacíos
+  const [usuarios, setUsuarios] = useState(() => JSON.parse(localStorage.getItem("usuarios")) || []);
+  const [especialistas, setEspecialistas] = useState(() => JSON.parse(localStorage.getItem("especialistas")) || []);
+  const [especialidades, setEspecialidades] = useState(() => JSON.parse(localStorage.getItem("especialidades")) || []);
   const [showModal, setShowModal] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
   const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
-    nombre: "", numero_identificacion: "", fecha_nacimiento: "", telefono: "",
-    cargo: "", email: "", password: "", confirmPassword: "", fecha_contratacion: "",
-    estado: "activo", rol: "usuario", activo: true, especialidades: "", genero1: "",
+    nombre: "",
+    numero_identificacion: "",
+    fecha_nacimiento: "",
+    telefono: "",
+    cargo: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    fecha_contratacion: "",
+    estado: "activo",
+    rol: "usuario",
+    activo: true,
+    especialidades: "",
+    genero1: "",
   });
 
-  // Guardar en localStorage cuando cambien los estados
-  useEffect(() => {
-    localStorage.setItem("usuarios", JSON.stringify(usuarios));
-  }, [usuarios]);
+  // Sincronizar con localStorage
+  useEffect(() => { localStorage.setItem("usuarios", JSON.stringify(usuarios)); }, [usuarios]);
+  useEffect(() => { localStorage.setItem("especialistas", JSON.stringify(especialistas)); }, [especialistas]);
+  useEffect(() => { localStorage.setItem("especialidades", JSON.stringify(especialidades)); }, [especialidades]);
 
+  // Cargar datos desde API si no hay datos locales
   useEffect(() => {
-    localStorage.setItem("especialistas", JSON.stringify(especialistas));
-  }, [especialistas]);
-
-  useEffect(() => {
-    localStorage.setItem("especialidades", JSON.stringify(especialidades));
-  }, [especialidades]);
-
-  // Cargar datos de API solo si localStorage está vacío
-  useEffect(() => {
-    if (usuarios.length === 0 && especialistas.length === 0 && especialidades.length === 0) {
+    if (!usuarios.length && !especialistas.length && !especialidades.length) {
       loadData();
     }
   }, []);
@@ -57,15 +52,10 @@ const Admin = () => {
         setEspecialistas(data.especialistas || []);
         setEspecialidades(data.especialidades || []);
       } else {
-        throw new Error("La respuesta del servidor no es válida");
+        throw new Error("Respuesta inválida del servidor");
       }
     } catch (error) {
-      Swal.fire({
-        title: "Error",
-        text: error.message || "No se pudieron cargar los datos",
-        icon: "error",
-        confirmButtonText: "Aceptar",
-      });
+      Swal.fire("Error", error.message || "No se pudieron cargar los datos", "error");
     } finally {
       setLoading(false);
     }
@@ -73,12 +63,7 @@ const Admin = () => {
 
   const validatePasswords = () => {
     if (!editingUser && formData.password !== formData.confirmPassword) {
-      Swal.fire({
-        title: "Error",
-        text: "Las contraseñas no coinciden",
-        icon: "error",
-        confirmButtonText: "Aceptar",
-      });
+      Swal.fire("Error", "Las contraseñas no coinciden", "error");
       return false;
     }
     return true;
@@ -89,52 +74,48 @@ const Admin = () => {
     if (!validatePasswords()) return;
     try {
       setLoading(true);
-      let dataToSend = {};
-      let urlSuffix = "";
       const commonFields = {
-        nombre: formData.nombre, numero_identificacion: formData.numero_identificacion,
-        fechaNac: formData.fecha_nacimiento, email: formData.email,
+        nombre: formData.nombre,
+        numero_identificacion: formData.numero_identificacion,
+        fechaNac: formData.fecha_nacimiento,
+        email: formData.email,
         password: formData.password,
         fechaContratacion: formData.fecha_contratacion || new Date().toISOString().split("T")[0],
-        estado: formData.estado, activo: formData.activo, genero1: formData.genero1,
+        estado: formData.estado,
+        activo: formData.activo,
+        genero1: formData.genero1,
       };
+
+      let urlSuffix = "";
+      let dataToSend = {};
 
       switch (formData.rol) {
         case "usuario":
           urlSuffix = "clientes";
-          dataToSend = {
-            ...commonFields,
-            telefono: formData.telefono,
-          };
+          dataToSend = { ...commonFields, telefono: formData.telefono };
           break;
         case "especialista":
           urlSuffix = "especialistas";
-          dataToSend = {
-            ...commonFields,
-            especialidades: formData.especialidades,
-          };
+          dataToSend = { ...commonFields, especialidades: formData.especialidades };
           break;
         case "empleado":
           urlSuffix = "empleados";
-          dataToSend = {
-            ...commonFields,
-            telefono: formData.telefono,
-            cargo: formData.cargo,
-          };
+          dataToSend = { ...commonFields, telefono: formData.telefono, cargo: formData.cargo };
           break;
         default:
           throw new Error("Rol no soportado");
       }
+
       const response = await postAdmin(urlSuffix, dataToSend);
 
-      if (formData.rol === "usuario") setUsuarios([...usuarios, response]);
-      else if (formData.rol === "especialista") setEspecialistas([...especialistas, response]);
-      else if (formData.rol === "empleado") setUsuarios([...usuarios, response]); // Ajusta si manejas empleados en otro estado
+      if (formData.rol === "usuario") setUsuarios((prev) => [...prev, response]);
+      else if (formData.rol === "especialista") setEspecialistas((prev) => [...prev, response]);
+      else if (formData.rol === "empleado") setUsuarios((prev) => [...prev, response]); // Ajustar si usas otro estado para empleados
 
       resetForm();
-      Swal.fire({ title: "¡Éxito!", text: "Usuario creado correctamente", icon: "success", confirmButtonText: "Aceptar" });
+      Swal.fire("¡Éxito!", "Usuario creado correctamente", "success");
     } catch (error) {
-      Swal.fire({ title: "Error", text: error.message || "No se pudo crear el usuario", icon: "error", confirmButtonText: "Aceptar" });
+      Swal.fire("Error", error.message || "No se pudo crear el usuario", "error");
     } finally {
       setLoading(false);
     }
@@ -145,61 +126,52 @@ const Admin = () => {
     if (formData.password && !validatePasswords()) return;
     try {
       setLoading(true);
-      let dataToSend = {};
-      let urlSuffix = "";
       const commonFields = {
         nombre: formData.nombre,
         numero_identificacion: formData.numero_identificacion,
-        fechaNac: formData.fecha_nacimiento,
+        fecha_nacimiento: formData.fecha_nacimiento,
         email: formData.email,
         fechaContratacion: formData.fecha_contratacion,
         estado: formData.estado,
         activo: formData.activo,
         genero1: formData.genero1,
+        ...(formData.password && { password: formData.password }),
       };
-      if (formData.password) {
-        commonFields.password = formData.password;
-      }
+
+      let urlSuffix = "";
+      let dataToSend = {};
+
       switch (formData.rol) {
         case "usuario":
           urlSuffix = "clientes";
-          dataToSend = {
-            ...commonFields,
-            telefono: formData.telefono,
-          };
+          dataToSend = { ...commonFields, telefono: formData.telefono };
           break;
         case "especialista":
           urlSuffix = "especialistas";
-          dataToSend = {
-            ...commonFields,
-            especialidades: formData.especialidades,
-          };
+          dataToSend = { ...commonFields, especialidades: formData.especialidades };
           break;
         case "empleado":
           urlSuffix = "empleados";
-          dataToSend = {
-            ...commonFields,
-            telefono: formData.telefono,
-            cargo: formData.cargo,
-          };
+          dataToSend = { ...commonFields, telefono: formData.telefono, cargo: formData.cargo };
           break;
         default:
           throw new Error("Rol no soportado");
       }
+
       const response = await patchAdmin(urlSuffix, editingUser.id, dataToSend);
 
       if (formData.rol === "usuario") {
-        setUsuarios(usuarios.map((user) => (user.id === editingUser.id ? response : user)));
+        setUsuarios((prev) => prev.map((u) => (u.id === editingUser.id ? response : u)));
       } else if (formData.rol === "especialista") {
-        setEspecialistas(especialistas.map((esp) => (esp.id === editingUser.id ? response : esp)));
+        setEspecialistas((prev) => prev.map((e) => (e.id === editingUser.id ? response : e)));
       } else if (formData.rol === "empleado") {
-        setUsuarios(usuarios.map((user) => (user.id === editingUser.id ? response : user))); // Ajusta si manejas empleados en otro estado
+        setUsuarios((prev) => prev.map((u) => (u.id === editingUser.id ? response : u)));
       }
 
       resetForm();
-      Swal.fire({ title: "¡Éxito!", text: "Usuario actualizado correctamente", icon: "success", confirmButtonText: "Aceptar" });
+      Swal.fire("¡Éxito!", "Usuario actualizado correctamente", "success");
     } catch (error) {
-      Swal.fire({ title: "Error", text: error.message || "No se pudo actualizar el usuario", icon: "error", confirmButtonText: "Aceptar" });
+      Swal.fire("Error", error.message || "No se pudo actualizar el usuario", "error");
     } finally {
       setLoading(false);
     }
@@ -223,6 +195,7 @@ const Admin = () => {
           usuarios.find((u) => u.id === userId) ||
           especialistas.find((e) => e.id === userId);
         if (!user) throw new Error("Usuario no encontrado");
+
         let urlSuffix = "";
         switch (user.rol) {
           case "usuario":
@@ -237,21 +210,19 @@ const Admin = () => {
           default:
             throw new Error("Rol no soportado");
         }
-        const response = await deleteAdmin(urlSuffix, userId);
-        if (response !== false) {
-          if (user.rol === "usuario")
-            setUsuarios(usuarios.filter((user) => user.id !== userId));
-          else if (user.rol === "especialista")
-            setEspecialistas(especialistas.filter((esp) => esp.id !== userId));
-          else if (user.rol === "empleado")
-            setUsuarios(usuarios.filter((user) => user.id !== userId)); // Ajusta si manejas empleados en otro estado
 
-          Swal.fire({ title: "¡Eliminado!", text: "El usuario ha sido eliminado correctamente", icon: "success", confirmButtonText: "Aceptar" });
+        const response = await deleteAdmin(urlSuffix, userId);
+
+        if (response !== false) {
+          if (user.rol === "usuario") setUsuarios((prev) => prev.filter((u) => u.id !== userId));
+          else if (user.rol === "especialista") setEspecialistas((prev) => prev.filter((e) => e.id !== userId));
+          else if (user.rol === "empleado") setUsuarios((prev) => prev.filter((u) => u.id !== userId));
+          Swal.fire("¡Eliminado!", "El usuario ha sido eliminado correctamente", "success");
         } else {
           throw new Error("Error al eliminar el usuario");
         }
       } catch (error) {
-        Swal.fire({ title: "Error", text: error.message || "No se pudo eliminar el usuario", icon: "error", confirmButtonText: "Aceptar" });
+        Swal.fire("Error", error.message || "No se pudo eliminar el usuario", "error");
       } finally {
         setLoading(false);
       }
@@ -263,15 +234,13 @@ const Admin = () => {
     setFormData({
       nombre: user.nombre || "",
       numero_identificacion: user.numero_identificacion || "",
-      fecha_nacimiento: user.fechaNac || "",
+      fecha_nacimiento: user.fecha_nacimiento || "",
       telefono: user.telefono || "",
       cargo: user.cargo || "",
       email: user.email || "",
       password: "",
       confirmPassword: "",
-      fecha_contratacion: user.fechaContratacion
-        ? new Date(user.fechaContratacion).toISOString().split("T")[0]
-        : "",
+      fecha_contratacion: user.fechaContratacion ? new Date(user.fechaContratacion).toISOString().split("T")[0] : "",
       estado: user.estado || "activo",
       rol: user.rol || "usuario",
       activo: user.activo ?? true,
@@ -331,7 +300,6 @@ const Admin = () => {
     }));
   };
 
-
   return (
     <div style={{ display: "flex", minHeight: "100vh", background: "#f4f5fa" }}>
       {/* Sidebar */}
@@ -339,19 +307,15 @@ const Admin = () => {
         <h2 style={{ textAlign: "center", marginBottom: 30 }}>ADMIN</h2>
         <nav>
           <ul style={{ listStyle: "none", padding: 0 }}>
-            <li style={{ margin: "20px 0" }}>
-              <Link to="/admin" style={{ color: "#fff", textDecoration: "none" }}>
-                Dashboard
-              </Link>
-            </li>
+            <li style={{ margin: "20px 0" }}>Dashboard</li>
             <li style={{ margin: "20px 0" }}>
               <Link to="/" style={{ color: "#fff", textDecoration: "none" }}>
                 Home
               </Link>
             </li>
             <li style={{ margin: "20px 0" }}>
-              <Link to="/usuarios" style={{ color: "#fff", textDecoration: "none" }}>
-                Usuarios
+              <Link to="/Clientes" style={{ color: "#fff", textDecoration: "none" }}>
+                Clientes
               </Link>
             </li>
             <li style={{ margin: "20px 0" }}>
@@ -370,6 +334,11 @@ const Admin = () => {
               </Link>
             </li>
             <li style={{ margin: "20px 0" }}>
+              <Link to="/serviciosdash" style={{ color: "#fff", textDecoration: "none" }}>
+                Servicios
+              </Link>
+            </li>
+            <li style={{ margin: "20px 0" }}>
               <Link to="/Dates" style={{ color: "#fff", textDecoration: "none" }}>
                 Citas
               </Link>
@@ -384,17 +353,24 @@ const Admin = () => {
       </aside>
 
       <main style={{ flex: 1, padding: "40px" }}>
-        <header style={{display: "flex", justifyContent: "space-between",
-            alignItems: "center", marginBottom: 40,
-          }}>
+        <header
+          style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 40 }}
+        >
           <h1>Panel de Administración</h1>
           <div>
-            <img alt="Admin" style={{ width: 40, height: 40, borderRadius: "50%" }} />
+            <p> Bienvenido</p>
+ 
           </div>
         </header>
 
-        {loading && (<div style={{textAlign: "center", padding: "20px",
-              background: "#fff", borderRadius: 12, marginBottom: 20,
+        {loading && (
+          <div
+            style={{
+              textAlign: "center",
+              padding: "20px",
+              background: "#fff",
+              borderRadius: 12,
+              marginBottom: 20,
               border: "2px solid #6c63ff",
             }}
           >
@@ -403,32 +379,43 @@ const Admin = () => {
         )}
 
         <section style={{ display: "flex", gap: 24, marginBottom: 40 }}>
-          <div style={{background: "#fff", borderRadius: 12, padding: 24,
-              flex: 1, textAlign: "center",}}>
+          <div style={{ background: "#fff", borderRadius: 12, padding: 24, flex: 1, textAlign: "center" }}>
             <h4 style={{ color: "#6c63ff" }}>Usuarios</h4>
             <h2>{usuarios.length}</h2>
           </div>
-          <div style={{background: "#fff", borderRadius: 12, padding: 24,
-              flex: 1,textAlign: "center",}}>
+          <div style={{ background: "#fff", borderRadius: 12, padding: 24, flex: 1, textAlign: "center" }}>
             <h4 style={{ color: "#6c63ff" }}>Especialistas</h4>
             <h2>{especialistas.length}</h2>
           </div>
-          <div
-            style={{background: "#fff", borderRadius: 12, padding: 24, flex: 1,
-              textAlign: "center",
-            }}>
+          <div style={{ background: "#fff", borderRadius: 12, padding: 24, flex: 1, textAlign: "center" }}>
             <h4 style={{ color: "#6c63ff" }}>Especialidades</h4>
             <h2>{especialidades.length}</h2>
           </div>
         </section>
+
         <section style={{ background: "#fff", borderRadius: 12, padding: 24 }}>
-          <div style={{display: "flex", justifyContent: "space-between", alignItems: "center",
-              marginBottom: 16,}}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: 16,
+            }}
+          >
             <h3>Usuarios Registrados</h3>
-            <button onClick={handleAdd} disabled={loading}
-            style={{background: "#6c63ff", color: "#fff", border: "none", borderRadius: 8,
-            padding: "10px 20px",cursor: loading ? "not-allowed" : "pointer",
-            fontSize: "14px", fontWeight: "500", opacity: loading ? 0.6 : 1,
+            <button
+              onClick={handleAdd}
+              disabled={loading}
+              style={{
+                background: "#6c63ff",
+                color: "#fff",
+                border: "none",
+                borderRadius: 8,
+                padding: "10px 20px",
+                cursor: loading ? "not-allowed" : "pointer",
+                fontSize: "14px",
+                fontWeight: "500",
+                opacity: loading ? 0.6 : 1,
               }}
             >
               {loading ? "Cargando..." : "Agregar Usuario"}
@@ -459,30 +446,14 @@ const Admin = () => {
               <table style={{ width: "100%", borderCollapse: "collapse", minWidth: "800px" }}>
                 <thead>
                   <tr>
-                    <th style={{ textAlign: "left", padding: 8, borderBottom: "2px solid #e9ecef" }}>
-                      Nombre
-                    </th>
-                    <th style={{ textAlign: "left", padding: 8, borderBottom: "2px solid #e9ecef" }}>
-                      Identificación
-                    </th>
-                    <th style={{ textAlign: "left", padding: 8, borderBottom: "2px solid #e9ecef" }}>
-                      Email
-                    </th>
-                    <th style={{ textAlign: "left", padding: 8, borderBottom: "2px solid #e9ecef" }}>
-                      Rol
-                    </th>
-                    <th style={{ textAlign: "left", padding: 8, borderBottom: "2px solid #e9ecef" }}>
-                      Estado
-                    </th>
-                    <th style={{ textAlign: "left", padding: 8, borderBottom: "2px solid #e9ecef" }}>
-                      Fecha Contratación
-                    </th>
-                    <th style={{ textAlign: "left", padding: 8, borderBottom: "2px solid #e9ecef" }}>
-                      Acciones
-                    </th>
-                    <th style={{ textAlign: "left", padding: 8, borderBottom: "2px solid #e9ecef" }}>
-                      Género
-                    </th>
+                    <th style={{ textAlign: "left", padding: 8, borderBottom: "2px solid #e9ecef" }}>Nombre</th>
+                    <th style={{ textAlign: "left", padding: 8, borderBottom: "2px solid #e9ecef" }}>Identificación</th>
+                    <th style={{ textAlign: "left", padding: 8, borderBottom: "2px solid #e9ecef" }}>Email</th>
+                    <th style={{ textAlign: "left", padding: 8, borderBottom: "2px solid #e9ecef" }}>Rol</th>
+                    <th style={{ textAlign: "left", padding: 8, borderBottom: "2px solid #e9ecef" }}>Género</th>
+                    <th style={{ textAlign: "left", padding: 8, borderBottom: "2px solid #e9ecef" }}>Estado</th>
+                    <th style={{ textAlign: "left", padding: 8, borderBottom: "2px solid #e9ecef" }}>Fecha Contratación</th>
+                    <th style={{ textAlign: "center", padding: 8, borderBottom: "2px solid #e9ecef" }}>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -493,53 +464,45 @@ const Admin = () => {
                       <td style={{ padding: 8 }}>{user.email}</td>
                       <td style={{ padding: 8 }}>{user.rol}</td>
                       <td style={{ padding: 8 }}>{user.genero1}</td>
+                      <td style={{ padding: 8 }}>{user.estado}</td> 
                       <td style={{ padding: 8 }}>
-                        <span
-                          style={{
-                            padding: "4px 12px",
-                            borderRadius: 12,
-                            background: user.estado === "activo" ? "#e0ffe0" : "#ffe0e0",
-                            color: user.estado === "activo" ? "#2ecc40" : "#e74c3c",
-                            fontSize: "0.9em",
-                          }}
-                        >
-                          {user.estado}
-                        </span>
+                        {user.fecha_contratacion
+                          ? new Date(user.fecha_contratacion).toLocaleDateString()
+                          : ""}
                       </td>
-                      <td style={{ padding: 8 }}>{user.fecha_contratacion}</td>
-                      <td style={{ padding: 8 }}>
+                      <td style={{ padding: 8, textAlign: "center" }}>
                         <button
                           onClick={() => handleEdit(user)}
                           disabled={loading}
                           style={{
-                            background: "#28a745",
-                            color: "#fff",
-                            border: "none",
-                            borderRadius: 4,
-                            padding: "6px 12px",
-                            cursor: loading ? "not-allowed" : "pointer",
-                            fontSize: "12px",
                             marginRight: 8,
-                            opacity: loading ? 0.6 : 1,
+                            cursor: loading ? "not-allowed" : "pointer",
+                            background: "#6c63ff",
+                            border: "none",
+                            borderRadius: 6,
+                            padding: "6px 12px",
+                            color: "#fff",
+                            fontSize: 14,
                           }}
+                          title="Editar"
                         >
-                          Editar
+                          ✏️
                         </button>
                         <button
                           onClick={() => handleDelete(user.id)}
                           disabled={loading}
                           style={{
-                            background: "#dc3545",
-                            color: "#fff",
-                            border: "none",
-                            borderRadius: 4,
-                            padding: "6px 12px",
                             cursor: loading ? "not-allowed" : "pointer",
-                            fontSize: "12px",
-                            opacity: loading ? 0.6 : 1,
+                            background: "#ff4d4f",
+                            border: "none",
+                            borderRadius: 6,
+                            padding: "6px 12px",
+                            color: "#fff",
+                            fontSize: 14,
                           }}
+                          title="Eliminar"
                         >
-                          Eliminar
+                          🗑️
                         </button>
                       </td>
                     </tr>
@@ -550,33 +513,31 @@ const Admin = () => {
           )}
         </section>
 
+        {/* Modal */}
         {showModal && (
           <div
+            onClick={resetForm}
             style={{
               position: "fixed",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              background: "rgba(0, 0, 0, 0.5)",
+              inset: 0,
+              backgroundColor: "rgba(0,0,0,0.6)",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              zIndex: 1000,
+              zIndex: 100,
             }}
-            onClick={resetForm}
           >
             <div
-              style={{
-                background: "#fff",
-                borderRadius: 12,
-                padding: 24,
-                width: "90%",
-                maxWidth: 600,
-                maxHeight: "90vh",
-                overflow: "auto",
-              }}
               onClick={(e) => e.stopPropagation()}
+              style={{
+                width: "600px",
+                background: "#fff",
+                padding: 24,
+                borderRadius: 12,
+                boxShadow: "0 2px 10px rgba(0,0,0,0.2)",
+                maxHeight: "90vh",
+                overflowY: "auto",
+              }}
             >
               <div
                 style={{
@@ -591,22 +552,32 @@ const Admin = () => {
                 </h3>
                 <button
                   onClick={resetForm}
+                  aria-label="Cerrar modal"
                   style={{
                     background: "none",
                     border: "none",
                     fontSize: "24px",
                     cursor: "pointer",
                     color: "#666",
+                    fontWeight: "700",
                   }}
-                ></button>
+                >
+                  &times;
+                </button>
               </div>
+
               <form onSubmit={editingUser ? handleUpdate : handleCreate}>
+                {/* Form rows */}
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
                   <div>
-                    <label style={{ display: "block", marginBottom: 8, fontWeight: "500" }}>
+                    <label
+                      htmlFor="nombre"
+                      style={{ display: "block", marginBottom: 8, fontWeight: "500" }}
+                    >
                       Nombre:
                     </label>
                     <input
+                      id="nombre"
                       type="text"
                       name="nombre"
                       value={formData.nombre}
@@ -621,12 +592,17 @@ const Admin = () => {
                         fontSize: "14px",
                         boxSizing: "border-box",
                       }}
-                    /></div>
+                    />
+                  </div>
                   <div>
-                    <label style={{ display: "block", marginBottom: 8, fontWeight: "500" }}>
+                    <label
+                      htmlFor="numero_identificacion"
+                      style={{ display: "block", marginBottom: 8, fontWeight: "500" }}
+                    >
                       Número de Identificación:
                     </label>
                     <input
+                      id="numero_identificacion"
                       type="text"
                       name="numero_identificacion"
                       value={formData.numero_identificacion}
@@ -647,10 +623,14 @@ const Admin = () => {
 
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
                   <div>
-                    <label style={{ display: "block", marginBottom: 8, fontWeight: "500" }}>
+                    <label
+                      htmlFor="email"
+                      style={{ display: "block", marginBottom: 8, fontWeight: "500" }}
+                    >
                       Email:
                     </label>
                     <input
+                      id="email"
                       type="email"
                       name="email"
                       value={formData.email}
@@ -669,10 +649,14 @@ const Admin = () => {
                   </div>
 
                   <div>
-                    <label style={{ display: "block", marginBottom: 8, fontWeight: "500" }}>
+                    <label
+                      htmlFor="fecha_nacimiento"
+                      style={{ display: "block", marginBottom: 8, fontWeight: "500" }}
+                    >
                       Fecha de Nacimiento:
                     </label>
                     <input
+                      id="fecha_nacimiento"
                       type="date"
                       name="fecha_nacimiento"
                       value={formData.fecha_nacimiento}
@@ -693,10 +677,14 @@ const Admin = () => {
 
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
                   <div>
-                    <label style={{ display: "block", marginBottom: 8, fontWeight: "500" }}>
+                    <label
+                      htmlFor="rol"
+                      style={{ display: "block", marginBottom: 8, fontWeight: "500" }}
+                    >
                       Rol:
                     </label>
                     <select
+                      id="rol"
                       name="rol"
                       value={formData.rol}
                       onChange={handleInputChange}
@@ -717,10 +705,14 @@ const Admin = () => {
                   </div>
 
                   <div>
-                    <label style={{ display: "block", marginBottom: 8, fontWeight: "500" }}>
+                    <label
+                      htmlFor="estado"
+                      style={{ display: "block", marginBottom: 8, fontWeight: "500" }}
+                    >
                       Estado:
                     </label>
                     <select
+                      id="estado"
                       name="estado"
                       value={formData.estado}
                       onChange={handleInputChange}
@@ -742,10 +734,14 @@ const Admin = () => {
                 </div>
 
                 <div style={{ marginBottom: 16 }}>
-                  <label style={{ display: "block", marginBottom: 8, fontWeight: "500" }}>
+                  <label
+                    htmlFor="fecha_contratacion"
+                    style={{ display: "block", marginBottom: 8, fontWeight: "500" }}
+                  >
                     Fecha de Contratación:
                   </label>
                   <input
+                    id="fecha_contratacion"
                     type="date"
                     name="fecha_contratacion"
                     value={formData.fecha_contratacion}
@@ -763,13 +759,17 @@ const Admin = () => {
                   />
                 </div>
 
-                {/* Campos específicos según rol */}
+                {/* Campos específicos por rol */}
                 {formData.rol === "usuario" && (
                   <div style={{ marginBottom: 16 }}>
-                    <label style={{ display: "block", marginBottom: 8, fontWeight: "500" }}>
+                    <label
+                      htmlFor="telefono"
+                      style={{ display: "block", marginBottom: 8, fontWeight: "500" }}
+                    >
                       Teléfono:
                     </label>
                     <input
+                      id="telefono"
                       type="text"
                       name="telefono"
                       value={formData.telefono}
@@ -789,10 +789,14 @@ const Admin = () => {
 
                 {formData.rol === "especialista" && (
                   <div style={{ marginBottom: 16 }}>
-                    <label style={{ display: "block", marginBottom: 8, fontWeight: "500" }}>
+                    <label
+                      htmlFor="especialidades"
+                      style={{ display: "block", marginBottom: 8, fontWeight: "500" }}
+                    >
                       Especialidades:
                     </label>
                     <input
+                      id="especialidades"
                       type="text"
                       name="especialidades"
                       value={formData.especialidades}
@@ -814,10 +818,14 @@ const Admin = () => {
                 {formData.rol === "empleado" && (
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
                     <div>
-                      <label style={{ display: "block", marginBottom: 8, fontWeight: "500" }}>
+                      <label
+                        htmlFor="cargo"
+                        style={{ display: "block", marginBottom: 8, fontWeight: "500" }}
+                      >
                         Cargo:
                       </label>
                       <input
+                        id="cargo"
                         type="text"
                         name="cargo"
                         value={formData.cargo}
@@ -835,11 +843,16 @@ const Admin = () => {
                     </div>
                   </div>
                 )}
+
                 <div style={{ marginBottom: 16 }}>
-                  <label style={{ display: "block", marginBottom: 8, fontWeight: "500" }}>
+                  <label
+                    htmlFor="genero1"
+                    style={{ display: "block", marginBottom: 8, fontWeight: "500" }}
+                  >
                     Género:
                   </label>
                   <select
+                    id="genero1"
                     name="genero1"
                     value={formData.genero1}
                     onChange={handleInputChange}
@@ -860,10 +873,14 @@ const Admin = () => {
                 </div>
 
                 <div style={{ marginBottom: 16 }}>
-                  <label style={{ display: "block", marginBottom: 8, fontWeight: "500" }}>
+                  <label
+                    htmlFor="password"
+                    style={{ display: "block", marginBottom: 8, fontWeight: "500" }}
+                  >
                     Contraseña:
                   </label>
                   <input
+                    id="password"
                     type="password"
                     name="password"
                     value={formData.password}
@@ -881,10 +898,14 @@ const Admin = () => {
                   />
                 </div>
                 <div style={{ marginBottom: 16 }}>
-                  <label style={{ display: "block", marginBottom: 8, fontWeight: "500" }}>
+                  <label
+                    htmlFor="confirmPassword"
+                    style={{ display: "block", marginBottom: 8, fontWeight: "500" }}
+                  >
                     Confirmar Contraseña:
                   </label>
                   <input
+                    id="confirmPassword"
                     type="password"
                     name="confirmPassword"
                     value={formData.confirmPassword}
@@ -901,6 +922,7 @@ const Admin = () => {
                     }}
                   />
                 </div>
+
                 <div style={{ textAlign: "right" }}>
                   <button
                     type="submit"
@@ -927,7 +949,6 @@ const Admin = () => {
       </main>
     </div>
   );
-}
+};
 
-
-export default Admin; 
+export default Admin;

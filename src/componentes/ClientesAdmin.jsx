@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getClientes, postCliente, patchCliente, deleteCliente } from '../services/Clientes';
 import Swal from 'sweetalert2';
 import '../styles/Clientes.css'
+import { Link } from 'react-router-dom';
 
 
 function ClientesAdmin() {
@@ -87,7 +88,7 @@ function ClientesAdmin() {
     }
   };
 
-  // Preparar formulario para edición
+  // formulario de edición
   const handleEditar = (cliente) => {
     setNombre(cliente.nombre || '');
     setNumero_identificacion(cliente.numero_identificacion || '');
@@ -146,7 +147,9 @@ function ClientesAdmin() {
   return (
     <div className="clientes-admin">
       <h1>Administración de Clientes</h1>
-
+      <div className="volver-panel"> 
+      <Link to="/Admin" className="btn-volver">Volver al Panel de Administración</Link><br/><br />
+      </div>
       {loading && <p className="loading">Cargando clientes...</p>}
       {error && <p className="error">Error: {error.message}</p>}
 
@@ -228,7 +231,8 @@ function ClientesAdmin() {
               <div key={cliente.id} className="cliente-card">
                 <div className="cliente-info">
                   <p><strong>Nombre:</strong> {cliente.nombre}</p>
-                  <p><strong>ID:</strong> {cliente.numero_identificacion}</p>
+                  <p><strong>ID:</strong> {cliente.id}</p>
+                  <p><strong>Número de Identificación:</strong> {cliente.numero_identificacion}</p>
                   <p><strong>Email:</strong> {cliente.email}</p>
                   <p><strong>Contraseña:</strong> {cliente.password}</p>
                   <p><strong>Fecha de Nacimiento:</strong> {cliente.fechaNac}</p>

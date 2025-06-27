@@ -11,6 +11,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import Card5 from '../componentes/Card5'
 import Card6 from '../componentes/Card6'
 
+
 function Home() {
   const navigate = useNavigate() // Hook de navegación para redirigir a otras páginas
   return (
@@ -44,9 +45,12 @@ function Home() {
           </div>
           <h1>Comienza hoy a utilizar nuestra plataforma!!</h1>
           <h5>Le acompañaremos a lo largo de su tratamiento, juntos tendremos resultados increíbles!! </h5>
+
+         
+
           
           <div className='cont-cards-4'>
-          <div className='card4' ><Card4  titulo={"Usuario Existente"} button={<Link to={"/login"}>INGRESAR</Link>} /></div><hr className='hr4' />
+          <div className='card4' ><Card4  titulo={"Usuario Existente"} button={<Link to={"/"}>INGRESAR</Link>} /></div><hr className='hr4' />
           <Card4 icono={"fa-solid fa-circle-user"} titulo={"Usuario Nuevo"} button={<Link to={"/registro"}>CREAR</Link>} /> 
           </div>
 

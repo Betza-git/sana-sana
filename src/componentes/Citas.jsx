@@ -65,14 +65,14 @@ function Citas() {
     Swal.fire({
       title: 'Editar cita',
       html: `
-        <input id="fecha" type="datetime-local" value="${cita.fecha}" class="swal2-input">
-        <input id="especialista" type="text" value="${cita.especialista}" class="swal2-input">
-        <input id="especialidad" type="text" value="${cita.especialidad}" class="swal2-input">
-        <select id="modalidad" class="swal2-input">
+        <input id="fecha" type="datetime-local" value="${cita.fecha}" className="swal2-input">
+        <input id="especialista" type="text" value="${cita.especialista}" className="swal2-input">
+        <input id="especialidad" type="text" value="${cita.especialidad}" className="swal2-input">
+        <select id="modalidad" className="swal2-input">
           <option value="Virtual" ${cita.modalidad === 'Virtual' ? 'selected' : ''}>Virtual</option>
           <option value="Presencial" ${cita.modalidad === 'Presencial' ? 'selected' : ''}>Presencial</option>
         </select>
-        <select id="estado" class="swal2-input">
+        <select id="estado" className="swal2-input">
           <option value="Pendiente" ${cita.estado === 'Pendiente' ? 'selected' : ''}>Pendiente</option>
           <option value="Confirmada" ${cita.estado === 'Confirmada' ? 'selected' : ''}>Confirmada</option>
           <option value="Cancelada" ${cita.estado === 'Cancelada' ? 'selected' : ''}>Cancelada</option>

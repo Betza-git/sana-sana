@@ -20,7 +20,7 @@ function FormLogin() {
   if (token.access) {
     localStorage.setItem("token", token.access)
     localStorage.setItem("userid", token.user.id)
-    navigate('/Usuarios')
+    navigate('/Admin') // Redirige a la página de administración
   }
 }
 

@@ -1,3 +1,6 @@
+import axios from 'axios';
+
+
 const API_URL = 'http://127.0.0.1:8000/api/especialistas/';
 
 // Obtener el token del localStorage
@@ -62,9 +65,15 @@ export async function deleteEspecialistas(id) {
   return true;
 }
 
+export const getespecialistas = async () => {
+  const response = await axios.get(`${API_URL}`);
+  return response.data;
+};
+
 export default {
   getEspecialistas,
   postEspecialistas,
   patchEspecialistas,
-  deleteEspecialistas
+  deleteEspecialistas,
+  getespecialistas
 };

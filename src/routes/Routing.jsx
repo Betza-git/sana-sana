@@ -15,6 +15,7 @@ import Clientes from '../pages/Clientes'
 import Empleados from '../pages/Empleados'
 import MetodosDePago from '../pages/MetodosDePago'
 import Payments from '../componentes/Pagos'
+import Serviciosdash from '../pages/Serviciosdash'
 
 
 
@@ -36,7 +37,7 @@ function Routing() {
             <Route path='/NavHome' element={<Home/>}/>
             <Route path='/Especialistas' element={<Especialistas/>}/> 
             <Route path='/Ayuda' element={<Ayuda/>}/> 
-            <Route path='/Servicios' element={<Servicios/>}/> 
+            <Route path='/servicios' element={<Servicios/>}/> 
             <Route path='/Aboutus' element={<Aboutus/>}/>
             <Route path='/Admin' element={<Admin/>}/>
             <Route path='/Usuarios' element={<Usuario/>}/>
@@ -46,6 +47,7 @@ function Routing() {
             <Route path='/Empleados' element={<Empleados/>}/>
             <Route path='/MetodosDePago' element={<MetodosDePago/>}/>
             <Route path='/Pagos' element={<Payments/>}/>
+            <Route path='/serviciosdash' element={<Serviciosdash/>}/>
 
 
 

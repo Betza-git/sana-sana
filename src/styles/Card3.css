@@ -1,32 +1,110 @@
-.card3-container{
-    
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    margin-top: 20vh;
-    color: #ffff;
-    background-color: #515c9da8;
-    height: 165px;
-    width: 175px;
-    position: relative;
-    bottom: 50px;
-    text-align: center;
-    gap: 10px;
-    padding: 15px;
-    
-    
-    
+.card3-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #ffffff;
+  background-color: rgba(81, 92, 157, 0.85);
+  height: 170px;
+  width: 175px;
+  text-align: center;
+  gap: 10px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInUp 1s ease;
+  cursor: default;
 }
-.cont-cards-3{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    gap: 30px;
-    margin-top: 10vh;
-    background-image: url(../src/imagenes/fondoCards.png);
-    position: relative;
-    top: 160px;
+
+.card3-container:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.3);
 }
-.cont-icono{
-    margin: 0 auto;
+
+.card3-container h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.card3-container p {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.cont-cards-3 {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 65px;
+  margin-top: 10vh;
+  padding: 40px 20px;
+  background-image: url(../src/imagenes/fondoCards.png);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  top: 160px;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  .card3-container {
+    width: 45%;
+    height: 160px;
+  }
+
+  .cont-cards-3 {
+    gap: 20px;
+    top: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card3-container {
+    width: 90%;
+    height: auto;
+    padding: 20px 10px;
+  }
+
+  .card3-container h2 {
+    font-size: 1rem;
+  }
+
+  .card3-container p {
+    font-size: 1.5rem;
+  }
+
+  .cont-icono {
+    font-size: 1.8rem;
+  }
+}
+
+.cont-icono {
+  font-size: 2.2rem;
+  margin-bottom: 5px;
+  color: #fafaf7; 
+  animation: pulse 2.5s ease-in-out infinite;
+}
+
+/* Animación de latido suave */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.85;
+  }
 }
