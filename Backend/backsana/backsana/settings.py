@@ -162,5 +162,6 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=5),  # Duración del token de actualización
 }
 
+AUTH_USER_MODEL = 'api.User'
 
 

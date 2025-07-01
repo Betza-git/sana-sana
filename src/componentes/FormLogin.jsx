@@ -1,42 +1,76 @@
-import React from 'react'
-import { useState } from 'react'
-import { useNavigate, useNavigation } from 'react-router-dom'
-import postLogin from '../services/loginservice' 
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { postLogin } from '../services/loginservice' // eliminado getLogin
 import { Link } from 'react-router-dom'
-import '../styles/Login.css' 
+import '../styles/Login.css'
 
 function FormLogin() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [id, setId] = useState('');
   const navigate = useNavigate()
 
-  async function iniciarSesion(e) { 
+  async function iniciarSesion(e) {
     e.preventDefault()
-  const token = await postLogin("api/clientes/login/", { id, email, password }) 
 
-  console.log(token)
+    try {
+      const token = await postLogin({ email, password })
+      console.log("Token recibido:", token)
 
-  if (token.access) {
-    localStorage.setItem("token", token.access)
-    localStorage.setItem("userid", token.user.id)
-    navigate('/Admin') // Redirige a la página de administración
+      if (token.access) {
+        localStorage.setItem("token", token.access)
+        localStorage.setItem("userid", token.user.id)
+        localStorage.setItem("rol", token.user.tipo)
+
+        // Redirección según rol
+        switch (token.user.tipo) {
+          case 'admin':
+            navigate('/Admin')
+            break
+          case 'cliente':
+            navigate('/Usuarios')
+            break
+          case 'especialista':
+            navigate('/Especialistas')
+            break
+          case 'empleado':
+            navigate('/Empleados')
+            break
+          default:
+            navigate('/') // Redirige a inicio si el rol es desconocido
+        }
+      } else {
+        alert("Credenciales inválidas. Verifica tus datos.")
+      }
+    } catch (error) {
+      console.error("Error al iniciar sesión:", error)
+      alert("Error al iniciar sesión. Verifica tu conexión o tus datos.")
+    }
   }
-}
 
-return (
-  <div className='contenedorLogin'>
-    <div>
+  return (
+    <div className='contenedorLogin'>
+      <div>
         <h1 className='titulo'>Inicio de Sesión</h1>
-        <form className='loginForm'>
-          <input type="text" placeholder="Correo Electrónico" onChange={(e) => setEmail(e.target.value)} />
-          <input type="password" placeholder="Contraseña" onChange={(e) => setPassword(e.target.value)} />
+        <form className='loginForm' onSubmit={iniciarSesion}>
+          <input
+            type="text"
+            placeholder="Correo Electrónico"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button className='botonLogin' type="submit">Iniciar Sesión</button>
         </form>
-        <div className='contenedor2'> 
+
+        <div className='contenedor2'>
           <Link to="/recuperar-contrasena" className='linkRecuperar'>¿Olvidaste tu contraseña?</Link>
-          <button className='botonLogin'  onClick={iniciarSesion}>Iniciar Sesión</button>
           <h4 className='titulo1'>¿No tienes cuenta?</h4>
-          <Link to="/registro" className='linkRegistro'>Registrate</Link>
+          <Link to="/registro" className='linkRegistro'>Regístrate</Link>
         </div>
       </div>
     </div>

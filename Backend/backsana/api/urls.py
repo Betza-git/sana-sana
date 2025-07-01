@@ -4,9 +4,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from .views import (
-    ClienteLoginAPIView,
-    EspecialistaLoginAPIView,
-    EmpleadoLoginAPIView,
+    LoginAPIView,
     ClientesListCreate,
     ClientesRetrieveUpdateDestroy,
     EspecialistasListCreate,
@@ -33,12 +31,11 @@ from .views import (
 )
 
 urlpatterns = [
-    path("admin-dashboard/", AdminDashboardAPIView.as_view(), name="admin-dashboard"),
-    path('admin-dashboard/<int:id>/', AdminDashboardAPIView.as_view()),
+    path("admin/", AdminDashboardAPIView.as_view(), name="admin-dashboard"),
+    path('admin/<int:id>/', AdminDashboardAPIView.as_view()),
 
-    path('clientes/login/', ClienteLoginAPIView.as_view(), name='cliente-login'),
-    path('especialistas/login/', EspecialistaLoginAPIView.as_view(), name='especialista-login'),
-    path('empleados/login/', EmpleadoLoginAPIView.as_view(), name='empleado-login'),
+    #Login único usando LoginAPIView  
+    path('login/', LoginAPIView.as_view(), name='login'),
 
     path('clientes/', ClientesListCreate.as_view(), name='clientes-list-create'),
     path('clientes/<int:pk>/', ClientesRetrieveUpdateDestroy.as_view(), name='clientes-detail'),
@@ -63,9 +60,6 @@ urlpatterns = [
 
     path('servicios/', ServiciosListCreate.as_view(), name='servicios-list-create'),
     path('servicios/<int:pk>/', ServiciosRetrieveUpdateDestroy.as_view(), name='servicios-detail'),
-    
-    path('serviciosdash/', ServiciosListCreate.as_view(), name='servicios-list-create'),
-    path('serviciosdash/<int:pk>/', ServiciosRetrieveUpdateDestroy.as_view(), name='servicios-detail'),
 
     path('especialidades/', EspecialidadesListCreate.as_view(), name='especialidades-list-create'),
     path('especialidades/<int:pk>/', EspecialidadesRetrieveUpdateDestroy.as_view(), name='especialidades-detail'),
@@ -75,5 +69,4 @@ urlpatterns = [
 
     path('pago/', PagoListCreate.as_view(), name='pago-list-create'),
     path('pago/<int:pk>/', PagoRetrieveUpdateDestroy.as_view(), name='pago-detail'),
-
 ]
