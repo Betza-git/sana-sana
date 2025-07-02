@@ -19,6 +19,7 @@ import Serviciosdash from '../pages/Serviciosdash'
 
 
 
+
 function Routing() {
   return (
     <Router>
@@ -48,6 +49,7 @@ function Routing() {
             <Route path='/MetodosDePago' element={<MetodosDePago/>}/>
             <Route path='/Pagos' element={<Payments/>}/>
             <Route path='/serviciosdash' element={<Serviciosdash/>}/>
+            <Route path='/Usuarios' element={<Usuario/>}/>
 
 
 

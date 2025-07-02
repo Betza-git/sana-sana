@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { postLogin } from '../services/loginservice' // eliminado getLogin
+import { postLogin } from '../services/loginservice' 
 import { Link } from 'react-router-dom'
 import '../styles/Login.css'
 

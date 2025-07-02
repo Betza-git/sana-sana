@@ -35,7 +35,8 @@ const getEmpleados = async () => {
 };
 
 
-// POST crear usuario/admin/empleado/especialista según urlSuffix dinámico
+// POST crear usuario/admin/empleado/especialista según urlSuffix dinámico, urlSuffix lo que hace es 
+// que se le pasa como parametro
 const postAdmin = async (urlSuffix, data) => {
   const response = await fetch(`${API_URL}/${urlSuffix}/`, {
     method: 'POST',

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import '../styles/Especialista.css';
+import { Link } from "react-router-dom";
 
 const Especialistasc = () => {
   const [formData, setFormData] = useState({
@@ -138,12 +139,17 @@ const Especialistasc = () => {
   return (
     <div className="containerespecialistas">
       <h1 className="text-center my-4">Área de Profesionales</h1>
+       <div className="volver-panel" align="center">
+            <Link to="/Admin" className="btn btn-primary">
+            Volver al Panel de Administración</Link>
+            </div><br />
 
       <div className="text-center mb-4">
         <button className="btn btn-primary" onClick={() => setMostrarFormulario(!mostrarFormulario)}>
           {mostrarFormulario ? 'Cerrar Formulario' : 'Registrar Especialista'}
         </button>
       </div>
+    
 
       {mostrarFormulario && (
         <div className="row mb-5">

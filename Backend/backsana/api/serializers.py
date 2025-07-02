@@ -1,9 +1,7 @@
-# serializers.py - Corregido y optimizado
-
 from rest_framework import serializers
 from django.core.validators import EmailValidator
 from django.utils import timezone
-from .models import clientes, especialistas, empleados, citas, encuestas_estres, sesiones_terapia, especialistas_servicios, servicios, especialidades, metodopago, pago, User
+from .models import *
 
 
 class LoginSerializer(serializers.Serializer):

@@ -3,32 +3,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from .views import (
-    LoginAPIView,
-    ClientesListCreate,
-    ClientesRetrieveUpdateDestroy,
-    EspecialistasListCreate,
-    EspecialistasRetrieveUpdateDestroy,
-    EmpleadosListCreate,
-    EmpleadosRetrieveUpdateDestroy,
-    CitasListCreate,
-    CitasRetrieveUpdateDestroy,
-    EncuestasEstresListCreate,
-    EncuestasEstresRetrieveUpdateDestroy,
-    SesionesTerapiaListCreate,
-    SesionesTerapiaRetrieveUpdateDestroy,
-    EspecialistasServiciosListCreate,
-    EspecialistasServiciosRetrieveUpdateDestroy,
-    EspecialidadesListCreate,
-    EspecialidadesRetrieveUpdateDestroy,
-    ServiciosListCreate,
-    ServiciosRetrieveUpdateDestroy,
-    MetodoPagoListCreate,
-    MetodosPagoRetrieveUpdateDestroy,
-    PagoListCreate,
-    PagoRetrieveUpdateDestroy,
-    AdminDashboardAPIView,
-)
+from .views import *
 
 urlpatterns = [
     path("admin/", AdminDashboardAPIView.as_view(), name="admin-dashboard"),

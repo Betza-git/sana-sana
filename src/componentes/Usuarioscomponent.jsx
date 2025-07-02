@@ -1,289 +1,259 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-
-import { getUsuario, patchUsuario, deleteUsuario } from '../services/usuarioservices';
-import { getCitasUsuario, postCita, patchCita, deleteCita } from '../services/citas';
-import { getespecialistas } from '../services/Especialistas';
-import { getServicios } from '../services/Servicios';
-import { getEspecialidades } from '../services/especialidadesservices';
-
+import {getMiUsuario,
+  patchMiUsuario,
+  deleteMiUsuario,
+  getAllUsuarios } from '../services/usuarioservices';
+import { getCitasUsuario,
+  postCita, 
+  patchCita,
+  deleteCita,
+  getCita } from '../services/citas';
 import '../styles/usuario.css';
 
-const Usuarios = () => {
-  const navigate = useNavigate();
-  const id = localStorage.getItem('userid');
 
-  const [usuario, setUsuario] = useState(null);
-  const [especialistas, setEspecialistas] = useState([]);
-  const [servicios, setServicios] = useState([]);
-  const [especialidades, setEspecialidades] = useState([]);
-  const [citas, setCitas] = useState([]);
+function Usuario() {
+  // Estado cliente
+  const [cliente, setCliente] = useState(null);
+  const [editandoCliente, setEditandoCliente] = useState(false);
 
-  const [form, setForm] = useState({
-    nombre: '', numero_identificacion: '', email: '', password: '',
-    fechaNac: '', genero1: '', telefono: ''
-  });
-
-  const [nuevaCita, setNuevaCita] = useState({
-    cliente: id, especialista: '', servicio: '', fecha: '',
-    hora: '', estado: 'pendiente', observaciones: ''
-  });
-
-  const [editMode, setEditMode] = useState(false);
-  const [editCitaId, setEditCitaId] = useState(null);
+  // Estado citas
+  const [citas, setCitas] = useState([]); 
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  // Formulario citas
+  const [formCita, setFormCita] = useState({
+    id: null,
+    servicio: '',
+    fecha: '',
+    hora: '',
+    observaciones: '',
+  });
+  const [editandoCita, setEditandoCita] = useState(false);
+
+  // Cargar perfil y citas al montar
   useEffect(() => {
-    const cargarDatos = async () => {
-      try {
-        if (!id) throw new Error('No se encontró ID de usuario en localStorage');
-
-        const [userData, citasData, especialistasData, serviciosData, especialidadesData] = await Promise.all([
-          getUsuario(id),
-          getCitasUsuario(id),
-          getespecialistas(),
-          getServicios(),
-          getEspecialidades()
-        ]);
-
-        if (!userData) throw new Error('Usuario no encontrado');
-
-        setUsuario(userData);
-        setForm({
-          nombre: userData.nombre || '',
-          numero_identificacion: userData.numero_identificacion || '',
-          email: userData.email || '',
-          password: '',
-          fechaNac: userData.fechaNac || '',
-          genero1: userData.genero1 || '',
-          telefono: userData.telefono || ''
-        });
-
-        setCitas(citasData);
-        setEspecialistas(especialistasData);
-        setServicios(serviciosData);
-        setEspecialidades(especialidadesData);
-      } catch (error) {
-        Swal.fire('Error', error.message || 'Error cargando datos', 'error');
-      } finally {
-        setLoading(false);
-      }
-    };
     cargarDatos();
-  }, [id]);
+  }, []);
 
-  const handleInputChange = e =>
-    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
-
-  const handleGuardarUsuario = async () => {
+  const cargarDatos = async () => {
     try {
-      const updated = await patchUsuario(id, form);
-      setUsuario(updated);
-      setEditMode(false);
-      Swal.fire('Éxito', 'Información actualizada', 'success');
-    } catch {
-      Swal.fire('Error', 'No se pudo actualizar la información', 'error');
+      setLoading(true);
+      const perfilData = await getMiUsuario();
+      setCliente(perfilData);
+      const citasData = await getCitasUsuario();
+      setCitas(citasData);
+      setLoading(false);
+    } catch (e) {
+      setError(e);
+      setLoading(false);
     }
   };
 
-  const handleEliminarUsuario = async () => {
-    const confirm = await Swal.fire({
-      title: '¿Eliminar cuenta?',
-      text: 'Esta acción eliminará todos tus datos. ¿Deseas continuar?',
-      icon: 'warning', showCancelButton: true,
+  // Manejo formulario cliente
+  const handleChangeCliente = (e) => {
+    setCliente({ ...cliente, [e.target.name]: e.target.value });
+  };
+
+  const guardarCliente = async () => {
+    try {
+      await patchMiUsuario(cliente);
+      Swal.fire('¡Éxito!', 'Perfil actualizado correctamente', 'success');
+      setEditandoCliente(false);
+      cargarDatos();
+    } catch (e) {
+      Swal.fire('Error', 'No se pudo actualizar el perfil', 'error');
+    }
+  };
+
+  const eliminarCliente = async () => {
+    const result = await Swal.fire({
+      title: '¿Eliminar tu cuenta?',
+      text: 'Esta acción no se puede deshacer',
+      icon: 'warning',
+      showCancelButton: true,
       confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'Cancelar'
+      cancelButtonText: 'Cancelar',
     });
-    if (confirm.isConfirmed) {
+
+    if (result.isConfirmed) {
       try {
-        await deleteUsuario(id);
-        localStorage.clear();
-        Swal.fire('Cuenta eliminada', 'Tu cuenta ha sido eliminada exitosamente.', 'success');
-        navigate('/');
+        await deleteMiUsuario();
+        Swal.fire('Cuenta eliminada', 'Tu cuenta ha sido eliminada', 'success');
+        // Redirigir o hacer logout aquí
       } catch {
         Swal.fire('Error', 'No se pudo eliminar la cuenta', 'error');
       }
     }
   };
 
-  const handleCitaChange = e =>
-    setNuevaCita(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  // Manejo formulario citas
+  const handleChangeCita = (e) => {
+    setFormCita({ ...formCita, [e.target.name]: e.target.value });
+  };
 
-  const handleGuardarCita = async () => {
-    const { especialista, servicio, fecha, hora, observaciones } = nuevaCita;
-    if (!especialista || !servicio || !fecha || !hora || !observaciones)
-      return Swal.fire('Error', 'Todos los campos son obligatorios', 'error');
-
+  const agregarCita = async () => {
+    if (!formCita.servicio || !formCita.fecha || !formCita.hora) {
+      Swal.fire('Error', 'Completa todos los campos requeridos', 'error');
+      return;
+    }
     try {
-      if (editCitaId) {
-        await patchCita(editCitaId, nuevaCita);
-        Swal.fire('Éxito', 'Cita actualizada', 'success');
-      } else {
-        await postCita(nuevaCita);
-        Swal.fire('Éxito', 'Cita creada', 'success');
-      }
-      setEditCitaId(null);
-      setNuevaCita({
-        cliente: id, especialista: '', servicio: '', fecha: '',
-        hora: '', estado: 'pendiente', observaciones: ''
-      });
-      setCitas(await getCitasUsuario(id));
+      await postCita(formCita);
+      Swal.fire('¡Éxito!', 'Cita agregada', 'success');
+      setFormCita({ id: null, servicio: '', fecha: '', hora: '', observaciones: '' });
+      cargarDatos();
     } catch {
-      Swal.fire('Error', 'No se pudo guardar la cita', 'error');
+      Swal.fire('Error', 'No se pudo agregar la cita', 'error');
     }
   };
 
-  const handleEditarCita = cita => {
-    setNuevaCita({
-      cliente: id,
-      especialista: cita.especialista,
+  const editarCita = (cita) => {
+    setFormCita({
+      id: cita.id,
       servicio: cita.servicio,
       fecha: cita.fecha,
       hora: cita.hora,
-      estado: cita.estado,
-      observaciones: cita.observaciones
+      observaciones: cita.observaciones,
     });
-    setEditCitaId(cita.id);
+    setEditandoCita(true);
   };
 
-  const handleEliminarCita = async citaId => {
-    const confirm = await Swal.fire({
-      title: '¿Eliminar cita?',
-      text: 'Esta acción no se puede deshacer',
-      icon: 'warning', showCancelButton: true,
+  const guardarCitaEditada = async () => {
+    try {
+      await patchCita(formCita.id, formCita);
+      Swal.fire('¡Éxito!', 'Cita actualizada', 'success');
+      setFormCita({ id: null, servicio: '', fecha: '', hora: '', observaciones: '' });
+      setEditandoCita(false);
+      cargarDatos();
+    } catch {
+      Swal.fire('Error', 'No se pudo actualizar la cita', 'error');
+    }
+  };
+
+  const eliminarCita = async (id) => {
+    const result = await Swal.fire({
+      title: '¿Eliminar esta cita?',
+      icon: 'warning',
+      showCancelButton: true,
       confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'Cancelar'
+      cancelButtonText: 'Cancelar',
     });
-    if (confirm.isConfirmed) {
+
+    if (result.isConfirmed) {
       try {
-        await deleteCita(citaId);
-        Swal.fire('Eliminada', 'Cita eliminada con éxito', 'success');
-        setCitas(await getCitasUsuario(id));
+        await deleteCita(id);
+        Swal.fire('Eliminada', 'Cita eliminada correctamente', 'success');
+        cargarDatos();
       } catch {
         Swal.fire('Error', 'No se pudo eliminar la cita', 'error');
       }
     }
   };
 
-  if (loading) return <p className="clientes-admin loading">Cargando datos...</p>;
+  if (loading) return <p>Cargando...</p>;
+  if (error) return <p>Error: {error.message || error.toString()}</p>;
 
   return (
-    <div className="clientes-admin">
-      <Link to="/" className="btn btn-cancel mb-3">Volver a inicio</Link>
+    <div className="cliente-dashboard">
+      <h1>Mi Perfil</h1>
 
-      <h1>Perfil de Usuario</h1>
-      <div className="formulario-container">
-        {editMode ? (
-          <div className="cliente-form">
-            {['nombre', 'numero_identificacion', 'email', 'password', 'fechaNac', 'telefono'].map(field => (
-              <div key={field} className="form-group">
-                <label>{field.charAt(0).toUpperCase() + field.slice(1).replace('_', ' ')}:</label>
-                <input
-                  name={field}
-                  type={field === 'email' ? 'email' : field === 'password' ? 'password' : field === 'fechaNac' ? 'date' : 'text'}
-                  value={form[field]}
-                  onChange={handleInputChange}
-                  className="form-input"
-                  placeholder={field.charAt(0).toUpperCase() + field.slice(1).replace('_', ' ')}
-                />
-              </div>
-            ))}
-            <div className="form-group">
-              <label>Género:</label>
-              <select name="genero1" value={form.genero1} onChange={handleInputChange} className="form-input">
-                <option value="">Seleccione género</option>
-                <option value="masculino">Masculino</option>
-                <option value="femenino">Femenino</option>
-                <option value="otro">Otro</option>
-              </select>
-            </div>
-            <div className="form-buttons">
-              <button className="btn btn-success" onClick={handleGuardarUsuario}>Guardar Cambios</button>
-              <button className="btn btn-cancel" onClick={() => setEditMode(false)}>Cancelar</button>
-            </div>
-          </div>
-        ) : (
-          <div className="cliente-info">
-            {Object.entries(usuario).map(([key, value]) =>
-              <p key={key}><strong>{key.replace('_', ' ').toUpperCase()}:</strong> {key === 'password' ? '********' : value}</p>
-            )}
-            <div className="form-buttons">
-              <button className="btn btn-edit" onClick={() => setEditMode(true)}>Editar Información</button>
-              <button className="btn btn-delete" onClick={handleEliminarUsuario}>Eliminar Cuenta</button>
-            </div>
-          </div>
-        )}
-      </div>
+      {!editandoCliente ? (
+        <div>
+          <p><b>Nombre:</b> {cliente.nombre}</p>
+          <p><b>Email:</b> {cliente.email}</p>
+          <p><b>Teléfono:</b> {cliente.telefono}</p>
+          <p><b>Fecha de Nacimiento:</b> {cliente.fechaNac}</p>
+          <p><b>Género:</b> {cliente.genero1}</p>
 
-      <div className="clientes-lista">
-        <h2>Citas Agendadas</h2>
-        {citas.length === 0 ? <p className="no-clientes">No tienes citas registradas.</p> : (
-          <div className="clientes-grid">
-            {citas.map(cita => (
-              <div key={cita.id} className="cliente-card">
-                <div className="cliente-info">
-                  <p><strong>Fecha:</strong> {cita.fecha}</p>
-                  <p><strong>Hora:</strong> {cita.hora}</p>
-                  <p><strong>Servicio:</strong> {servicios.find(s => s.id === cita.servicio)?.nombre || cita.servicio}</p>
-                  <p><strong>Especialista:</strong> {especialistas.find(e => e.id === cita.especialista)?.nombre || cita.especialista}</p>
-                  <p><strong>Estado:</strong> {cita.estado}</p>
-                  <p><strong>Observaciones:</strong> {cita.observaciones}</p>
-                </div>
-                <div className="cliente-actions">
-                  <button className="btn btn-edit" onClick={() => handleEditarCita(cita)}>Editar</button>
-                  <button className="btn btn-delete" onClick={() => handleEliminarCita(cita.id)}>Eliminar</button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <div className="formulario-container">
-        <h2>{editCitaId ? 'Editar Cita' : 'Agendar Nueva Cita'}</h2>
-        <div className="cliente-form">
-          {[{
-            name: 'especialista', options: especialistas
-          }, {
-            name: 'servicio', options: servicios
-          }].map(({ name, options }) => (
-            <div key={name} className="form-group">
-              <label>{name.charAt(0).toUpperCase() + name.slice(1)}:</label>
-              <select
-                name={name}
-                value={nuevaCita[name]}
-                onChange={handleCitaChange}
-                className="form-input"
-              >
-                <option value="">Seleccione {name}</option>
-                {options.map(opt => (
-                  <option key={opt.id} value={opt.id}>{opt.nombre}</option>
-                ))}
-              </select>
-            </div>
-          ))}
-          <div className="form-group">
-            <label>Fecha:</label>
-            <input name="fecha" type="date" value={nuevaCita.fecha} onChange={handleCitaChange} className="form-input" />
-          </div>
-          <div className="form-group">
-            <label>Hora:</label>
-            <input name="hora" type="time" value={nuevaCita.hora} onChange={handleCitaChange} className="form-input" />
-          </div>
-          <div className="form-group">
-            <label>Observaciones:</label>
-            <textarea name="observaciones" value={nuevaCita.observaciones} onChange={handleCitaChange} className="form-input" placeholder="Observaciones" />
-          </div>
-          <div className="form-buttons">
-            <button className="btn btn-success" onClick={handleGuardarCita}>
-              {editCitaId ? 'Actualizar Cita' : 'Agendar Cita'}
-            </button>
-          </div>
+          <button onClick={() => setEditandoCliente(true)}>Editar Perfil</button>
+          <button onClick={eliminarCliente} style={{ marginLeft: 10, color: 'red' }}>Eliminar Cuenta</button>
         </div>
+      ) : (
+        <form onSubmit={(e) => { e.preventDefault(); guardarCliente(); }}>
+          <label>
+            Nombre:
+            <input name="nombre" value={cliente.nombre} onChange={handleChangeCliente} required />
+          </label>
+          <label>
+            Email:
+            <input name="email" type="email" value={cliente.email} onChange={handleChangeCliente} required />
+          </label>
+          <label>
+            Teléfono:
+            <input name="telefono" value={cliente.telefono} onChange={handleChangeCliente} required />
+          </label>
+          <label>
+            Fecha de Nacimiento:
+            <input name="fechaNac" type="date" value={cliente.fechaNac || ''} onChange={handleChangeCliente} />
+          </label>
+          <label>
+            Género:
+            <select name="genero1" value={cliente.genero1 || ''} onChange={handleChangeCliente} required>
+              <option value="">Seleccione</option>
+              <option value="masculino">Masculino</option>
+              <option value="femenino">Femenino</option>
+              <option value="otro">Otro</option>
+            </select>
+          </label>
+          <button type="submit">Guardar Cambios</button>
+          <button type="button" onClick={() => setEditandoCliente(false)}>Cancelar</button>
+        </form>
+      )}
+
+      <hr />
+
+      <h2>Mis Citas</h2>
+      <button onClick={() => setFormCita({ id: null, servicio: '', fecha: '', hora: '', observaciones: '' }) && setEditandoCita(false)}>
+        Agregar Nueva Cita
+      </button>
+
+      {editandoCita && (
+        <form onSubmit={e => {
+          e.preventDefault();
+          editandoCita ? guardarCitaEditada() : agregarCita();
+        }}>
+          <label>
+            Servicio:
+            <input name="servicio" value={formCita.servicio} onChange={handleChangeCita} required />
+          </label>
+          <label>
+            Fecha:
+            <input name="fecha" type="date" value={formCita.fecha} onChange={handleChangeCita} required />
+          </label>
+          <label>
+            Hora:
+            <input name="hora" type="time" value={formCita.hora} onChange={handleChangeCita} required />
+          </label>
+          <label>
+            Observaciones:
+            <textarea name="observaciones" value={formCita.observaciones} onChange={handleChangeCita} />
+          </label>
+          <button type="submit">{editandoCita ? 'Guardar Cambios' : 'Agregar Cita'}</button>
+          <button type="button" onClick={() => {
+            setEditandoCita(false);
+            setFormCita({ id: null, servicio: '', fecha: '', hora: '', observaciones: '' });
+          }}>Cancelar</button>
+        </form>
+      )}
+
+      <div>
+        {citas.length === 0 ? (
+          <p>No tienes citas registradas.</p>
+        ) : (
+          <ul>
+            {citas.map((cita) => (
+              <li key={cita.id}>
+                <b>{cita.servicio}</b> - {cita.fecha} {cita.hora}  
+                <button onClick={() => editarCita(cita)} style={{ marginLeft: 10 }}>Editar</button>
+                <button onClick={() => eliminarCita(cita.id)} style={{ marginLeft: 5, color: 'red' }}>Eliminar</button>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
-};
+}
 
-export default Usuarios;
+export default Usuario;

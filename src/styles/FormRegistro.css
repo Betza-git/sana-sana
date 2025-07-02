@@ -1,108 +1,489 @@
+/* ===== ESTILOS PARA PÁGINA DE SALUD MENTAL - MORADO Y AZUL ===== */
+
+/* Contenedor principal con fondo dinámico generado por CSS */
 .navRegistro {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #9ebdd49e;
-    background-image: url('../imagenes/sasha-matic-H_yCnWeSUEM-unsplash.jpg'); 
-    background-size: cover;
-    background-position: center;
-    background-blend-mode: overlay;
-    padding: 10px;
-    margin-left: 2%;
-} 
+    min-height: 100vh;
+    background: linear-gradient(135deg, 
+        #667eea 0%,
+        #764ba2 25%,
+        #6a5acd 50%,
+        #4a90e2 75%,
+        #5b6cd4 100%
+    );
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-.contenedorRegistro {
-    background-color: rgba(36, 50, 58, 0.792);
-    padding: 30px; 
-    border-radius: 18px;
-    box-shadow: 0 6px 20px rgba(62, 96, 12, 0.347);
-    max-width: 450px;
+/* Formas geométricas animadas de fondo */
+.navRegistro::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(102, 126, 234, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(118, 75, 162, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(74, 144, 226, 0.25) 0%, transparent 50%);
+    animation: floatingShapes 15s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.navRegistro::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-   
+    height: 100%;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    animation: patternMove 20s linear infinite;
+    pointer-events: none;
 }
 
+@keyframes floatingShapes {
+    0%, 100% { 
+        transform: translateY(0px) rotate(0deg) scale(1);
+        opacity: 0.3;
+    }
+    33% { 
+        transform: translateY(-30px) rotate(120deg) scale(1.1);
+        opacity: 0.6;
+    }
+    66% { 
+        transform: translateY(-15px) rotate(240deg) scale(0.9);
+        opacity: 0.4;
+    }
+}
+
+@keyframes patternMove {
+    0% { transform: translateX(0) translateY(0); }
+    100% { transform: translateX(60px) translateY(60px); }
+}
+
+/* Contenedor del formulario con diseño de salud mental */
+.contenedorRegistro {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(118, 75, 162, 0.2);
+    padding: 45px;
+    border-radius: 30px;
+    box-shadow: 
+        0 25px 50px rgba(102, 126, 234, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    max-width: 500px;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+    transform: translateY(0);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    animation: slideInUp 0.8s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.contenedorRegistro:hover {
+    transform: translateY(-8px);
+    box-shadow: 
+        0 35px 70px rgba(102, 126, 234, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+/* Título con diseño de salud mental */
 .contenedorRegistro h2 {
-    color: #6d8b74; 
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #6a5acd 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     text-align: center;
-    margin-bottom: 30px;
-    font-size: 26px;
-    font-weight: 300;
-    letter-spacing: 0.5px;
-}
-
-.formularioRegistro {
+    margin-bottom: 40px;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    position: relative;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
 }
 
+/* Icono de bienestar mental antes del título */
+.contenedorRegistro h2::before {
+    content: '🧠';
+    font-size: 36px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.contenedorRegistro h2::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #667eea, #764ba2, transparent);
+    border-radius: 2px;
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes shimmer {
+    0%, 100% { opacity: 0.5; transform: translateX(-50%) scaleX(0.5); }
+    50% { opacity: 1; transform: translateX(-50%) scaleX(1); }
+}
+
+/* Formulario con iconos */
+.formularioRegistro {
+    display: grid;
+    gap: 25px;
+    position: relative;
+}
+
+/* Grupo de input con icono */
+.input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+/* Inputs con espaciado para iconos */
 .formularioRegistro input,
 .formularioRegistro select {
-    padding: 14px 18px;
-    border: 1px solid #d1e3d7;
-    border-radius: 10px;
-    font-size: 15px;
-    background-color: #f8faf9;
-    transition: all 0.25s ease;
-    color: #5a6d5a;
+    width: 100%;
+    padding: 18px 24px 18px 55px;
+    border: 2px solid rgba(102, 126, 234, 0.2);
+    border-radius: 15px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.8);
+    color: #4a5568;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 500;
+    box-shadow: 0 2px 10px rgba(102, 126, 234, 0.1);
+}
+
+.formularioRegistro input::placeholder {
+    color: rgba(102, 126, 234, 0.6);
+    transition: all 0.3s ease;
 }
 
 .formularioRegistro input:focus,
 .formularioRegistro select:focus {
     outline: none;
-    border-color: #a8c4b8;
-    box-shadow: 0 0 0 3px rgba(168, 196, 184, 0.25);
-}
-
-.formularioRegistro input::placeholder {
-    color: #b8c4b8;
-}
-
-.formularioRegistro select {
-    appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236d8b74'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 15px center;
-    background-size: 15px;
-}
-
-.registro {
-    background-color: #88b0a0; 
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s;
-    margin-top: 5px;
-    letter-spacing: 0.5px;
-}
-
-.registro:hover {
-    background-color: #0c589e;
+    border-color: #667eea;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 
+        0 0 0 4px rgba(102, 126, 234, 0.15),
+        0 10px 25px rgba(102, 126, 234, 0.2);
     transform: translateY(-2px);
 }
 
-.cont-link {
-    text-align: center;
-    margin-top: 15px;
+.formularioRegistro input:focus + .input-icon,
+.formularioRegistro select:focus + .input-icon {
+    color: #667eea;
+    transform: translateY(-50%) scale(1.1);
 }
 
+/* Select personalizado con icono de dropdown */
+.formularioRegistro select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23667eea'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 20px center;
+    background-size: 20px;
+    cursor: pointer;
+}
+
+/* Iconos específicos para cada campo */
+.icon-user::before { content: '👤'; }
+.icon-email::before { content: '📧'; }
+.icon-phone::before { content: '📱'; }
+.icon-date::before { content: '📅'; }
+.icon-gender::before { content: '⚧️'; }
+.icon-password::before { content: '🔒'; }
+.icon-location::before { content: '📍'; }
+.icon-heart::before { content: '💜'; }
+
+/* Botón con diseño de salud mental */
+.registro {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #6a5acd 100%);
+    color: white;
+    border: none;
+    padding: 20px 30px;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.registro::before {
+    content: '✨';
+    font-size: 20px;
+    animation: sparkle 1.5s ease-in-out infinite;
+}
+
+.registro::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.registro:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+.registro:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 50%, #553c9a 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+}
+
+@keyframes sparkle {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.2) rotate(180deg); }
+}
+
+/* Contenedor de enlace con icono */
+.cont-link {
+    text-align: center;
+    margin-top: 30px;
+    position: relative;
+}
+
+.cont-link::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+}
+
+/* Texto de enlace con icono */
 .textoIniciar {
-    color: #d0e4dd;
-    font-size: 14px;
-    transition: all 0.2s;
+    color: #667eea;
+    font-size: 16px;
+    transition: all 0.3s ease;
     letter-spacing: 0.5px;
+    text-decoration: none;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+}
+
+.textoIniciar::before {
+    content: '🚪';
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+
+.textoIniciar::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    transition: width 0.3s ease;
 }
 
 .textoIniciar:hover {
-    color: #36deb7;
-    text-decoration: underline;
+    color: #764ba2;
+    transform: translateY(-1px);
 }
 
+.textoIniciar:hover::before {
+    transform: scale(1.2);
+}
 
+.textoIniciar:hover::after {
+    width: 100%;
+}
+
+/* Personalización del picker de fecha */
 input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: sepia(0.5) hue-rotate(100deg) saturate(0.5);
+    filter: hue-rotate(220deg) saturate(1.5);
     cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    background: rgba(102, 126, 234, 0.1);
+    transform: scale(1.1);
+}
+
+/* Indicadores de validación */
+.formularioRegistro input:valid {
+    border-color: #48bb78;
+    box-shadow: 0 0 0 1px rgba(72, 187, 120, 0.2);
+}
+
+.formularioRegistro input:invalid:not(:placeholder-shown) {
+    border-color: #f56565;
+    box-shadow: 0 0 0 1px rgba(245, 101, 101, 0.2);
+}
+
+/* Estados de carga */
+.loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.2), transparent);
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .navRegistro {
+        padding: 15px;
+    }
+    
+    .contenedorRegistro {
+        padding: 35px 25px;
+        margin: 10px;
+        border-radius: 25px;
+    }
+    
+    .contenedorRegistro h2 {
+        font-size: 26px;
+        margin-bottom: 30px;
+    }
+    
+    .formularioRegistro input,
+    .formularioRegistro select {
+        padding: 16px 20px 16px 50px;
+        font-size: 15px;
+    }
+    
+    .registro {
+        padding: 18px 25px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contenedorRegistro {
+        padding: 30px 20px;
+        max-width: 95%;
+    }
+    
+    .contenedorRegistro h2 {
+        font-size: 22px;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .formularioRegistro input,
+    .formularioRegistro select {
+        padding: 14px 18px 14px 45px;
+        font-size: 14px;
+    }
+    
+    .input-icon {
+        left: 15px;
+        font-size: 18px;
+    }
+}
+
+/* Animaciones de entrada escalonada */
+.formularioRegistro > * {
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+.formularioRegistro > *:nth-child(1) { animation-delay: 0.1s; }
+.formularioRegistro > *:nth-child(2) { animation-delay: 0.2s; }
+.formularioRegistro > *:nth-child(3) { animation-delay: 0.3s; }
+.formularioRegistro > *:nth-child(4) { animation-delay: 0.4s; }
+.formularioRegistro > *:nth-child(5) { animation-delay: 0.5s; }
+.formularioRegistro > *:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Efecto de respiración para elementos de bienestar */
+.contenedorRegistro {
+    animation: breathe 4s ease-in-out infinite;
+}
+
+@keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
 }

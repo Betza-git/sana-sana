@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getAdmin, getAdminById, getUsuarios, getEspecialistas, getEmpleados, postAdmin, 
-  patchAdmin, deleteAdmin} from "../services/Admin";
+import {
+  getAdmin, getAdminById, getUsuarios, getEspecialistas, getEmpleados, postAdmin,
+  patchAdmin, deleteAdmin
+} from "../services/Admin";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import "../styles/Admin.css";
@@ -36,6 +38,7 @@ const Admin = () => {
     }
   }, [usuarios, especialistas, dataLoaded]);
 
+  // Obtener datos iniciales del servidor
   function getInitialFormData() {
     return {
       nombre: "", numero_identificacion: "", fecha_nacimiento: "", telefono: "",
@@ -62,29 +65,30 @@ const Admin = () => {
     }
   };
 
+
   const loadData = async () => {
-  try {
-    setLoading(true);
-    const [usuariosData, empleadosData, especialistasData] = await Promise.all([
-      getUsuarios(),
-      getAdmin(), // empleados
-      getEspecialistas()
-      
-    ]);
+    try {
+      setLoading(true);
+      const [usuariosData, empleadosData, especialistasData] = await Promise.all([
+        getUsuarios(),
+        getAdmin(), // empleados
+        getEspecialistas()
 
-    setUsuarios(usuariosData);
-    setEspecialistas(especialistasData);
-    
-    // setEmpleados(empleadosData); 
+      ]);
 
-    setDataLoaded(true);
-  } catch (error) {
-    console.error("Error cargando datos:", error);
-    Swal.fire("Error", "No se pudieron cargar los datos", "error");
-  } finally {
-    setLoading(false);
-  }
-};
+      setUsuarios(usuariosData);
+      setEspecialistas(especialistasData);
+
+
+      // Actualizar especialidades desde los especialistas
+      setDataLoaded(true);
+    } catch (error) {
+      console.error("Error cargando datos:", error);
+      Swal.fire("Error", "No se pudieron cargar los datos", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
 
 
   // Validar consistencia de datos
@@ -93,7 +97,7 @@ const Admin = () => {
     const duplicateIds = allUsers
       .map(u => u.id)
       .filter((id, index, arr) => arr.indexOf(id) !== index);
-      
+
     if (duplicateIds.length > 0) {
       console.warn("IDs duplicados encontrados:", duplicateIds);
       refreshDataAfterOperation();
@@ -114,7 +118,7 @@ const Admin = () => {
           confirmButtonText: "Reintentar",
           cancelButtonText: "Cancelar"
         });
-        
+
         if (result.isConfirmed) {
           return await operation();
         }
@@ -132,6 +136,7 @@ const Admin = () => {
     return true;
   };
 
+  // Construir datos a enviar 
   const buildDataToSend = () => {
     const commonFields = {
       nombre: formData.nombre,
@@ -156,7 +161,7 @@ const Admin = () => {
     return roleSpecific[formData.rol] || { url: "", data: {} };
   };
 
-  // CREAR usuario/especialista/empleado/admin según rol
+  // CREAR usuario/especialista/empleado/admin
   const handleCreate = async (e) => {
     e.preventDefault();
     if (!validatePasswords()) return;
@@ -180,7 +185,7 @@ const Admin = () => {
     }
   };
 
-  // ACTUALIZAR usuario/especialista/empleado/admin según rol
+  // ACTUALIZAR usuario/especialista/empleado/admin 
   const handleUpdate = async (e) => {
     e.preventDefault();
     if (formData.password && !validatePasswords()) return;
@@ -241,7 +246,6 @@ const Admin = () => {
     }
   };
 
-  // ==================== Utilidades ====================
   // Actualizar arrays según rol y acción
   const updateStateByRole = (user, rol, action) => {
     const updater = (arr) => {
@@ -257,6 +261,7 @@ const Admin = () => {
     }
   };
 
+  // Obtener usuario por ID
   const getUserById = (id) => {
     return usuarios.find((u) => u.id === id) || especialistas.find((e) => e.id === id);
   };
@@ -282,18 +287,21 @@ const Admin = () => {
     setShowModal(true);
   };
 
+  // Manejo de la adición de usuarios
   const handleAdd = () => {
     setEditingUser(null);
     setFormData(getInitialFormData());
     setShowModal(true);
   };
 
+  // Reiniciar formulario
   const resetForm = () => {
     setFormData(getInitialFormData());
     setEditingUser(null);
     setShowModal(false);
   };
 
+  // Manejo de cambios en los inputs del formulario
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -323,7 +331,7 @@ const Admin = () => {
           <ul className="sidebar-list">
             {[
               { path: "/", label: "Home" },
-              { path: "/Clientes", label: "Clientes" },
+              { path: "/Clientes", label: "Usuarios" },
               { path: "/especialistas", label: "Especialistas" },
               { path: "/empleados", label: "Empleados" },
               { path: "/pagos", label: "Pagos" },
@@ -344,9 +352,9 @@ const Admin = () => {
         <header className="main-header">
           <h1>Panel de Administración</h1>
           <p>Bienvenido</p>
-          <button 
-            onClick={handleRefreshData} 
-            disabled={loading} 
+          <button
+            onClick={handleRefreshData}
+            disabled={loading}
             className="refresh-button"
             title="Refrescar datos"
           >
@@ -411,18 +419,18 @@ const Admin = () => {
                       <td>{user.estado}</td>
                       <td>{user.fecha_contratacion ? new Date(user.fecha_contratacion).toLocaleDateString() : ""}</td>
                       <td className="acciones-cell">
-                        <button 
-                          onClick={() => handleEdit(user)} 
-                          disabled={loading} 
-                          className="edit-button" 
+                        <button
+                          onClick={() => handleEdit(user)}
+                          disabled={loading}
+                          className="edit-button"
                           title="Editar"
                         >
                           ✏️
                         </button>
-                        <button 
-                          onClick={() => handleDelete(user.id)} 
-                          disabled={loading} 
-                          className="delete-button" 
+                        <button
+                          onClick={() => handleDelete(user.id)}
+                          disabled={loading}
+                          className="delete-button"
                           title="Eliminar"
                         >
                           🗑️
@@ -460,18 +468,18 @@ const Admin = () => {
                       <td>{especialista.especialidades}</td>
                       <td>{especialista.estado}</td>
                       <td className="acciones-cell">
-                        <button 
-                          onClick={() => handleEdit(especialista)} 
-                          disabled={loading} 
-                          className="edit-button" 
+                        <button
+                          onClick={() => handleEdit(especialista)}
+                          disabled={loading}
+                          className="edit-button"
                           title="Editar"
                         >
                           ✏️
                         </button>
-                        <button 
-                          onClick={() => handleDelete(especialista.id)} 
-                          disabled={loading} 
-                          className="delete-button" 
+                        <button
+                          onClick={() => handleDelete(especialista.id)}
+                          disabled={loading}
+                          className="delete-button"
                           title="Eliminar"
                         >
                           🗑️
@@ -486,7 +494,7 @@ const Admin = () => {
         )}
 
         {/* Modal para agregar/editar usuarios */}
-      
+
         {showModal && (
           <div className="modal-overlay" onClick={() => setShowModal(false)}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -494,211 +502,211 @@ const Admin = () => {
                 <h3>{editingUser ? "Editar Usuario" : "Agregar Usuario"}</h3>
                 <button onClick={() => setShowModal(false)} className="modal-close">×</button>
               </div>
-              
-              // Actualizar el formulario JSX con validaciones mejoradas
-<form onSubmit={editingUser ? handleUpdate : handleCreate} className="user-form">
-  <div className="form-grid">
-    <div className="form-group">
-      <label>Nombre: *</label>
-      <input
-        type="text"
-        name="nombre"
-        value={formData.nombre}
-        onChange={handleInputChange}
-        required
-        placeholder="Ingrese el nombre completo"
-      />
-    </div>
 
-    <div className="form-group">
-      <label>Identificación: *</label>
-      <input
-        type="text"
-        name="numero_identificacion"
-        value={formData.numero_identificacion}
-        onChange={handleInputChange}
-        required
-        placeholder="Ingrese el número de identificación"
-      />
-    </div>
 
-    <div className="form-group">
-      <label>Email: *</label>
-      <input
-        type="email"
-        name="email"
-        value={formData.email}
-        onChange={handleInputChange}
-        required
-        placeholder="ejemplo@correo.com"
-      />
-    </div>
+              <form onSubmit={editingUser ? handleUpdate : handleCreate} className="user-form">
+                <div className="form-grid">
+                  <div className="form-group">
+                    <label>Nombre: *</label>
+                    <input
+                      type="text"
+                      name="nombre"
+                      value={formData.nombre}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="Ingrese el nombre completo"
+                    />
+                  </div>
 
-    <div className="form-group">
-      <label>Rol: *</label>
-      <select
-        name="rol"
-        value={formData.rol}
-        onChange={handleInputChange}
-        required
-      >
-        <option value="usuario">Usuario</option>
-        <option value="admin">Admin</option>
-        <option value="especialista">Especialista</option>
-        <option value="empleado">Empleado</option>
-      </select>
-    </div>
-    <div className="form-group">
-      <label>Cargo: *</label>
-      <input
-        type="text"
-        name="cargo"
-        value={formData.cargo}
-        onChange={handleInputChange}
-        required
-        placeholder="Ingrese el cargo"
-      />
-    </div>
+                  <div className="form-group">
+                    <label>Identificación: *</label>
+                    <input
+                      type="text"
+                      name="numero_identificacion"
+                      value={formData.numero_identificacion}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="Ingrese el número de identificación"
+                    />
+                  </div>
 
-    <div className="form-group">
-      <label>Género:</label>
-      <select
-        name="genero1"
-        value={formData.genero1}
-        onChange={handleInputChange}
-      >
-        <option value="">Seleccionar</option>
-        <option value="masculino">Masculino</option>
-        <option value="femenino">Femenino</option>
-        <option value="otro">Otro</option>
-      </select>
-    </div>
+                  <div className="form-group">
+                    <label>Email: *</label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="ejemplo@correo.com"
+                    />
+                  </div>
 
-    <div className="form-group">
-      <label>Fecha de Nacimiento:</label>
-      <input
-        type="date"
-        name="fecha_nacimiento"
-        value={formData.fecha_nacimiento}
-        onChange={handleInputChange}
-      />
-    </div>
+                  <div className="form-group">
+                    <label>Rol: *</label>
+                    <select
+                      name="rol"
+                      value={formData.rol}
+                      onChange={handleInputChange}
+                      required
+                    >
+                      <option value="usuario">Usuario</option>
+                      <option value="admin">Admin</option>
+                      <option value="especialista">Especialista</option>
+                      <option value="empleado">Empleado</option>
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label>Cargo: *</label>
+                    <input
+                      type="text"
+                      name="cargo"
+                      value={formData.cargo}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="Ingrese el cargo"
+                    />
+                  </div>
 
-    {/* Campos condicionales según el rol */}
-    {(formData.rol === "usuario" || formData.rol === "empleado") && (
-      <div className="form-group">
-        <label>Teléfono: *</label>
-        <input
-          type="tel"
-          name="telefono"
-          value={formData.telefono}
-          onChange={handleInputChange}
-          required
-          placeholder="Ingrese el teléfono"
-        />
-      </div>
-    )}
+                  <div className="form-group">
+                    <label>Género:</label>
+                    <select
+                      name="genero1"
+                      value={formData.genero1}
+                      onChange={handleInputChange}
+                    >
+                      <option value="">Seleccionar</option>
+                      <option value="masculino">Masculino</option>
+                      <option value="femenino">Femenino</option>
+                      <option value="otro">Otro</option>
+                    </select>
+                  </div>
 
-    {formData.rol === "empleado" && (
-      <>
-        <div className="form-group">
-          <label>Cargo: *</label>
-          <input
-            type="text"
-            name="cargo"
-            value={formData.cargo}
-            onChange={handleInputChange}
-            required
-            placeholder="Ingrese el cargo"
-          />
-        </div>
-        <div className="form-group">
-          <label>Fecha de Contratación: *</label>
-          <input
-            type="date"
-            name="fecha_contratacion"
-            value={formData.fecha_contratacion}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-      </>
-    )}
+                  <div className="form-group">
+                    <label>Fecha de Nacimiento:</label>
+                    <input
+                      type="date"
+                      name="fecha_nacimiento"
+                      value={formData.fecha_nacimiento}
+                      onChange={handleInputChange}
+                    />
+                  </div>
 
-    {formData.rol === "especialista" && (
-      <div className="form-group">
-        <label>Especialidades: *</label>
-        <input
-          type="text"
-          name="especialidades"
-          value={formData.especialidades}
-          onChange={handleInputChange}
-          required
-          placeholder="Ej: Cardiología, Neurología"
-        />
-      </div>
-    )}
+                  {/* Campos condicionales según el rol */}
+                  {(formData.rol === "usuario" || formData.rol === "empleado") && (
+                    <div className="form-group">
+                      <label>Teléfono: *</label>
+                      <input
+                        type="tel"
+                        name="telefono"
+                        value={formData.telefono}
+                        onChange={handleInputChange}
+                        required
+                        placeholder="Ingrese el teléfono"
+                      />
+                    </div>
+                  )}
 
-    <div className="form-group">
-      <label>Contraseña: {!editingUser && '*'}</label>
-      <input
-        type="password"
-        name="password"
-        value={formData.password}
-        onChange={handleInputChange}
-        placeholder={editingUser ? "Dejar vacío para mantener actual" : "Ingrese contraseña"}
-        required={!editingUser}
-      />
-    </div>
+                  {formData.rol === "empleado" && (
+                    <>
+                      <div className="form-group">
+                        <label>Cargo: *</label>
+                        <input
+                          type="text"
+                          name="cargo"
+                          value={formData.cargo}
+                          onChange={handleInputChange}
+                          required
+                          placeholder="Ingrese el cargo"
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label>Fecha de Contratación: *</label>
+                        <input
+                          type="date"
+                          name="fecha_contratacion"
+                          value={formData.fecha_contratacion}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      </div>
+                    </>
+                  )}
 
-    {!editingUser && (
-      <div className="form-group">
-        <label>Confirmar Contraseña: *</label>
-        <input
-          type="password"
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleInputChange}
-          required
-          placeholder="Confirme la contraseña"
-        />
-      </div>
-    )}
+                  {formData.rol === "especialista" && (
+                    <div className="form-group">
+                      <label>Especialidades: *</label>
+                      <input
+                        type="text"
+                        name="especialidades"
+                        value={formData.especialidades}
+                        onChange={handleInputChange}
+                        required
+                        placeholder="Ej: Cardiología, Neurología"
+                      />
+                    </div>
+                  )}
 
-    <div className="form-group">
-      <label>Estado:</label>
-      <select
-        name="estado"
-        value={formData.estado}
-        onChange={handleInputChange}
-      >
-        <option value="activo">Activo</option>
-        <option value="inactivo">Inactivo</option>
-      </select>
-    </div>
+                  <div className="form-group">
+                    <label>Contraseña: {!editingUser && '*'}</label>
+                    <input
+                      type="password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleInputChange}
+                      placeholder={editingUser ? "Dejar vacío para mantener actual" : "Ingrese contraseña"}
+                      required={!editingUser}
+                    />
+                  </div>
 
-    <div className="form-group">
-      <label>
-        <input
-          type="checkbox"
-          name="activo"
-          checked={formData.activo}
-          onChange={handleInputChange}
-        />
-        Usuario Activo
-      </label>
-    </div>
-  </div>
+                  {!editingUser && (
+                    <div className="form-group">
+                      <label>Confirmar Contraseña: *</label>
+                      <input
+                        type="password"
+                        name="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleInputChange}
+                        required
+                        placeholder="Confirme la contraseña"
+                      />
+                    </div>
+                  )}
 
-  <div className="form-actions">
-    <button type="button" onClick={resetForm} disabled={loading}>
-      Cancelar
-    </button>
-    <button type="submit" disabled={loading}>
-      {loading ? "Guardando..." : (editingUser ? "Actualizar" : "Crear")}
-    </button>
-  </div>
-</form>
+                  <div className="form-group">
+                    <label>Estado:</label>
+                    <select
+                      name="estado"
+                      value={formData.estado}
+                      onChange={handleInputChange}
+                    >
+                      <option value="activo">Activo</option>
+                      <option value="inactivo">Inactivo</option>
+                    </select>
+                  </div>
+
+                  <div className="form-group">
+                    <label>
+                      <input
+                        type="checkbox"
+                        name="activo"
+                        checked={formData.activo}
+                        onChange={handleInputChange}
+                      />
+                      Usuario Activo
+                    </label>
+                  </div>
+                </div>
+
+                <div className="form-actions">
+                  <button type="button" onClick={resetForm} disabled={loading}>
+                    Cancelar
+                  </button>
+                  <button type="submit" disabled={loading}>
+                    {loading ? "Guardando..." : (editingUser ? "Actualizar" : "Crear")}
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         )}

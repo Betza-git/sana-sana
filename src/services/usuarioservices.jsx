@@ -1,130 +1,108 @@
 const API_URL = "http://127.0.0.1:8000/";
 
-export async function getUsuario(id) {
-  try {
-    const token = localStorage.getItem('token');
-    if (!token || !id) {
-      console.error("Token o ID de usuario no encontrados en localStorage.");
-      return null;
-    }
+function getAuthHeaders() {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    console.error("Token no encontrado en localStorage.");
+    return null;
+  }
+  return {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  };
+}
 
-    const peticion = await fetch(`${API_URL}api/clientes/${id}/`, {
+export async function getMiUsuario() {
+  try {
+    const headers = getAuthHeaders();
+    if (!headers) return null;
+
+    const response = await fetch(`${API_URL}api/clientes/`, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers
     });
 
-    if (!peticion.ok) {
-      throw new Error(`Error: ${peticion.status} ${peticion.statusText}`);
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
     }
 
-    return await peticion.json();
+    return await response.json();
   } catch (error) {
-    console.error("Error al obtener usuario por ID:", error);
+    console.error("Error al obtener usuario autenticado:", error);
     return null;
   }
 }
 
-export const getAllUsuarios = async () => {
-  const response = await fetch(`${API_URL}api/clientes/`);
-  if (!response.ok) throw new Error('Error al obtener usuarios');
-  return response.json();
-};
-
-export async function patchUsuario(id, data) {
+export async function patchMiUsuario(data) {
   try {
-    const token = localStorage.getItem('token');
+    const headers = getAuthHeaders();
+    if (!headers) return null;
 
-    if (!token || !id) {
-      console.error("Token o ID de usuario no encontrados en localStorage.");
-      return null;
-    }
-
-    const peticion = await fetch(`${API_URL}api/clientes/${id}/`, {
+    const response = await fetch(`${API_URL}api/clientes/`, {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        
-      },
+      headers,
       body: JSON.stringify(data)
     });
 
-    if (!peticion.ok) {
-      throw new Error(`Error: ${peticion.status} ${peticion.statusText}`);
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
     }
 
-    return await peticion.json();
+    return await response.json();
   } catch (error) {
-    console.error("Error al actualizar usuario:", error);
+    console.error("Error al actualizar usuario autenticado:", error);
     return null;
   }
 }
 
-export async function postUsuario(data) {
+export async function deleteMiUsuario() {
   try {
-    const token = localStorage.getItem('token');
+    const headers = getAuthHeaders();
+    if (!headers) return null;
 
-    if (!token) {
-      console.error("Token no encontrado en localStorage.");
-      return null;
-    }
-
-    const peticion = await fetch(`${API_URL}api/clientes/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        
-      },
-      body: JSON.stringify(data)
-    });
-
-    if (!peticion.ok) {
-      throw new Error(`Error: ${peticion.status} ${peticion.statusText}`);
-    }
-
-    return await peticion.json();
-  } catch (error) {
-    console.error("Error al crear usuario:", error);
-    return null;
-  }
-}
-
-export async function deleteUsuario(id) {
-  try {
-    const token = localStorage.getItem('token');
-
-    if (!token || !id) {
-      console.error("Token o ID de usuario no encontrados en localStorage.");
-      return null;
-    }
-
-    const peticion = await fetch(`${API_URL}api/clientes/${id}/`, {
+    const response = await fetch(`${API_URL}api/clientes/`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-       
-      }
+      headers
     });
 
-    if (!peticion.ok) {
-      throw new Error(`Error: ${peticion.status} ${peticion.statusText}`);
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
     }
 
-    return await peticion.json();
+    // En delete usualmente no hay json, depende de la API
+    return true;
   } catch (error) {
-    console.error("Error al eliminar usuario:", error);
-    return null;
+    console.error("Error al eliminar usuario autenticado:", error);
+    return false;
   }
 }
 
+// Si quieres listar todos los usuarios (solo admins)
+// usa el endpoint normal con token
+export async function getAllUsuarios() {
+  try {
+    const headers = getAuthHeaders();
+    if (!headers) return null;
 
+    const response = await fetch(`${API_URL}api/clientes/`, {
+      method: 'GET',
+      headers
+    });
 
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
 
+    return await response.json();
+  } catch (error) {
+    console.error("Error al obtener lista de usuarios:", error);
+    return null;
+  }
+}
 
 export default {
-  getUsuario,
-  patchUsuario,
-  postUsuario,
-  deleteUsuario
+  getMiUsuario,
+  patchMiUsuario,
+  deleteMiUsuario,
+  getAllUsuarios,
 };

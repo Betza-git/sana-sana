@@ -1,0 +1,446 @@
+.metodos-de-pago {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px;
+  background: linear-gradient(135deg, #f8fbff 0%, #e8f4f8 100%);
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #2c3e50;
+  line-height: 1.6;
+}
+
+.metodos-de-pago h1 {
+  color: #2c3e50;
+  font-size: 2.5em;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 20px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.metodos-de-pago h1::before {
+  content: '💳';
+  position: absolute;
+  top: 50%;
+  left: 30px;
+  transform: translateY(-50%);
+  font-size: 1.5em;
+}
+
+.metodos-de-pago h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #3498db, #2ecc71, #9b59b6);
+}
+
+/* Loading styles */
+.metodos-de-pago .loading {
+  text-align: center;
+  padding: 30px;
+  font-size: 1.2em;
+  color: #3498db;
+  background: linear-gradient(135deg, #ebf5ff 0%, #d6eaff 100%);
+  border-radius: 15px;
+  margin: 20px 0;
+  border-left: 5px solid #3498db;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Sección nuevo método */
+.metodos-de-pago .nuevo-metodo {
+  background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 20px;
+  padding: 35px;
+  margin: 30px 0;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  border-top: 5px solid #3498db;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.metodos-de-pago .nuevo-metodo::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #3498db, #2ecc71, #9b59b6);
+}
+
+.metodos-de-pago .nuevo-metodo input {
+  flex: 1;
+  padding: 15px 20px;
+  border: 2px solid #e8f4f8;
+  border-radius: 12px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.9);
+  box-sizing: border-box;
+}
+
+.metodos-de-pago .nuevo-metodo input:focus {
+  outline: none;
+  border-color: #3498db;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+  transform: translateY(-2px);
+}
+
+.metodos-de-pago .nuevo-metodo input:hover {
+  border-color: #5dade2;
+  background: #ffffff;
+}
+
+.metodos-de-pago .nuevo-metodo button {
+  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.metodos-de-pago .nuevo-metodo button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.metodos-de-pago .nuevo-metodo button:hover::before {
+  left: 100%;
+}
+
+.metodos-de-pago .nuevo-metodo button:hover {
+  background: linear-gradient(135deg, #229954 0%, #27ae60 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+}
+
+/* Lista de métodos */
+.metodos-de-pago .lista-metodos {
+  margin-top: 40px;
+}
+
+.metodos-de-pago .metodo {
+  background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 15px;
+  padding: 20px;
+  margin: 15px 0;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: all 0.3s ease;
+  border-left: 4px solid #3498db;
+  position: relative;
+  overflow: hidden;
+}
+
+.metodos-de-pago .metodo:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.metodos-de-pago .metodo:nth-child(even) {
+  border-left-color: #2ecc71;
+}
+
+.metodos-de-pago .metodo:nth-child(3n) {
+  border-left-color: #9b59b6;
+}
+
+.metodos-de-pago .metodo span {
+  flex: 1;
+  font-size: 1.1em;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.metodos-de-pago .metodo button {
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.metodos-de-pago .metodo button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.metodos-de-pago .metodo button:hover::before {
+  left: 100%;
+}
+
+/* Botón editar */
+.metodos-de-pago .metodo button:nth-child(2) {
+  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+}
+
+.metodos-de-pago .metodo button:nth-child(2):hover {
+  background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
+}
+
+/* Botón eliminar */
+.metodos-de-pago .metodo button:nth-child(3) {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.metodos-de-pago .metodo button:nth-child(3):hover {
+  background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+}
+
+/* Editar método */
+.metodos-de-pago .editar-metodo {
+  background: linear-gradient(145deg, #fff9e6 0%, #ffeaa7 100%);
+  border-radius: 15px;
+  padding: 25px;
+  margin: 20px 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  border-left: 4px solid #f39c12;
+  position: relative;
+  overflow: hidden;
+}
+
+.metodos-de-pago .editar-metodo::before {
+  content: '✏️';
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  font-size: 1.2em;
+}
+
+.metodos-de-pago .editar-metodo input {
+  flex: 1;
+  padding: 15px 20px;
+  padding-left: 50px;
+  border: 2px solid #f39c12;
+  border-radius: 12px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.9);
+  box-sizing: border-box;
+}
+
+.metodos-de-pago .editar-metodo input:focus {
+  outline: none;
+  border-color: #e67e22;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.1);
+  transform: translateY(-2px);
+}
+
+.metodos-de-pago .editar-metodo button {
+  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.metodos-de-pago .editar-metodo button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.metodos-de-pago .editar-metodo button:hover::before {
+  left: 100%;
+}
+
+.metodos-de-pago .editar-metodo button:hover {
+  background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
+}
+
+/* Botón volver */
+.metodos-de-pago .volver-panel {
+  text-align: center;
+  margin: 40px 0 20px 0;
+}
+
+.metodos-de-pago .btn {
+  border-radius: 12px;
+  padding: 15px 30px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.metodos-de-pago .btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.metodos-de-pago .btn:hover::before {
+  left: 100%;
+}
+
+.metodos-de-pago .btn-primary {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+.metodos-de-pago .btn-primary:hover {
+  background: linear-gradient(135deg, #2980b9 0%, #21618c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+  text-decoration: none;
+  color: white;
+}
+
+/* Animaciones */
+.metodos-de-pago .metodo {
+  animation: slideInUp 0.6s ease-out forwards;
+}
+
+.metodos-de-pago .metodo:nth-child(1) { animation-delay: 0.1s; }
+.metodos-de-pago .metodo:nth-child(2) { animation-delay: 0.2s; }
+.metodos-de-pago .metodo:nth-child(3) { animation-delay: 0.3s; }
+.metodos-de-pago .metodo:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .metodos-de-pago {
+    padding: 20px 15px;
+  }
+  
+  .metodos-de-pago h1 {
+    font-size: 2em;
+    padding: 15px;
+  }
+  
+  .metodos-de-pago h1::before {
+    left: 15px;
+    font-size: 1.2em;
+  }
+  
+  .metodos-de-pago .nuevo-metodo {
+    flex-direction: column;
+    gap: 15px;
+    padding: 25px 20px;
+  }
+  
+  .metodos-de-pago .nuevo-metodo input,
+  .metodos-de-pago .nuevo-metodo button {
+    width: 100%;
+  }
+  
+  .metodos-de-pago .metodo {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+    padding: 15px;
+  }
+  
+  .metodos-de-pago .metodo span {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .metodos-de-pago .metodo button {
+    width: 100%;
+    margin: 3px 0;
+  }
+  
+  .metodos-de-pago .editar-metodo {
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+  }
+  
+  .metodos-de-pago .editar-metodo input,
+  .metodos-de-pago .editar-metodo button {
+    width: 100%;
+  }
+  
+  .metodos-de-pago .editar-metodo input {
+    padding-left: 20px;
+  }
+}

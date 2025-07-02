@@ -1,22 +1,51 @@
 .servicios {
-  background-color: rgba(151, 162, 229, 0.603);
-  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(151, 162, 229, 0.8), rgba(84, 92, 137, 0.6));
+  border-radius: 20px;
   max-width: 1200px;
-  padding: 35px;
+  padding: 40px;
   text-align: center;
-  
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.servicios::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: rotate(45deg);
+  animation: shimmer 3s ease-in-out infinite;
 }
 
 .contservicios {
-  background-image: url('../imagenes/bacceleste.jpg');
-  background-image: linear-gradient(to bottom right, rgba(84, 92, 137, 0.039), rgba(5, 31, 178, 0.5)), url('../imagenes/bacceleste.jpg');
+  background-image: linear-gradient(135deg, rgba(84, 92, 137, 0.1), rgba(5, 31, 178, 0.6)), url('../imagenes/bacceleste.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
   min-height: 100vh;
   padding-top: 20px;
   box-sizing: border-box;
-  
+  position: relative;
+}
+
+.contservicios::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%);
+  pointer-events: none;
+  animation: backgroundPulse 6s ease-in-out infinite alternate;
 }
 
 /* Tarjetas en columnas */
@@ -24,40 +53,166 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
+  gap: 25px;
+  margin-top: 30px;
+  perspective: 1000px;
+  animation: containerSlideIn 1s ease-out 0.3s both;
 }
 
 .tarjeta-servicio {
-  background-color: #e8f5f3d4;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(145deg, rgba(232, 245, 243, 0.95), rgba(220, 235, 240, 0.85));
+  border-radius: 16px;
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.1),
+    0 1px 6px rgba(0, 0, 0, 0.05);
   width: 280px;
-  padding: 20px;
+  padding: 25px;
   text-align: center;
-  transition: transform 0.2s ease;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  animation: cardFloat 0.6s ease-out both;
+}
+
+.tarjeta-servicio:nth-child(2) { animation-delay: 0.1s; }
+.tarjeta-servicio:nth-child(3) { animation-delay: 0.2s; }
+.tarjeta-servicio:nth-child(4) { animation-delay: 0.3s; }
+.tarjeta-servicio:nth-child(5) { animation-delay: 0.4s; }
+.tarjeta-servicio:nth-child(6) { animation-delay: 0.5s; }
+
+.tarjeta-servicio::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.6s ease;
 }
 
 .tarjeta-servicio:hover {
-  transform: translateY(-5px);
+  transform: translateY(-12px) rotateX(5deg) rotateY(5deg) scale(1.02);
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.2),
+    0 5px 15px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(145deg, rgba(232, 245, 243, 1), rgba(220, 235, 240, 0.95));
+}
+
+.tarjeta-servicio:hover::before {
+  left: 100%;
+}
+
+.tarjeta-servicio:active {
+  transform: translateY(-8px) scale(0.98);
 }
 
 .tarjeta-servicio h3 {
-  margin-bottom: 5px;
-  font-size: 1.2rem;
-  color: #333;
+  margin-bottom: 8px;
+  font-size: 1.3rem;
+  color: #2c3e50;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.tarjeta-servicio:hover h3 {
+  color: #1a252f;
+  transform: translateY(-2px);
 }
 
 .tarjeta-servicio h4 {
-  margin: 0;
-  font-size: 1rem;
-  color: #666;
+  margin: 5px 0;
+  font-size: 1.1rem;
+  color: #34495e;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.tarjeta-servicio:hover h4 {
+  color: #2c3e50;
 }
 
 .tarjeta-servicio p {
-  margin: 6px 0;
+  margin: 8px 0;
   font-size: 0.95rem;
-  color: #444;
+  color: #5d6d7e;
+  line-height: 1.5;
+  transition: all 0.3s ease;
+}
+
+.tarjeta-servicio:hover p {
+  color: #34495e;
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0%, 100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+@keyframes backgroundPulse {
+  0% { opacity: 0.3; }
+  100% { opacity: 0.7; }
+}
+
+@keyframes containerSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cardFloat {
+  from {
+    opacity: 0;
+    transform: translateY(30px) rotateX(-10deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+  }
+}
+
+/* Efecto de partículas flotantes */
+.servicios::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.2), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.2), transparent);
+  background-repeat: repeat;
+  background-size: 200px 100px;
+  animation: floatingParticles 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes floatingParticles {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-100px); }
 }
 
 /* Responsivo para pantallas pequeñas */
@@ -65,9 +220,31 @@
   .tarjetas-container {
     flex-direction: column;
     align-items: center;
+    gap: 20px;
   }
-
+  
   .tarjeta-servicio {
     width: 90%;
+    max-width: 350px;
+  }
+  
+  .tarjeta-servicio:hover {
+    transform: translateY(-8px) scale(1.01);
+  }
+  
+  .servicios {
+    padding: 25px;
+    margin: 0 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tarjeta-servicio {
+    width: 95%;
+    padding: 20px;
+  }
+  
+  .servicios {
+    padding: 20px;
   }
 }

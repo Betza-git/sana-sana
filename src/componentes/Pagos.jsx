@@ -9,8 +9,11 @@ import {
 } from "../services/Pagos";
 import { getEmpleados } from "../services/Empleados";
 import { getmetodopago } from "../services/MetodosDePago";
+import '../styles/Pagos.css';
+import { Link } from "react-router-dom";
 
-const Payments = () => {
+// Componente para gestionar pagos
+const Pagos = () => {
   const [pagos, setPagos] = useState([]);
   const [empleados, setEmpleados] = useState([]);
   const [metodos, setMetodos] = useState([]);
@@ -38,6 +41,7 @@ const Payments = () => {
     cargarDatos();
   }, []);
 
+  // Manejo de cambios en los inputs del formulario
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setEditarPago((prev) => ({
@@ -71,7 +75,7 @@ const Payments = () => {
       Swal.fire("Campos vacíos", "Por favor completa todos los campos obligatorios", "warning");
       return;
     }
-
+    // Validación de monto
     const datos = {
       empleado: editarPago.empleado,
       metodopago: editarPago.metodopago,
@@ -81,8 +85,8 @@ const Payments = () => {
       confirmado: editarPago.confirmado,
     };
 
-     console.log('Datos a enviar:', datos);   // Para depuración
-     console.log('ID a editar:', editarPago.id); 
+    console.log('Datos a enviar:', datos);   // Para depuración
+    console.log('ID a editar:', editarPago.id);
 
     try {
       if (editarPago.id) {
@@ -133,81 +137,88 @@ const Payments = () => {
   };
 
   return (
-    <div className="container mt-4">
-      <h2>Gestión de Pagos</h2>
+    <div className="payments-container">
+      <h2 className="payments-title">Gestión de Pagos</h2>
 
-      <div className="card p-3 mb-4">
-        <h5>{editarPago.id ? "Editar Pago" : "Nuevo Pago"}</h5>
+      <div className="payments-form-card">
+        <h5 className="payments-form-title">
+          {editarPago.id ? "Editar Pago" : "Nuevo Pago"}
+        </h5>
 
-        <div className="mb-2">
-          <label>Empleado:</label>
-          <select
-            className="form-select"
-            name="empleado"
-            value={editarPago.empleado}
-            onChange={handleChange}
-          >
-            <option value="">Seleccione un empleado</option>
-            {empleados.map((emp) => (
-              <option key={emp.id} value={emp.id}>
-                {emp.nombre}
-              </option>
-            ))}
-          </select>
+        <div className="form-row">
+          <div className="form-group">
+            <label className="form-label">Empleado:</label>
+            <select
+              className="form-select"
+              name="empleado"
+              value={editarPago.empleado}
+              onChange={handleChange}
+            >
+              <option value="">Seleccione un empleado</option>
+              {empleados.map((emp) => (
+                <option key={emp.id} value={emp.id}>
+                  {emp.nombre}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Método de Pago:</label>
+            <select
+              className="form-select"
+              name="metodopago"
+              value={editarPago.metodopago}
+              onChange={handleChange}
+            >
+              <option value="">Seleccione un método</option>
+              {metodos.map((met) => (
+                <option key={met.id} value={met.id}>
+                  {met.nombre}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Monto:</label>
+            <input
+              type="number"
+              className="form-input"
+              name="monto"
+              value={editarPago.monto}
+              onChange={handleChange}
+              placeholder="Ingrese el monto"
+            />
+          </div>
         </div>
 
-        <div className="mb-2">
-          <label>Método de Pago:</label>
-          <select
-            className="form-select"
-            name="metodopago"
-            value={editarPago.metodopago}
-            onChange={handleChange}
-          >
-            <option value="">Seleccione un método</option>
-            {metodos.map((met) => (
-              <option key={met.id} value={met.id}>
-                {met.nombre}
-              </option>
-            ))}
-          </select>
-        </div>
+        <div className="form-row">
+          <div className="form-group">
+            <label className="form-label">Descripción:</label>
+            <input
+              type="text"
+              className="form-input"
+              name="descripcion"
+              value={editarPago.descripcion}
+              onChange={handleChange}
+              placeholder="Descripción del pago"
+            />
+          </div>
 
-        <div className="mb-2">
-          <label>Monto:</label>
-          <input
-            type="number"
-            className="form-control"
-            name="monto"
-            value={editarPago.monto}
-            onChange={handleChange}
-          />
-        </div>
+          <div className="form-group">
+            <label className="form-label">Fecha de Pago:</label>
+            <input
+              type="date"
+              className="form-input"
+              name="fecha_pago"
+              value={editarPago.fecha_pago}
+              onChange={handleChange}
+            />
+          </div>
 
-        <div className="mb-2">
-          <label>Descripción:</label>
-          <input
-            type="text"
-            className="form-control"
-            name="descripcion"
-            value={editarPago.descripcion}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="mb-2">
-          <label>Fecha de Pago:</label>
-          <input
-            type="date"
-            className="form-control"
-            name="fecha_pago"
-            value={editarPago.fecha_pago}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="mb-2 select">
-          <label>Confirmado:</label>
+          <div className="form-group">
+            <label className="form-label">Confirmado:</label>
             <select
               className="form-select"
               name="confirmado"
@@ -218,56 +229,70 @@ const Payments = () => {
               <option value="Sí">Sí</option>
               <option value="No">No</option>
             </select>
+          </div>
         </div>
 
-        <button className="btn btn-success" onClick={handleGuardar}>
+        <button className="save-button" onClick={handleGuardar}>
           {editarPago.id ? "Actualizar" : "Guardar"}
         </button>
       </div>
 
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Empleado</th>
-            <th>Método</th>
-            <th>Monto</th>
-            <th>Descripción</th>
-            <th>Fecha Pago</th>
-            <th>Confirmado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {pagos.map((pago) => (
-            <tr key={pago.id}>
-              <td>{pago.id}</td>
-              <td>{pago.empleado}</td>
-              <td>{pago.metodopago}</td>
-              <td>{pago.monto}</td>
-              <td>{pago.descripcion}</td>
-              <td>{pago.fecha_pago ? pago.fecha_pago.slice(0, 10) : ''}</td>
-              <td>{pago.confirmado}</td>
-              <td>
-                <button
-                  className="btn btn-primary btn-sm me-2"
-                  onClick={() => handleEditar(pago)}
-                >
-                  Editar
-                </button>
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => handleEliminar(pago.id)}
-                >
-                  Eliminar
-                </button>
-              </td>
+      <div className="table-container">
+        <table className="payments-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Empleado</th>
+              <th>Método</th>
+              <th>Monto</th>
+              <th>Descripción</th>
+              <th>Fecha Pago</th>
+              <th>Confirmado</th>
+              <th>Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {pagos.map((pago) => (
+              <tr key={pago.id}>
+                <td>{pago.id}</td>
+                <td>{pago.empleado}</td>
+                <td>{pago.metodopago}</td>
+                <td>₡{Number(pago.monto).toLocaleString()}</td>
+                <td>{pago.descripcion}</td>
+                <td>{pago.fecha_pago ? pago.fecha_pago.slice(0, 10) : ''}</td>
+                <td>
+                  <span className={pago.confirmado === 'Sí' ? 'confirmado-si' : 'confirmado-no'}>
+                    {pago.confirmado}
+                  </span>
+                </td>
+                <td>
+                  <div className="action-buttons">
+                    <button
+                      className="btn-edit"
+                      onClick={() => handleEditar(pago)}
+                    >
+                      Editar
+                    </button>
+                    <button
+                      className="btn-delete"
+                      onClick={() => handleEliminar(pago.id)}
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <br /><br />
+        <div className="volver-panel" align="center">
+            <Link to="/Admin" className="btn btn-primary">
+            Volver al Panel de Administración</Link>
+            </div>
+      </div>
     </div>
   );
 };
 
-export default Payments;
+export default Pagos;

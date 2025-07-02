@@ -1,7 +1,8 @@
-import '../styles/Empleados.css';
+import '../styles/MetodosDePago.css';
 import { getmetodopago, postmetodopago, patchmetodopago, deletemetodopago } from '../services/MetodosDePago';
 import Swal from 'sweetalert2';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const MetodosDePago = () => {
   const [metodos, setMetodos] = useState([]);
@@ -65,6 +66,7 @@ const MetodosDePago = () => {
   if (loading) return <p>Cargando métodos de pago...</p>;
 
   return (
+    
     <div className="metodos-de-pago">
       <h1>Métodos de Pago</h1>
       
@@ -86,6 +88,21 @@ const MetodosDePago = () => {
             <button onClick={() => eliminarMetodo(metodo.id)}>Eliminar</button>
           </div>
         ))}
+        {editarMetodo.id && (
+          <div className="editar-metodo">
+            <input
+              type="text"
+              value={editarMetodo.nombre}
+              onChange={(e) => setEditarMetodo({ ...editarMetodo, nombre: e.target.value })}
+              placeholder="Editar método de pago"
+            />
+            <button onClick={actualizarMetodo}>Actualizar</button>
+          </div>
+        )}
+         <div className="volver-panel" align="center">
+            <Link to="/Admin" className="btn btn-primary">
+            Volver al Panel de Administración</Link>
+            </div>
       </div>
     </div>
   );

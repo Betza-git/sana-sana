@@ -1,5 +1,3 @@
-# views.py - Corregido y optimizado
-
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -8,7 +6,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
-from .models import User, clientes, especialistas, empleados, citas, encuestas_estres, sesiones_terapia, especialistas_servicios, servicios, especialidades, metodopago, pago
+from .models import *
 from .serializers import *
 
 User = get_user_model()
@@ -107,7 +105,7 @@ class AdminDashboardAPIView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-# CLIENTES CRUD
+# CLIENTES 
 class ClientesListCreate(ListCreateAPIView):
     queryset = clientes.objects.all()
     serializer_class = ClientesSerializer
@@ -147,7 +145,7 @@ class ClientesRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-# ESPECIALISTAS CRUD
+# ESPECIALISTAS 
 class EspecialistasListCreate(ListCreateAPIView):
     queryset = especialistas.objects.all()
     serializer_class = EspecialistasSerializer
@@ -187,7 +185,7 @@ class EspecialistasRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-#  EMPLEADOS CRUD
+#  EMPLEADOS 
 class EmpleadosListCreate(ListCreateAPIView):
     queryset = empleados.objects.all()
     serializer_class = EmpleadosSerializer
@@ -220,7 +218,7 @@ class EmpleadosRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     permission_classes = [AllowAny]
 
 
-# CITAS CRUD
+# CITAS
 class CitasListCreate(ListCreateAPIView):
     queryset = citas.objects.all()
     serializer_class = CitasSerializer
@@ -233,7 +231,7 @@ class CitasRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     permission_classes = [AllowAny]
 
 
-# ENCUESTAS ESTRES CRUD
+# ENCUESTAS ESTRES 
 class EncuestasEstresListCreate(ListCreateAPIView):
     queryset = encuestas_estres.objects.all()
     serializer_class = EncuestasEstresSerializer
@@ -246,7 +244,7 @@ class EncuestasEstresRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     permission_classes = [AllowAny]
 
 
-# SESIONES TERAPIA CRUD
+# SESIONES TERAPIA 
 class SesionesTerapiaListCreate(ListCreateAPIView):
     queryset = sesiones_terapia.objects.all()
     serializer_class = SesionesTerapiaSerializer
@@ -259,7 +257,7 @@ class SesionesTerapiaRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     permission_classes = [AllowAny]
 
 
-# ✅ ESPECIALISTAS SERVICIOS CRUD
+#ESPECIALISTAS 
 class EspecialistasServiciosListCreate(ListCreateAPIView):
     queryset = especialistas_servicios.objects.all()
     serializer_class = EspecialistasServiciosSerializer
@@ -272,7 +270,7 @@ class EspecialistasServiciosRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     permission_classes = [AllowAny]
 
 
-# ✅ SERVICIOS CRUD
+#SERVICIOS
 class ServiciosListCreate(ListCreateAPIView):
     queryset = servicios.objects.all()
     serializer_class = ServiciosSerializer
@@ -285,7 +283,7 @@ class ServiciosRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     permission_classes = [AllowAny]
 
 
-# ✅ ESPECIALIDADES CRUD
+#ESPECIALIDADES
 class EspecialidadesListCreate(ListCreateAPIView):
     queryset = especialidades.objects.all()
     serializer_class = EspecialidadesSerializer
@@ -298,7 +296,7 @@ class EspecialidadesRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     permission_classes = [AllowAny]
 
 
-# ✅ METODOS PAGO CRUD
+#METODOS PAGO 
 class MetodoPagoListCreate(ListCreateAPIView):
     queryset = metodopago.objects.all()
     serializer_class = MetodosPagoSerializer
@@ -311,7 +309,7 @@ class MetodosPagoRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     permission_classes = [AllowAny]
 
 
-# ✅ PAGOS CRUD
+#PAGOS 
 class PagoListCreate(ListCreateAPIView):
     queryset = pago.objects.all()
     serializer_class = PagosSerializer

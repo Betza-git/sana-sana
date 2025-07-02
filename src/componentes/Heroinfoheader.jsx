@@ -3,11 +3,11 @@ import '../styles/Hero.css';
 import { getData } from '../services/llamados';
 import { Link } from 'react-router-dom';
 
-function Heroinfoheader() { 
+function Heroinfoheader() {
   const [especialidades, setEspecialidades] = useState([]);
 
   useEffect(() => {
-    const cargarEspecialidades = async () => { 
+    const cargarEspecialidades = async () => {
       try {
         const datos = await getData("api/especialidades/");
         console.log(datos);
@@ -18,7 +18,7 @@ function Heroinfoheader() {
     };
     cargarEspecialidades();
   }, []);
-  
+
   return (
     <div className='cont-hero'>
       <img src="../src/imagenes/Hero.png" alt="Imagen Hero" />

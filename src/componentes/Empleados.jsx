@@ -168,7 +168,15 @@ import { useNavigate } from 'react-router-dom';
         <button className="btn btn-primary" onClick={handleAgregar}>
           Agregar Nuevo Empleado
         </button>
+ 
+
       )}
+      <br /><br />
+       <div className="volver-panel" align="center">
+            <Link to="/Admin" className="btn btn-primary">
+            Volver al Panel de Administración</Link>
+            </div>
+  
 
       {mostrarFormulario && (
         <div className="formulario-container">
