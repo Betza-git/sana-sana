@@ -17,7 +17,7 @@ export async function getMiUsuario() {
     const headers = getAuthHeaders();
     if (!headers) return null;
 
-    const response = await fetch(`${API_URL}api/clientes/`, {
+    const response = await fetch(`${API_URL}api/clientes/me/`, {
       method: 'GET',
       headers
     });
@@ -38,7 +38,7 @@ export async function patchMiUsuario(data) {
     const headers = getAuthHeaders();
     if (!headers) return null;
 
-    const response = await fetch(`${API_URL}api/clientes/`, {
+    const response = await fetch(`${API_URL}api/clientes/me/`, {
       method: 'PATCH',
       headers,
       body: JSON.stringify(data)
@@ -60,7 +60,7 @@ export async function deleteMiUsuario() {
     const headers = getAuthHeaders();
     if (!headers) return null;
 
-    const response = await fetch(`${API_URL}api/clientes/`, {
+    const response = await fetch(`${API_URL}api/clientes/me/`, {
       method: 'DELETE',
       headers
     });
@@ -99,6 +99,8 @@ export async function getAllUsuarios() {
     return null;
   }
 }
+
+
 
 export default {
   getMiUsuario,

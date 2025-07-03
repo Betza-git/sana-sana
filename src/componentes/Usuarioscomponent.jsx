@@ -1,40 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
-import {getMiUsuario,
+import {
+  getMiUsuario,
   patchMiUsuario,
   deleteMiUsuario,
-  getAllUsuarios } from '../services/usuarioservices';
-import { getCitasUsuario,
-  postCita, 
+} from '../services/usuarioservices';
+import {
+  getCitasUsuario,
+  postCita,
   patchCita,
   deleteCita,
-  getCita } from '../services/citas';
+} from '../services/citas';
+import { getServicios } from '../services/servicios';
+import { getEspecialistas } from '../services/especialistas';
 import '../styles/usuario.css';
 
-
 function Usuario() {
-  // Estado cliente
   const [cliente, setCliente] = useState(null);
   const [editandoCliente, setEditandoCliente] = useState(false);
 
-  // Estado citas
-  const [citas, setCitas] = useState([]); 
+  const [citas, setCitas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Formulario citas
+  const [servicios, setServicios] = useState([]);
+  const [especialistas, setEspecialistas] = useState([]);
+
   const [formCita, setFormCita] = useState({
     id: null,
     servicio: '',
+    especialista: '',
     fecha: '',
     hora: '',
     observaciones: '',
   });
   const [editandoCita, setEditandoCita] = useState(false);
+  const [mostrandoFormularioCita, setMostrandoFormularioCita] = useState(false);
 
-  // Cargar perfil y citas al montar
   useEffect(() => {
     cargarDatos();
+    cargarServiciosYEspecialistas();
   }, []);
 
   const cargarDatos = async () => {
@@ -51,7 +56,21 @@ function Usuario() {
     }
   };
 
-  // Manejo formulario cliente
+  const cargarServiciosYEspecialistas = async () => {
+    try {
+      const serviciosData = await getServicios();
+      const especialistasData = await getEspecialistas();
+      setServicios(serviciosData);
+      setEspecialistas(especialistasData);
+    } catch (e) {
+      console.error("Error cargando servicios o especialistas", e);
+    }
+  };
+
+  // ===========================
+  // Manejadores cliente
+  // ===========================
+
   const handleChangeCliente = (e) => {
     setCliente({ ...cliente, [e.target.name]: e.target.value });
   };
@@ -81,53 +100,78 @@ function Usuario() {
       try {
         await deleteMiUsuario();
         Swal.fire('Cuenta eliminada', 'Tu cuenta ha sido eliminada', 'success');
-        // Redirigir o hacer logout aquí
+        // Redirigir o hacer logout aquí si deseas
       } catch {
         Swal.fire('Error', 'No se pudo eliminar la cuenta', 'error');
       }
     }
   };
 
-  // Manejo formulario citas
+  // ===========================
+  // Manejadores citas
+  // ===========================
+
   const handleChangeCita = (e) => {
     setFormCita({ ...formCita, [e.target.name]: e.target.value });
   };
 
-  const agregarCita = async () => {
-    if (!formCita.servicio || !formCita.fecha || !formCita.hora) {
-      Swal.fire('Error', 'Completa todos los campos requeridos', 'error');
-      return;
-    }
-    try {
-      await postCita(formCita);
-      Swal.fire('¡Éxito!', 'Cita agregada', 'success');
-      setFormCita({ id: null, servicio: '', fecha: '', hora: '', observaciones: '' });
-      cargarDatos();
-    } catch {
-      Swal.fire('Error', 'No se pudo agregar la cita', 'error');
-    }
+  const iniciarAgregarCita = () => {
+    setFormCita({
+      id: null,
+      servicio: '',
+      especialista: '',
+      fecha: '',
+      hora: '',
+      observaciones: '',
+    });
+    setEditandoCita(false);
+    setMostrandoFormularioCita(true);
   };
 
-  const editarCita = (cita) => {
+  const iniciarEditarCita = (cita) => {
     setFormCita({
       id: cita.id,
       servicio: cita.servicio,
+      especialista: cita.especialista || '',
       fecha: cita.fecha,
       hora: cita.hora,
       observaciones: cita.observaciones,
     });
     setEditandoCita(true);
+    setMostrandoFormularioCita(true);
   };
 
-  const guardarCitaEditada = async () => {
+  const cancelarFormularioCita = () => {
+    setFormCita({
+      id: null,
+      servicio: '',
+      especialista: '',
+      fecha: '',
+      hora: '',
+      observaciones: '',
+    });
+    setEditandoCita(false);
+    setMostrandoFormularioCita(false);
+  };
+
+  const guardarCita = async () => {
+    if (!formCita.servicio || !formCita.especialista || !formCita.fecha || !formCita.hora) {
+      Swal.fire('Error', 'Completa todos los campos requeridos', 'error');
+      return;
+    }
+
     try {
-      await patchCita(formCita.id, formCita);
-      Swal.fire('¡Éxito!', 'Cita actualizada', 'success');
-      setFormCita({ id: null, servicio: '', fecha: '', hora: '', observaciones: '' });
-      setEditandoCita(false);
+      if (editandoCita) {
+        await patchCita(formCita.id, formCita);
+        Swal.fire('¡Éxito!', 'Cita actualizada', 'success');
+      } else {
+        await postCita(formCita);
+        Swal.fire('¡Éxito!', 'Cita agregada', 'success');
+      }
+      cancelarFormularioCita();
       cargarDatos();
     } catch {
-      Swal.fire('Error', 'No se pudo actualizar la cita', 'error');
+      Swal.fire('Error', 'No se pudo guardar la cita', 'error');
     }
   };
 
@@ -151,6 +195,10 @@ function Usuario() {
     }
   };
 
+  // ===========================
+  // Render
+  // ===========================
+
   if (loading) return <p>Cargando...</p>;
   if (error) return <p>Error: {error.message || error.toString()}</p>;
 
@@ -171,24 +219,19 @@ function Usuario() {
         </div>
       ) : (
         <form onSubmit={(e) => { e.preventDefault(); guardarCliente(); }}>
-          <label>
-            Nombre:
+          <label>Nombre:
             <input name="nombre" value={cliente.nombre} onChange={handleChangeCliente} required />
           </label>
-          <label>
-            Email:
+          <label>Email:
             <input name="email" type="email" value={cliente.email} onChange={handleChangeCliente} required />
           </label>
-          <label>
-            Teléfono:
+          <label>Teléfono:
             <input name="telefono" value={cliente.telefono} onChange={handleChangeCliente} required />
           </label>
-          <label>
-            Fecha de Nacimiento:
+          <label>Fecha de Nacimiento:
             <input name="fechaNac" type="date" value={cliente.fechaNac || ''} onChange={handleChangeCliente} />
           </label>
-          <label>
-            Género:
+          <label>Género:
             <select name="genero1" value={cliente.genero1 || ''} onChange={handleChangeCliente} required>
               <option value="">Seleccione</option>
               <option value="masculino">Masculino</option>
@@ -204,36 +247,39 @@ function Usuario() {
       <hr />
 
       <h2>Mis Citas</h2>
-      <button onClick={() => setFormCita({ id: null, servicio: '', fecha: '', hora: '', observaciones: '' }) && setEditandoCita(false)}>
-        Agregar Nueva Cita
-      </button>
+      <button onClick={iniciarAgregarCita}>Agregar Nueva Cita</button>
 
-      {editandoCita && (
-        <form onSubmit={e => {
-          e.preventDefault();
-          editandoCita ? guardarCitaEditada() : agregarCita();
-        }}>
-          <label>
-            Servicio:
-            <input name="servicio" value={formCita.servicio} onChange={handleChangeCita} required />
+      {mostrandoFormularioCita && (
+        <form onSubmit={(e) => { e.preventDefault(); guardarCita(); }}>
+          <label>Servicio:
+            <select name="servicio" value={formCita.servicio} onChange={handleChangeCita} required>
+              <option value="">Seleccione un servicio</option>
+              {servicios.map(serv => (
+                <option key={serv.id} value={serv.nombre}>{serv.nombre}</option>
+              ))}
+            </select>
           </label>
-          <label>
-            Fecha:
+
+          <label>Especialista:
+            <select name="especialista" value={formCita.especialista} onChange={handleChangeCita} required>
+              <option value="">Seleccione un especialista</option>
+              {especialistas.map(esp => (
+                <option key={esp.id} value={esp.nombre}>{esp.nombre}</option>
+              ))}
+            </select>
+          </label>
+
+          <label>Fecha:
             <input name="fecha" type="date" value={formCita.fecha} onChange={handleChangeCita} required />
           </label>
-          <label>
-            Hora:
+          <label>Hora:
             <input name="hora" type="time" value={formCita.hora} onChange={handleChangeCita} required />
           </label>
-          <label>
-            Observaciones:
+          <label>Observaciones:
             <textarea name="observaciones" value={formCita.observaciones} onChange={handleChangeCita} />
           </label>
           <button type="submit">{editandoCita ? 'Guardar Cambios' : 'Agregar Cita'}</button>
-          <button type="button" onClick={() => {
-            setEditandoCita(false);
-            setFormCita({ id: null, servicio: '', fecha: '', hora: '', observaciones: '' });
-          }}>Cancelar</button>
+          <button type="button" onClick={cancelarFormularioCita}>Cancelar</button>
         </form>
       )}
 
@@ -244,8 +290,8 @@ function Usuario() {
           <ul>
             {citas.map((cita) => (
               <li key={cita.id}>
-                <b>{cita.servicio}</b> - {cita.fecha} {cita.hora}  
-                <button onClick={() => editarCita(cita)} style={{ marginLeft: 10 }}>Editar</button>
+                <b>{cita.servicio}</b> - {cita.fecha} {cita.hora}
+                <button onClick={() => iniciarEditarCita(cita)} style={{ marginLeft: 10 }}>Editar</button>
                 <button onClick={() => eliminarCita(cita.id)} style={{ marginLeft: 5, color: 'red' }}>Eliminar</button>
               </li>
             ))}

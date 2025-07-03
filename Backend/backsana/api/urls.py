@@ -11,6 +11,9 @@ urlpatterns = [
 
     #Login único usando LoginAPIView  
     path('login/', LoginAPIView.as_view(), name='login'),
+    path('clientes/me/', cliente_me, name='cliente-me'),
+    path('clientes/me/', cliente_me, name='cliente-me'),
+
 
     path('clientes/', ClientesListCreate.as_view(), name='clientes-list-create'),
     path('clientes/<int:pk>/', ClientesRetrieveUpdateDestroy.as_view(), name='clientes-detail'),
@@ -23,6 +26,22 @@ urlpatterns = [
 
     path('citas/', CitasListCreate.as_view(), name='citas-list-create'),
     path('citas/<int:pk>/', CitasRetrieveUpdateDestroy.as_view(), name='citas-detail'),
+
+
+    path('mis-citas/', mis_citas, name='mis-citas'),
+    path('crear-cita/', crear_cita, name='crear-cita'),
+    path('actualizar-cita/<int:cita_id>/', actualizar_cita, name='actualizar-cita'),
+    path('eliminar-cita/<int:cita_id>/', eliminar_cita, name='eliminar-cita'),
+
+    # URLs auxiliares
+    path('servicios-disponibles/', servicios_disponibles, name='servicios-disponibles'),
+    path('especialistas-disponibles/', especialistas_disponibles, name='especialistas-disponibles'),
+    path('especialistas-por-servicio/<int:servicio_id>/', especialistas_por_servicio, name='especialistas-por-servicio'),
+
+  
+
+    
+    
 
     path('encuestas-estres/', EncuestasEstresListCreate.as_view(), name='encuestas-estres-list-create'),
     path('encuestas-estres/<int:pk>/', EncuestasEstresRetrieveUpdateDestroy.as_view(), name='encuestas-estres-detail'),

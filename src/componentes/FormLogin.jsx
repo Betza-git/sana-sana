@@ -33,7 +33,7 @@ function FormLogin() {
             navigate('/Especialistas')
             break
           case 'empleado':
-            navigate('/Empleados')
+            navigate('/Especialistas')
             break
           default:
             navigate('/') // Redirige a inicio si el rol es desconocido

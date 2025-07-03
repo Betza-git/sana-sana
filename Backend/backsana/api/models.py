@@ -84,7 +84,7 @@ class empleados(models.Model):
 
 class citas(models.Model):
     cliente = models.ForeignKey(User, on_delete=models.CASCADE, related_name='citas_cliente')
-    especialista = models.ForeignKey(User, on_delete=models.CASCADE, related_name='citas_especialista')
+    especialista = models.ForeignKey(especialistas, on_delete=models.CASCADE, related_name='citas_especialista')
     servicio = models.CharField(max_length=100)
     fecha = models.DateField()
     hora = models.TimeField()

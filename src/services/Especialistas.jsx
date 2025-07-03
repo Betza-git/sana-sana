@@ -70,6 +70,10 @@ export const getespecialistas = async () => {
   return response.data;
 };
 
+
+
+
+
 export default {
   getEspecialistas,
   postEspecialistas,
