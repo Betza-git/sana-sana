@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import '../styles/citas.css';
-import Citas from '../componentes/citas';
+import Citas from '../componentes/Citas';
 
 
 function Dates() {

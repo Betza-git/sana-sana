@@ -199,15 +199,15 @@ function Usuario() {
   // Render
   // ===========================
 
-  if (loading) return <p>Cargando...</p>;
-  if (error) return <p>Error: {error.message || error.toString()}</p>;
+  if (loading) return <p className="loading">Cargando...</p>;
+  if (error) return <p className="error">Error: {error.message || error.toString()}</p>;
 
   return (
     <div className="cliente-dashboard">
       <h1>Mi Perfil</h1>
 
       {!editandoCliente ? (
-        <div>
+        <div className="perfil-info">
           <p><b>Nombre:</b> {cliente.nombre}</p>
           <p><b>Email:</b> {cliente.email}</p>
           <p><b>Teléfono:</b> {cliente.telefono}</p>
@@ -246,57 +246,65 @@ function Usuario() {
 
       <hr />
 
-      <h2>Mis Citas</h2>
-      <button onClick={iniciarAgregarCita}>Agregar Nueva Cita</button>
+      <div className="citas-container">
+        <h2>Mis Citas</h2>
+        <button className="btn-agregar-cita" onClick={iniciarAgregarCita}>Agregar Nueva Cita</button>
 
-      {mostrandoFormularioCita && (
-        <form onSubmit={(e) => { e.preventDefault(); guardarCita(); }}>
-          <label>Servicio:
-            <select name="servicio" value={formCita.servicio} onChange={handleChangeCita} required>
-              <option value="">Seleccione un servicio</option>
-              {servicios.map(serv => (
-                <option key={serv.id} value={serv.nombre}>{serv.nombre}</option>
-              ))}
-            </select>
-          </label>
+        {mostrandoFormularioCita && (
+          <form onSubmit={(e) => { e.preventDefault(); guardarCita(); }}>
+            <label>Servicio:
+              <select name="servicio" value={formCita.servicio} onChange={handleChangeCita} required>
+                <option value="">Seleccione un servicio</option>
+                {servicios.map(serv => (
+                  <option key={serv.id} value={serv.nombre}>{serv.nombre}</option>
+                ))}
+              </select>
+            </label>
 
-          <label>Especialista:
-            <select name="especialista" value={formCita.especialista} onChange={handleChangeCita} required>
-              <option value="">Seleccione un especialista</option>
-              {especialistas.map(esp => (
-                <option key={esp.id} value={esp.nombre}>{esp.nombre}</option>
-              ))}
-            </select>
-          </label>
+            <label>Especialista:
+              <select name="especialista" value={formCita.especialista} onChange={handleChangeCita} required>
+                <option value="">Seleccione un especialista</option>
+                {especialistas.map(esp => (
+                  <option key={esp.id} value={esp.nombre}>{esp.nombre}</option>
+                ))}
+              </select>
+            </label>
 
-          <label>Fecha:
-            <input name="fecha" type="date" value={formCita.fecha} onChange={handleChangeCita} required />
-          </label>
-          <label>Hora:
-            <input name="hora" type="time" value={formCita.hora} onChange={handleChangeCita} required />
-          </label>
-          <label>Observaciones:
-            <textarea name="observaciones" value={formCita.observaciones} onChange={handleChangeCita} />
-          </label>
-          <button type="submit">{editandoCita ? 'Guardar Cambios' : 'Agregar Cita'}</button>
-          <button type="button" onClick={cancelarFormularioCita}>Cancelar</button>
-        </form>
-      )}
-
-      <div>
-        {citas.length === 0 ? (
-          <p>No tienes citas registradas.</p>
-        ) : (
-          <ul>
-            {citas.map((cita) => (
-              <li key={cita.id}>
-                <b>{cita.servicio}</b> - {cita.fecha} {cita.hora}
-                <button onClick={() => iniciarEditarCita(cita)} style={{ marginLeft: 10 }}>Editar</button>
-                <button onClick={() => eliminarCita(cita.id)} style={{ marginLeft: 5, color: 'red' }}>Eliminar</button>
-              </li>
-            ))}
-          </ul>
+            <label>Fecha:
+              <input name="fecha" type="date" value={formCita.fecha} onChange={handleChangeCita} required />
+            </label>
+            <label>Hora:
+              <input name="hora" type="time" value={formCita.hora} onChange={handleChangeCita} required />
+            </label>
+            <label>Observaciones:
+              <textarea name="observaciones" value={formCita.observaciones} onChange={handleChangeCita} />
+            </label>
+            <button type="submit">{editandoCita ? 'Guardar Cambios' : 'Agregar Cita'}</button>
+            <button type="button" onClick={cancelarFormularioCita}>Cancelar</button>
+          </form>
         )}
+
+        <div>
+          {citas.length === 0 ? (
+            <p>No tienes citas registradas.</p>
+          ) : (
+            <ul>
+              {citas.map((cita) => (
+                <li key={cita.id}>
+                  <div className="cita-info">
+                    <b>{cita.servicio}</b> - {cita.fecha} {cita.hora}
+                    {cita.especialista && <span> - {cita.especialista}</span>}
+                    {cita.observaciones && <p style={{ margin: '5px 0', color: '#666' }}>{cita.observaciones}</p>}
+                  </div>
+                  <div className="cita-actions">
+                    <button onClick={() => iniciarEditarCita(cita)}>Editar</button>
+                    <button onClick={() => eliminarCita(cita.id)} style={{ color: 'red' }}>Eliminar</button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
     </div>
   );

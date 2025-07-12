@@ -1,115 +1,275 @@
 .cliente-dashboard {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 30px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  background-color: #f8f9fa;
+  min-height: 100vh;
 }
 
 .cliente-dashboard h1 {
   text-align: center;
-  margin-bottom: 30px;
   color: #333;
+  margin-bottom: 30px;
+  font-size: 2.5em;
+  font-weight: bold;
 }
 
 .cliente-dashboard h2 {
-  margin-top: 40px;
-  color: #444;
+  color: #495057;
+  margin-bottom: 20px;
+  font-size: 1.8em;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
 }
 
-.cliente-dashboard p {
-  margin: 5px 0;
+/* Estilos para el perfil del cliente */
+.cliente-dashboard .perfil-info {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
 }
 
-.cliente-dashboard form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.cliente-dashboard label {
-  display: flex;
-  flex-direction: column;
-  font-weight: 500;
+.cliente-dashboard .perfil-info p {
+  margin: 10px 0;
+  font-size: 1.1em;
   color: #555;
 }
 
-.cliente-dashboard input[type="text"],
-.cliente-dashboard input[type="email"],
-.cliente-dashboard input[type="date"],
-.cliente-dashboard input[type="time"],
-.cliente-dashboard select,
-.cliente-dashboard textarea {
-  padding: 8px 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.cliente-dashboard .perfil-info p b {
+  color: #333;
+  font-weight: 600;
 }
 
+/* Botones principales */
 .cliente-dashboard button {
-  padding: 10px 15px;
-  margin-top: 10px;
-  background-color: #4caf50;
-  border: none;
-  border-radius: 4px;
+  background-color: #007bff;
   color: white;
-  font-weight: 500;
+  border: none;
+  padding: 12px 20px;
+  margin: 8px 5px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-size: 1em;
+  transition: all 0.3s ease;
 }
 
 .cliente-dashboard button:hover {
-  background-color: #45a049;
+  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.cliente-dashboard button[type="button"] {
-  background-color: #ccc;
+.cliente-dashboard button[style*="red"] {
+  background-color: #dc3545;
+}
+
+.cliente-dashboard button[style*="red"]:hover {
+  background-color: #c82333;
+}
+
+/* Formularios */
+.cliente-dashboard form {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.cliente-dashboard form label {
+  display: block;
+  margin-bottom: 15px;
+  font-weight: 600;
   color: #333;
 }
 
-.cliente-dashboard button[type="button"]:hover {
-  background-color: #b3b3b3;
-}
-
-.cliente-dashboard button[style*="color: red"],
-.cliente-dashboard button[style*="color: red"]:hover {
-  background-color: #f44336;
-  color: white;
-}
-
-.cliente-dashboard hr {
-  margin: 30px 0;
-}
-
-.cliente-dashboard ul {
-  list-style: none;
-  padding: 0;
-}
-
-.cliente-dashboard li {
-  background: #fff;
-  padding: 10px;
-  margin-bottom: 8px;
+.cliente-dashboard form input,
+.cliente-dashboard form select,
+.cliente-dashboard form textarea {
+  width: 100%;
+  padding: 12px;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 5px;
+  font-size: 1em;
+  margin-top: 5px;
+  transition: border-color 0.3s ease;
 }
 
-.cliente-dashboard li b {
-  color: #333;
-}
-
-.cliente-dashboard li button {
-  font-size: 0.9rem;
-  padding: 5px 8px;
-}
-
-.cliente-dashboard form button {
-  width: fit-content;
+.cliente-dashboard form input:focus,
+.cliente-dashboard form select:focus,
+.cliente-dashboard form textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
 }
 
 .cliente-dashboard form textarea {
   resize: vertical;
-  min-height: 60px;
+  min-height: 100px;
 }
 
+.cliente-dashboard form button[type="submit"] {
+  background-color: #28a745;
+}
+
+.cliente-dashboard form button[type="submit"]:hover {
+  background-color: #218838;
+}
+
+.cliente-dashboard form button[type="button"] {
+  background-color: #6c757d;
+}
+
+.cliente-dashboard form button[type="button"]:hover {
+  background-color: #5a6268;
+}
+
+/* Separador */
+.cliente-dashboard hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(to right, #007bff, #28a745);
+  margin: 40px 0;
+}
+
+/* Lista de citas */
+.cliente-dashboard .citas-container {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.cliente-dashboard .citas-container p {
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+  margin: 20px 0;
+}
+
+.cliente-dashboard .citas-container ul {
+  list-style: none;
+  padding: 0;
+}
+
+.cliente-dashboard .citas-container li {
+  background: #f8f9fa;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border-left: 4px solid #007bff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.cliente-dashboard .citas-container li:hover {
+  transform: translateX(5px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cliente-dashboard .citas-container li b {
+  color: #007bff;
+  font-size: 1.1em;
+}
+
+.cliente-dashboard .citas-container .cita-info {
+  flex-grow: 1;
+}
+
+.cliente-dashboard .citas-container .cita-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.cliente-dashboard .citas-container .cita-actions button {
+  padding: 8px 12px;
+  font-size: 0.9em;
+  margin: 0;
+}
+
+/* Botón de agregar cita */
+.cliente-dashboard .btn-agregar-cita {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 15px 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.cliente-dashboard .btn-agregar-cita:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Estados de carga y error */
+.cliente-dashboard .loading {
+  text-align: center;
+  color: #007bff;
+  font-size: 1.2em;
+  margin: 20px 0;
+}
+
+.cliente-dashboard .error {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #f5c6cb;
+  margin: 20px 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cliente-dashboard {
+    padding: 15px;
+  }
+  
+  .cliente-dashboard h1 {
+    font-size: 2em;
+  }
+  
+  .cliente-dashboard .citas-container li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .cliente-dashboard .citas-container .cita-actions {
+    margin-top: 10px;
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .cliente-dashboard form {
+    padding: 20px;
+  }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cliente-dashboard .perfil-info,
+.cliente-dashboard form,
+.cliente-dashboard .citas-container {
+  animation: fadeIn 0.5s ease;
+}

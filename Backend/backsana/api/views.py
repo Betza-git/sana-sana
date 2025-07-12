@@ -204,7 +204,7 @@ class EspecialistasListCreate(ListCreateAPIView):
 class EspecialistasRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = especialistas.objects.all()
     serializer_class = EspecialistasSerializer
-    permission_classes = [AllowAny]
+    permission_classes = []
 
     def delete(self, request, *args, **kwargs):
         instance = self.get_object()
