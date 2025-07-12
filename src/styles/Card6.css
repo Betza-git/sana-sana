@@ -5,6 +5,7 @@
   background: linear-gradient(135deg, #1e293b 0%, #1e40af 50%, #1e293b 100%);
   color: white;
   font-family: 'Arial', sans-serif;
+  
 }
 
 /* Contenido principal del footer */
@@ -12,6 +13,7 @@
   max-width: 1265px;
   height: auto;
   margin: 0 auto;
+  margin-top: 5%;
   padding: 3rem 1.5rem;
 }
 

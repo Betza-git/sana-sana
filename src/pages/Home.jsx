@@ -31,7 +31,6 @@ function Home() {
           <Heroinfoheader />
           <div className='cont-cards'>
             <Card1 titulo={"Especialistas"} icono={"fa-solid fa-user-md"} cantidad={100} lugar={"Consultorios"} cantidad2={10} sitio={"sitios"} />
-
             <Card1 titulo={"Salud"} icono={"fa-solid fa-heart-pulse fa-beat"} cantidad={100} lugar={"Consultorios"} cantidad2={10} sitio={"sitios"} />
             <Card1 titulo={"Foros"} icono={"fa-solid fa-comment-dots"} cantidad={100} lugar={"Personas"} cantidad2={10} sitio={"sitios"} />
           </div>
@@ -46,18 +45,19 @@ function Home() {
 
 
           <div className='cont-cards-3' style={{ backgroundImage: `url(${fondoCards})` }}>
-
+            
             <Card3 icono={"fa-solid fa-id-card"} titulo={"Total de visitas"} cantidad={15.678} />
             <Card3 icono={"fa-regular fa-star"} titulo={"Estrellas"} cantidad={3.439} />
             <Card3 icono={"fa-solid fa-users"} titulo={"Nuestros Clientes"} cantidad={7.547} />
             <Card3 icono={"fa-sharp fa-regular fa-face-smile"} titulo={"Casos Exitosos"} cantidad={8.550} />
-            
+           
           </div>
-          <h1>Comienza hoy a utilizar nuestra plataforma!!</h1>
-          <h5>Le acompañaremos a lo largo de su tratamiento, juntos tendremos resultados increíbles!! </h5>
 
+          <div className='TituloSintomas2'>
+            <h1>Comienza hoy a utilizar nuestra plataforma!!</h1>
+            <h5>Le acompañaremos a lo largo de su tratamiento, juntos tendremos resultados increíbles!! </h5>
 
-
+          </div>
 
           <div className='cont-cards-4'>
             <div className='card4' ><Card4 titulo={"Usuario Existente"} button={<Link to={"/login"}>INGRESAR</Link>} /></div><hr className='hr4' />

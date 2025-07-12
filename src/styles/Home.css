@@ -65,6 +65,7 @@
     background: linear-gradient(135deg, #3c4a84 0%, #2a3660 100%);
     position: relative;
     overflow: hidden;
+    margin-top: -1.2%;
 }
 
 .nav-home-ul2::after {
