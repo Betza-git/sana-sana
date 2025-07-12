@@ -11,7 +11,7 @@ import {
   patchCita,
   deleteCita,
 } from '../services/citas';
-import { getServicios } from '../services/servicios';
+import { getServicios } from '../services/Servicios';
 import { getEspecialistas } from '../services/Especialistas';
 import '../styles/usuario.css';
 
