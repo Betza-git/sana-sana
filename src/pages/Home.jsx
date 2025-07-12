@@ -15,6 +15,7 @@ import desgestres from '../imagenes/desgestres.jpg'
 import bajap from '../imagenes/bajap.jpg'
 import agota from '../imagenes/agota.jpg'
 import descontrol from '../imagenes/descontrol.png'
+import fondoCards from '../imagenes/fondoCards.png';
 
 
 
@@ -44,11 +45,13 @@ function Home() {
           </div>
 
 
-          <div className='cont-cards-3'>
+          <div className='cont-cards-3' style={{ backgroundImage: `url(${fondoCards})` }}>
+
             <Card3 icono={"fa-solid fa-id-card"} titulo={"Total de visitas"} cantidad={15.678} />
             <Card3 icono={"fa-regular fa-star"} titulo={"Estrellas"} cantidad={3.439} />
             <Card3 icono={"fa-solid fa-users"} titulo={"Nuestros Clientes"} cantidad={7.547} />
             <Card3 icono={"fa-sharp fa-regular fa-face-smile"} titulo={"Casos Exitosos"} cantidad={8.550} />
+            
           </div>
           <h1>Comienza hoy a utilizar nuestra plataforma!!</h1>
           <h5>Le acompañaremos a lo largo de su tratamiento, juntos tendremos resultados increíbles!! </h5>

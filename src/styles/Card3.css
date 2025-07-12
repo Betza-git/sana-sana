@@ -1,3 +1,6 @@
+
+
+
 .card3-container {
   display: flex;
   flex-direction: column;
@@ -39,7 +42,7 @@
   gap: 65px;
   margin-top: 10vh;
   padding: 40px 20px;
-  background-image: url(../src/imagenes/fondoCards.png);
+  background-image: url(/imagenes/fondoCards.png);
   background-size: cover;
   background-position: center;
   position: relative;
