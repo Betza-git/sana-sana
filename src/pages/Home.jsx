@@ -6,6 +6,7 @@ import Card2 from '../componentes/Card2'
 import Card3 from '../componentes/Card3'
 import Card4 from '../componentes/Card4'
 import '../styles/Home.css';
+import '../styles/Card3.css';
 import Heroinfoheader from '../componentes/Heroinfoheader'
 import { Link, useNavigate } from 'react-router-dom'
 import Card5 from '../componentes/Card5'
