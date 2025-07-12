@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../styles/Hero.css';
 import { getData } from '../services/llamados';
 import { Link } from 'react-router-dom';
+import Hero from '../imagenes/Hero.png'; 
 
 function Heroinfoheader() {
   const [especialidades, setEspecialidades] = useState([]);
@@ -21,7 +22,7 @@ function Heroinfoheader() {
 
   return (
     <div className='cont-hero'>
-      <img src="../src/imagenes/Hero.png" alt="Imagen Hero" />
+      <img src={Hero} alt="Imagen Hero" />
       <div className='cont-text'>
         <h1>Bienvenidos a su sitio web para el tratamiento del estrés laboral</h1>
         <div className='hero-busqueda'>

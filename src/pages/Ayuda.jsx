@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { getData, patchData, postData } from '../services/llamados'
 import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom' 
+import icono from '../imagenes/icono.png'
 
 
 
@@ -93,7 +94,7 @@ function Ayuda() {
       <div className='contenedor-mensaje'>
         <h2>Gracias por su consulta!</h2>
         <button className='btn-home'><Link to="/">Home</Link></button>
-        <img src="src/imagenes/icono.png" alt=""  height="50" width="60" />
+        <img src={icono} alt=""  height="50" width="60" />
       </div>
     </div>
     
