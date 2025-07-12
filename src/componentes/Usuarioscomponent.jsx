@@ -12,7 +12,7 @@ import {
   deleteCita,
 } from '../services/citas';
 import { getServicios } from '../services/servicios';
-import { getEspecialistas } from '../services/especialistas';
+import { getEspecialistas } from '../services/Especialistas';
 import '../styles/usuario.css';
 
 function Usuario() {
