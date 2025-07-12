@@ -10,6 +10,10 @@ import Heroinfoheader from '../componentes/Heroinfoheader'
 import { Link, useNavigate } from 'react-router-dom' 
 import Card5 from '../componentes/Card5'
 import Card6 from '../componentes/Card6'
+import desgestres from '../imagenes/desgestres.jpg'
+import bajap from '../imagenes/bajap.jpg'
+import agota from '../imagenes/agota.jpg'
+import descontrol from '../imagenes/descontrol.png' 
 
 
 function Home() {
@@ -31,11 +35,12 @@ function Home() {
           <div><h1 className='TituloSintomas'>¿Estás presentando alguno de estos síntomas?</h1></div>
 
           <div className='cont-cards-2'>
-            <Card2 img={"../src/imagenes/desgestres.jpg"} tituloPrincipal={"Cansancio Extremo"} />
-            <Card2 img={"../src/imagenes/bajap.jpg"} tituloPrincipal={"Baja Productividad"} />
-            <Card2 img={"../src/imagenes/agota.jpg"} tituloPrincipal={"Agotamiento y Depresión"} />
-            <Card2 img={"../src/imagenes/descontrol.png"} tituloPrincipal={"Descontrol de las emociones"} />
-          </div>  
+  <Card2 img={desgestres} tituloPrincipal={"Cansancio Extremo"} />
+  <Card2 img={bajap} tituloPrincipal={"Baja Productividad"} />
+  <Card2 img={agota} tituloPrincipal={"Agotamiento y Depresión"} />
+  <Card2 img={descontrol} tituloPrincipal={"Descontrol de las emociones"} />
+</div>
+  
 
           <div className='cont-cards-3'>
           <Card3 icono={"fa-solid fa-id-card"} titulo={"Total de visitas"} cantidad={15.678} />
